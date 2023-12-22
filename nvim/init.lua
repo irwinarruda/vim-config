@@ -1,0 +1,12 @@
+require('app.core.options')
+require('app.core.keymaps')
+require('app.core.colorscheme')
+require('app.plugins.setup')
+require('app.plugins.comment')
+require('app.plugins.nvim-tree')
+require('app.plugins.lualine')
+require('app.plugins.telescope')
+require('app.plugins.nvim-cmp')
+require('app.plugins.lsp.mason')
+require('app.plugins.lsp.lspconfig')
+

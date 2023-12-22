@@ -1,0 +1,155 @@
+{
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "+"
+            ],
+            "after": [
+                "<C-a>"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "-"
+            ],
+            "after": [
+                "<C-x>"
+            ]
+        },
+        {
+            "before": [
+                "x"
+            ],
+            "after": [
+                "_",
+                "x"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "l"
+            ],
+            "after": [
+                "<C-w>",
+                "v"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "j"
+            ],
+            "after": [
+                "<C-w>",
+                "s"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "e"
+            ],
+            "after": [
+                "<C-w>",
+                "="
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "c"
+            ],
+            "after": [
+                ":close",
+                "<CR>"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "e"
+            ],
+            "commands": [
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        },
+        {
+            "before": [
+                "<C-h>"
+            ],
+            "commands": [
+                "workbench.action.navigateLeft"
+            ]
+        },
+        {
+            "before": [
+                "<C-l>"
+            ],
+            "commands": [
+                "workbench.action.navigateRight"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "f"
+            ],
+            "commands": [
+                "actions.find"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "j"
+            ],
+            "commands": [
+                "workbench.action.findInFiles"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "p"
+            ],
+            "after": [
+                "\"",
+                "_",
+                "d",
+                "P"
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        }
+    ],
+    "vim.useSystemClipboard": true,
+    "vim.leader": "<space>",
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    }
+}
