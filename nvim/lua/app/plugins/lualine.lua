@@ -1,12 +1,12 @@
-local status, lualine = pcall(require, "lualine")
-if not status then
-    return
+local s1, lualine = pcall(require, "lualine")
+local s2, lualine_dracula = pcall(require, "lualine.themes.dracula")
+
+if not s1 or not s2 then
+	return
 end
 
-local lualine_dracula = require('lualine.themes.dracula')
-
 lualine.setup({
-  options = {
-    theme = lualine_dracula 
-  }
+	options = {
+		theme = lualine_dracula,
+	},
 })

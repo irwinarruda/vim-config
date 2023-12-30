@@ -9,34 +9,33 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
+opt.smartindent = true
 
 -- line wrapping
 opt.wrap = false
-opt.cursorline = false
--- opt.guicursor = 'n-v-c:block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175'
 
 -- search settings
+opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
 
 -- apperance
--- opt.background = 'light'
 opt.termguicolors = true
 opt.smartcase = true
 
 -- backspace
-opt.backspace = 'indent,eol,start'
+opt.backspace = "indent,eol,start"
+opt.eol = true
 
 -- clipboard
-opt.clipboard:append('unnamedplus')
+opt.clipboard:append("unnamedplus")
 
 -- split windows
 opt.splitright = true
 opt.splitbelow = true
 
--- opt.iskeyword:append('-')
 -- gutter
-opt.signcolumn = 'yes'
-
-
-
+opt.signcolumn = "yes"
+opt.scrolloff = 10
+opt.updatetime = 50
+opt.colorcolumn = "80"

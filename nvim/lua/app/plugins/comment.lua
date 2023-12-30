@@ -1,7 +1,15 @@
-local status, comment = pcall(require, "Comment")
-if not status then
-    return
+local s1, comment = pcall(require, "Comment")
+if not s1 then
+	return
 end
 
-comment.setup()
-
+comment.setup({
+	toggler = {
+		line = "<C-;>",
+		block = "<leader><C-;>",
+	},
+	opleader = {
+		line = "<C-;>",
+		block = "<leader><C-;>",
+	},
+})
