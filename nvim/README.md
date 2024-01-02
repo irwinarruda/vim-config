@@ -7,7 +7,7 @@ Copy the repo code to the `.config`.
 ```bash
 # MacOS
 $ rm -rf ~/.config/nvim
-$ cp ./nvim ~/.config/nvim
+$ cp -r ./nvim ~/.config/nvim
 ```
 
 Copy the `.config` code to the repo.
@@ -15,7 +15,7 @@ Copy the `.config` code to the repo.
 ```bash
 # MacOS
 $ rm -rf ./nvim
-$ cp ~/.config/nvim ./nvim
+$ cp -r ~/.config/nvim ./nvim
 ```
 
 ## Dracula Pro

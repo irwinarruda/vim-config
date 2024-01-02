@@ -93,8 +93,8 @@ return packer.startup(function(use)
 	use("stevearc/conform.nvim")
 	use("mfussenegger/nvim-lint")
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
-	use("theHamsta/nvim-dap-virtual-text")
 	use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
+	use("theHamsta/nvim-dap-virtual-text")
 	use({
 		"microsoft/vscode-js-debug",
 		opt = true,

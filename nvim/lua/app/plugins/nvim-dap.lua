@@ -2,7 +2,7 @@ local s1, dap = pcall(require, "dap")
 local s2, dapui = pcall(require, "dapui")
 local s3, neodev = pcall(require, "neodev")
 local s4, dap_vscode = pcall(require, "dap-vscode-js")
-local s5, dap_utils = pcall(require, "dat.utils")
+local s5, dap_utils = pcall(require, "dap.utils")
 
 if not s1 or not s2 or not s2 or not s3 or not s4 or not s5 then
 	return
