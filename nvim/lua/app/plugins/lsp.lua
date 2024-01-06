@@ -71,7 +71,7 @@ require("typescript-tools").setup({
 		code_lens = "off",
 		disable_member_code_lens = true,
 		jsx_close_tag = {
-			enable = true,
+			enable = false,
 			filetypes = { "javascriptreact", "typescriptreact" },
 		},
 	},
@@ -94,6 +94,34 @@ require("mason-lspconfig").setup({
 		lua_ls = function()
 			local lua_opts = lsp.nvim_lua_ls()
 			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+		tailwindcss = function()
+			local tailwind_opts = {
+				settings = {
+					tailwindCSS = {
+						classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+						lint = {
+							cssConflict = "warning",
+							invalidApply = "error",
+							invalidConfigPath = "error",
+							invalidScreen = "error",
+							invalidTailwindDirective = "error",
+							invalidVariant = "error",
+							recommendedVariantOrder = "warning",
+						},
+						validate = true,
+						experimental = {
+							classRegex = {
+								{
+									"tv\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
+									"[\"'`](.*?)[\"'`]",
+								},
+							},
+						},
+					},
+				},
+			}
+			require("lspconfig").tailwindcss.setup(tailwind_opts)
 		end,
 	},
 })

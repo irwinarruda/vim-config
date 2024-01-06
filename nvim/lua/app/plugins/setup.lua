@@ -33,6 +33,8 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 	-- Autoclose
 	use("m4xshen/autoclose.nvim")
+	-- Color Highlight for hex colors
+	use("norcalli/nvim-colorizer.lua")
 	-- File explorer
 	use("nvim-tree/nvim-tree.lua")
 	-- Tabs
@@ -65,6 +67,7 @@ return packer.startup(function(use)
 			ts_update()
 		end,
 	})
+	use("windwp/nvim-ts-autotag")
 	-- Snippets
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 	use("github/copilot.vim")
@@ -86,9 +89,6 @@ return packer.startup(function(use)
 	use({
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		config = function()
-			require("typescript-tools").setup({})
-		end,
 	})
 	use("stevearc/conform.nvim")
 	use("mfussenegger/nvim-lint")
@@ -101,6 +101,7 @@ return packer.startup(function(use)
 		run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
 	})
 	use("folke/neodev.nvim")
+	use("dracula/vim")
 
 	if packer_bootstrap then
 		require("packer").sync()

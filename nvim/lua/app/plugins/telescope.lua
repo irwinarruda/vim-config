@@ -22,7 +22,7 @@ local keymap = vim.keymap
 -- telescope
 -- Needs ripgrep installed
 keymap.set("n", "<leader>fo", builtin.find_files) -- find files within current working directory, respects .gitignore
-keymap.set("n", "<leader>fg", builtin.git_files) -- find files in git
+keymap.set("n", "<leader>fp", builtin.git_files) -- find files in git
 keymap.set("n", "<leader>ff", function()
 	builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end) -- find string in current working directory as you type
