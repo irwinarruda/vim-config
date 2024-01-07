@@ -56,7 +56,7 @@
             ],
             "commands": [
                 "editor.action.moveLinesDownAction"
-            ],
+            ]
         },
         {
             "before": [
@@ -223,7 +223,7 @@
             ],
             "commands": [
                 "editor.action.moveLinesDownAction"
-            ],
+            ]
         },
         {
             "before": [
