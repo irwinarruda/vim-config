@@ -30,6 +30,89 @@
         {
             "before": [
                 "<leader>",
+                "p"
+            ],
+            "after": [
+                "\"",
+                "_",
+                "d",
+                "P"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "d"
+            ],
+            "after": [
+                "\"",
+                "_",
+                "d"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "commands": [
+                "editor.action.moveLinesDownAction"
+            ],
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "commands": [
+                "editor.action.moveLinesUpAction"
+            ]
+        },
+        {
+            "before": [
+                "<C-d>"
+            ],
+            "after": [
+                "<C-d>",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "<C-u>"
+            ],
+            "after": [
+                "<C-u>",
+                "z",
+                "z"
+            ]
+        },
+        {
+            "before": [
+                "n"
+            ],
+            "after": [
+                "n",
+                "z",
+                "z",
+                "z",
+                "v"
+            ]
+        },
+        {
+            "before": [
+                "N"
+            ],
+            "after": [
+                "N",
+                "z",
+                "z",
+                "z",
+                "v"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
                 "s",
                 "l"
             ],
@@ -64,11 +147,10 @@
             "before": [
                 "<leader>",
                 "s",
-                "c"
+                "s"
             ],
-            "after": [
-                ":close",
-                "<CR>"
+            "commands": [
+                "workbench.action.closeActiveEditor"
             ]
         },
         {
@@ -82,25 +164,9 @@
         },
         {
             "before": [
-                "<C-h>"
-            ],
-            "commands": [
-                "workbench.action.navigateLeft"
-            ]
-        },
-        {
-            "before": [
-                "<C-l>"
-            ],
-            "commands": [
-                "workbench.action.navigateRight"
-            ]
-        },
-        {
-            "before": [
                 "<leader>",
                 "f",
-                "f"
+                "s"
             ],
             "commands": [
                 "actions.find"
@@ -110,10 +176,20 @@
             "before": [
                 "<leader>",
                 "f",
-                "j"
+                "f"
             ],
             "commands": [
                 "workbench.action.findInFiles"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "p"
+            ],
+            "commands": [
+                "workbench.action.quickOpen"
             ]
         }
     ],
@@ -128,6 +204,33 @@
                 "_",
                 "d",
                 "P"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "d"
+            ],
+            "after": [
+                "\"",
+                "_",
+                "d"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "commands": [
+                "editor.action.moveLinesDownAction"
+            ],
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "commands": [
+                "editor.action.moveLinesUpAction"
             ]
         },
         {
@@ -147,9 +250,11 @@
             ]
         }
     ],
+    "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.leader": "<space>",
     "extensions.experimental.affinity": {
-        "vscodevim.vim": 1
+        "vscodevim.vim": 1,
+        "tailwindlabs.tailwindCSS": 1
     }
 }
