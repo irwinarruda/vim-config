@@ -27,20 +27,19 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
-keymap.set("n", "<leader>sl", "<C-w>v")     -- split window right
-keymap.set("n", "<leader>sj", "<C-w>s")     -- split window down
-keymap.set("n", "<leader>se", "<C-w>=")     -- make split windows equal width & height
+keymap.set("n", "<leader>sl", "<C-w>v") -- split window right
+keymap.set("n", "<leader>sj", "<C-w>s") -- split window down
+keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>ss", ":close<CR>") -- close current split window
 -- vim-maximizer
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>")
 
-keymap.set("n", "<leader>tn", ":tabnew<CR>")   -- open new tab
+keymap.set("n", "<leader>tn", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tc", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tl", ":tabn<CR>")     --  go to next tab
-keymap.set("n", "<leader>th", ":tabp< R>")     --  go to previous tab
+keymap.set("n", "<leader>tl", ":tabn<CR>") --  go to next tab
+keymap.set("n", "<leader>th", ":tabp< R>") --  go to previous tab
 
 vim.g.VM_maps = {
   ["Find Under"] = "gb",
   ["Find Subword Under"] = "gb",
 }
-

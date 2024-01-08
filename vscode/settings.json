@@ -1,260 +1,114 @@
 {
-    "vim.normalModeKeyBindings": [
-        {
-            "before": [
-                "<leader>",
-                "+"
-            ],
-            "after": [
-                "<C-a>"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "-"
-            ],
-            "after": [
-                "<C-x>"
-            ]
-        },
-        {
-            "before": [
-                "x"
-            ],
-            "after": [
-                "_",
-                "x"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "p"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "d",
-                "P"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "d"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "d"
-            ]
-        },
-        {
-            "before": [
-                "J"
-            ],
-            "commands": [
-                "editor.action.moveLinesDownAction"
-            ]
-        },
-        {
-            "before": [
-                "K"
-            ],
-            "commands": [
-                "editor.action.moveLinesUpAction"
-            ]
-        },
-        {
-            "before": [
-                "<C-d>"
-            ],
-            "after": [
-                "<C-d>",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "<C-u>"
-            ],
-            "after": [
-                "<C-u>",
-                "z",
-                "z"
-            ]
-        },
-        {
-            "before": [
-                "n"
-            ],
-            "after": [
-                "n",
-                "z",
-                "z",
-                "z",
-                "v"
-            ]
-        },
-        {
-            "before": [
-                "N"
-            ],
-            "after": [
-                "N",
-                "z",
-                "z",
-                "z",
-                "v"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s",
-                "l"
-            ],
-            "after": [
-                "<C-w>",
-                "v"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s",
-                "j"
-            ],
-            "after": [
-                "<C-w>",
-                "s"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s",
-                "e"
-            ],
-            "after": [
-                "<C-w>",
-                "="
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "s",
-                "s"
-            ],
-            "commands": [
-                "workbench.action.closeActiveEditor"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "e"
-            ],
-            "commands": [
-                "workbench.action.toggleSidebarVisibility"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "f",
-                "s"
-            ],
-            "commands": [
-                "actions.find"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "f",
-                "f"
-            ],
-            "commands": [
-                "workbench.action.findInFiles"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "f",
-                "p"
-            ],
-            "commands": [
-                "workbench.action.quickOpen"
-            ]
-        }
-    ],
-    "vim.visualModeKeyBindings": [
-        {
-            "before": [
-                "<leader>",
-                "p"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "d",
-                "P"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "d"
-            ],
-            "after": [
-                "\"",
-                "_",
-                "d"
-            ]
-        },
-        {
-            "before": [
-                "J"
-            ],
-            "commands": [
-                "editor.action.moveLinesDownAction"
-            ]
-        },
-        {
-            "before": [
-                "K"
-            ],
-            "commands": [
-                "editor.action.moveLinesUpAction"
-            ]
-        },
-        {
-            "before": [
-                ">"
-            ],
-            "commands": [
-                "editor.action.indentLines"
-            ]
-        },
-        {
-            "before": [
-                "<"
-            ],
-            "commands": [
-                "editor.action.outdentLines"
-            ]
-        }
-    ],
-    "vim.useCtrlKeys": true,
-    "vim.useSystemClipboard": true,
-    "vim.leader": "<space>",
-    "extensions.experimental.affinity": {
-        "vscodevim.vim": 1,
-        "tailwindlabs.tailwindCSS": 1
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["<leader>", "+"],
+      "after": ["<C-a>"]
+    },
+    {
+      "before": ["<leader>", "-"],
+      "after": ["<C-x>"]
+    },
+    {
+      "before": ["x"],
+      "after": ["_", "x"]
+    },
+    {
+      "before": ["<leader>", "p"],
+      "after": ["\"", "_", "d", "P"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["\"", "_", "d"]
+    },
+    {
+      "before": ["J"],
+      "commands": ["editor.action.moveLinesDownAction"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.moveLinesUpAction"]
+    },
+    {
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["n"],
+      "after": ["n", "z", "z", "z", "v"]
+    },
+    {
+      "before": ["N"],
+      "after": ["N", "z", "z", "z", "v"]
+    },
+    {
+      "before": ["<leader>", "s", "l"],
+      "after": ["<C-w>", "v"]
+    },
+    {
+      "before": ["<leader>", "s", "j"],
+      "after": ["<C-w>", "s"]
+    },
+    {
+      "before": ["<leader>", "s", "e"],
+      "after": ["<C-w>", "="]
+    },
+    {
+      "before": ["<leader>", "s", "s"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["<leader>", "f", "s"],
+      "commands": ["actions.find"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.findInFiles"]
+    },
+    {
+      "before": ["<leader>", "f", "p"],
+      "commands": ["workbench.action.quickOpen"]
     }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["<leader>", "p"],
+      "after": ["\"", "_", "d", "P"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["\"", "_", "d"]
+    },
+    {
+      "before": ["J"],
+      "commands": ["editor.action.moveLinesDownAction"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.moveLinesUpAction"]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    }
+  ],
+  "vim.useCtrlKeys": true,
+  "vim.useSystemClipboard": true,
+  "vim.leader": "<space>",
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+    "tailwindlabs.tailwindCSS": 1
+  }
 }
+
