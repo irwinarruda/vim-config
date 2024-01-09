@@ -31,6 +31,8 @@ keymap.set("n", "<leader>sl", "<C-w>v") -- split window right
 keymap.set("n", "<leader>sj", "<C-w>s") -- split window down
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>ss", ":close<CR>") -- close current split window
+keymap.set("n", "<leader>=", "<C-w>>") -- increment window width
+keymap.set("n", "<leader>-", "<C-w><") -- decrement window width
 -- vim-maximizer
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>")
 
