@@ -20,7 +20,10 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.definition()
   end, opts)
   keymap.set("n", "<C-<>", function()
-    local st, num = pcall(vim.diagnostic.open_float)
+    local st, num = pcall(function()
+      vim.diagnostic.open_float()
+      return vim.diagnostic.open_float()
+    end)
     if not st or not num then
       vim.lsp.buf.hover()
     end
