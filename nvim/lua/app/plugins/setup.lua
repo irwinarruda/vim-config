@@ -45,15 +45,11 @@ return packer.startup(function(use)
   })
   -- Undo History
   use("mbbill/undotree")
-  -- Icons for files
-  use("onsails/lspkind.nvim")
-  use("kyazdani42/nvim-web-devicons")
   -- Statusline
   use("nvim-lualine/lualine.nvim")
+  use("kyazdani42/nvim-web-devicons")
   -- Fuzzy finding w/ telescope
   -- If not working, do :checkhealth telescope to download the other plugins
-  -- Needs ripgrep installed
-  use("nvim-lua/plenary.nvim")
   use({
     "nvim-telescope/telescope.nvim",
     tag = "0.1.x",
@@ -67,11 +63,10 @@ return packer.startup(function(use)
       ts_update()
     end,
   })
-  use("windwp/nvim-ts-autotag")
-  -- Snippets
-  use("saadparwaiz1/cmp_luasnip") -- for autocompletion
-  use("github/copilot.vim")
+  use("nvim-treesitter/nvim-treesitter-context")
   -- LSP
+  use("saadparwaiz1/cmp_luasnip") -- for autocompletion
+  use("windwp/nvim-ts-autotag")
   use({
     "vonheikemen/lsp-zero.nvim",
     branch = "v3.x",
@@ -101,6 +96,10 @@ return packer.startup(function(use)
     run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
   })
   use("folke/neodev.nvim")
+  -- Github
+  use("github/copilot.vim")
+  use("lewis6991/gitsigns.nvim")
+  -- Themes
   use("dracula/vim")
 
   if packer_bootstrap then

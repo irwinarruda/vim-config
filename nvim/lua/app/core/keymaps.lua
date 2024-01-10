@@ -42,6 +42,6 @@ keymap.set("n", "<leader>tl", ":tabn<CR>") --  go to next tab
 keymap.set("n", "<leader>th", ":tabp< R>") --  go to previous tab
 
 vim.g.VM_maps = {
-  ["Find Under"] = "gb",
-  ["Find Subword Under"] = "gb",
+	["Find Under"] = "gb",
+	["Find Subword Under"] = "gb",
 }

@@ -99,7 +99,7 @@
   },
   {
     "key": "q",
-    "command": "vscode-harpoon.gotoPreviousHarpoonEditor",
+    "command": "workbench.action.closeActiveEditor",
     "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
   }
 ]

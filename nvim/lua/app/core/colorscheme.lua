@@ -1,6 +1,6 @@
 local s1, _ = pcall(vim.cmd, "packadd! dracula_pro")
 if not s1 then
-  return
+	return
 end
 -- dracula_pro_blade
 -- dracula_pro_buffy

@@ -1,6 +1,8 @@
 local s1, nvimtreesitter = pcall(require, "nvim-treesitter.configs")
+local s2, nvimtreesittercontext = pcall(require, "treesitter-context")
+local s3, nvimautotag = pcall(require, "nvim-ts-autotag")
 
-if not s1 then
+if not s1 or not s2 or not s3 then
   return
 end
 
@@ -34,7 +36,8 @@ nvimtreesitter.setup({
   },
 })
 
-require("nvim-ts-autotag").setup()
+nvimtreesittercontext.setup()
+nvimautotag.setup()
 
 -- on windows
 -- local s2, nvimtreesitterinstall = pcall(require, "nvim-treesitter.install")
