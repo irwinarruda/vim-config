@@ -36,7 +36,9 @@ nvimtreesitter.setup({
   },
 })
 
-nvimtreesittercontext.setup()
+nvimtreesittercontext.setup({
+  multiline_threshold = 1,
+})
 nvimautotag.setup()
 
 -- on windows

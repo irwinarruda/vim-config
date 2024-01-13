@@ -19,8 +19,6 @@ keymap.set("v", "<leader>d", '"_d', { noremap = true })
 -- Move blocks of code
 keymap.set("n", "J", ":m '>+1<CR>gv=gv")
 keymap.set("n", "K", ":m '<-2<CR>gv=gv")
-keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Ctrl D with cursor in the middle
 keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
@@ -42,6 +40,6 @@ keymap.set("n", "<leader>tl", ":tabn<CR>") --  go to next tab
 keymap.set("n", "<leader>th", ":tabp< R>") --  go to previous tab
 
 vim.g.VM_maps = {
-	["Find Under"] = "gb",
-	["Find Subword Under"] = "gb",
+  ["Find Under"] = "gb",
+  ["Find Subword Under"] = "gb",
 }
