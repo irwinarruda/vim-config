@@ -42,8 +42,8 @@ nvimtreesittercontext.setup({
 nvimautotag.setup()
 
 -- on windows
--- local s2, nvimtreesitterinstall = pcall(require, "nvim-treesitter.install")
--- if not s2 then
+-- local s4, nvimtreesitterinstall = pcall(require, "nvim-treesitter.install")
+-- if not s4 then
 --   return
 -- end
 -- nvimtreesitterinstall.compilers = { "clang" }
