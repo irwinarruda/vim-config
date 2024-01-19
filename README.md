@@ -86,6 +86,7 @@ if has('nvim')
     hi! link @field DraculaFg
     hi! link @property DraculaFg
     hi! link @constructor DraculaPink
+    hi! link @constructor.tsx DraculaCyan
     hi! link @conditional DraculaPink
     hi! link @repeat DraculaPink
     hi! link @label DraculaPink

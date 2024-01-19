@@ -14,19 +14,16 @@ lsp.set_sign_icons({
 
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr, remap = false }
-  -- lsp.default_keymaps({buffer = bufnr})
+  require("app.plugins.telescope").telescope_lsp_keymaps(opts)
+
   local keymap = vim.keymap
-  keymap.set("n", "<C-,>", function()
-    vim.lsp.buf.definition()
+  keymap.set("n", "<C->>", function()
+    vim.diagnostic.open_float()
+    vim.diagnostic.open_float()
   end, opts)
   keymap.set("n", "<C-<>", function()
-    local st, num = pcall(function()
-      vim.diagnostic.open_float()
-      return vim.diagnostic.open_float()
-    end)
-    if not st or not num then
-      vim.lsp.buf.hover()
-    end
+    vim.lsp.buf.hover()
+    vim.lsp.buf.hover()
   end, opts)
   keymap.set("n", "<C-.>", function()
     vim.lsp.buf.code_action()
@@ -35,7 +32,7 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.rename()
   end, opts)
   keymap.set("n", "<leader>vws", function()
-    vim.lsp.buf.workspace_symbol()
+    vim.lsp.buf.workspace_symbol("")
   end, opts)
   keymap.set("n", "<leader>vd", function()
     vim.diagnostic.open_float()
@@ -45,9 +42,6 @@ local on_attach = function(_, bufnr)
   end, opts)
   keymap.set("n", "]d", function()
     vim.diagnostic.goto_prev()
-  end, opts)
-  keymap.set("n", "<leader>vrr", function()
-    vim.lsp.buf.references()
   end, opts)
   keymap.set("i", "<C-h>", function()
     vim.lsp.buf.signature_help()
@@ -93,16 +87,41 @@ require("mason-lspconfig").setup({
     "tailwindcss",
     "rust_analyzer",
     "lua_ls",
+    "jsonls",
   },
   handlers = {
     lsp.default_setup,
-    tsserver = nil,
+    tsserver = lsp.noop(),
+    jsonls = function()
+      require("lspconfig").jsonls.setup({
+        on_attach = on_attach,
+        settings = {
+          json = {
+            schemas = {
+              {
+                fileMatch = { "package.json" },
+                url = "https://json.schemastore.org/package.json",
+              },
+              {
+                fileMatch = { "tsconfig*.json" },
+                url = "https://json.schemastore.org/tsconfig.json",
+              },
+
+              {
+                fileMatch = { "tauri.conf.json" },
+                url = "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
+              },
+            },
+          },
+        },
+      })
+    end,
     lua_ls = function()
-      local lua_opts = lsp.nvim_lua_ls()
-      require("lspconfig").lua_ls.setup(lua_opts)
+      require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
     end,
     tailwindcss = function()
-      local tailwind_opts = {
+      require("lspconfig").tailwindcss.setup({
+        on_attach = on_attach,
         settings = {
           tailwindCSS = {
             classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
@@ -126,8 +145,7 @@ require("mason-lspconfig").setup({
             },
           },
         },
-      }
-      require("lspconfig").tailwindcss.setup(tailwind_opts)
+      })
     end,
   },
 })
@@ -157,6 +175,7 @@ conform.setup({
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
+  desc = "Conform format on save",
   pattern = "*",
   callback = function(args)
     conform.format({ bufnr = args.buf })
@@ -183,6 +202,7 @@ lint.linters_by_ft = {
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  desc = "Lint on save",
   callback = function()
     lint.try_lint(nil, { ignore_errors = true })
   end,

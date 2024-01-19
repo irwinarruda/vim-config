@@ -52,7 +52,7 @@ return packer.startup(function(use)
   -- If not working, do :checkhealth telescope to download the other plugins
   use({
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.x",
+    branch = "0.1.x",
     requires = { { "nvim-lua/plenary.nvim" } },
   })
   -- treesitter configuration
@@ -101,6 +101,23 @@ return packer.startup(function(use)
   use("lewis6991/gitsigns.nvim")
   -- Themes
   use("dracula/vim")
+  -- Meme
+  --[[
+  use("alanfortlink/blackjack.nvim", {
+    run = function()
+      require("blackjack").setup({
+        card_style = "large",
+        suit_style = "black",
+        scores_path = "~/.config/blackjack/scores.json",
+        keybindings = {
+          ["next"] = "j",
+          ["finish"] = "k",
+          ["quit"] = "q",
+        },
+      })
+    end,
+  })
+  ]]
 
   if packer_bootstrap then
     require("packer").sync()

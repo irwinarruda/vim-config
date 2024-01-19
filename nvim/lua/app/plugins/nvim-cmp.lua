@@ -7,7 +7,7 @@ if not s1 or not s2 then
 end
 
 require("luasnip/loaders/from_vscode").lazy_load()
-vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = "menu,menuone"
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({

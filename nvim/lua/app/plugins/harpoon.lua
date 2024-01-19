@@ -3,7 +3,11 @@ if not s1 then
   return
 end
 
-harpoon:setup()
+local harpoon_select = function(index)
+  return function()
+    harpoon:list():select(index)
+  end
+end
 
 local keymap = vim.keymap
 keymap.set("n", "<leader>a", function()
@@ -13,21 +17,9 @@ keymap.set("n", "<leader><Tab>", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
-keymap.set("n", "<leader>1", function()
-  harpoon:list():select(1)
-end)
-keymap.set("n", "<leader>2", function()
-  harpoon:list():select(2)
-end)
-keymap.set("n", "<leader>3", function()
-  harpoon:list():select(3)
-end)
-keymap.set("n", "<leader>4", function()
-  harpoon:list():select(4)
-end)
-keymap.set("n", "<leader>5", function()
-  harpoon:list():select(5)
-end)
-keymap.set("n", "<leader>6", function()
-  harpoon:list():select(6)
-end)
+keymap.set("n", "<leader>1", harpoon_select(1))
+keymap.set("n", "<leader>2", harpoon_select(2))
+keymap.set("n", "<leader>3", harpoon_select(3))
+keymap.set("n", "<leader>4", harpoon_select(4))
+keymap.set("n", "<leader>5", harpoon_select(5))
+keymap.set("n", "<leader>6", harpoon_select(6))

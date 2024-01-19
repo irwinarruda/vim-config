@@ -39,3 +39,11 @@ opt.signcolumn = "yes"
 opt.scrolloff = 10
 opt.updatetime = 50
 opt.colorcolumn = "80"
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Hightlight selection on yank",
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 80 })
+  end,
+})
