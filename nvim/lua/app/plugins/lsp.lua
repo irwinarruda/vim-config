@@ -175,6 +175,7 @@ conform.setup({
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("ConformFormatOnSave", { clear = false }),
   desc = "Conform format on save",
   pattern = "*",
   callback = function(args)
@@ -202,6 +203,7 @@ lint.linters_by_ft = {
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  group = vim.api.nvim_create_augroup("LintOnSave", { clear = false }),
   desc = "Lint on save",
   callback = function()
     lint.try_lint(nil, { ignore_errors = true })

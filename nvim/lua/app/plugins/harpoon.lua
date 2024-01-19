@@ -3,6 +3,8 @@ if not s1 then
   return
 end
 
+harpoon:setup()
+
 local harpoon_select = function(index)
   return function()
     harpoon:list():select(index)

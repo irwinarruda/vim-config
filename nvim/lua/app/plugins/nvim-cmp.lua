@@ -1,12 +1,11 @@
 local s1, cmp = pcall(require, "cmp")
 local s2, luasnip = pcall(require, "luasnip")
--- local s3, lspkind = pcall(require, "lspkind")
 
 if not s1 or not s2 then
   return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 vim.opt.completeopt = "menu,menuone"
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -33,6 +32,5 @@ cmp.setup({
     { name = "buffer" }, -- text within current buffer
     { name = "path" }, -- file system paths
   }),
-  -- configure lspkind for vs-code like icons
   formatting = require("lsp-zero").cmp_format(),
 })

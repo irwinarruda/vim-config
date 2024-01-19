@@ -26,6 +26,7 @@ vim.keymap.set("n", "<leader>e", function()
 end)
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  group = vim.api.nvim_create_augroup("NvimTreeOnOpen", { clear = false }),
   desc = "Find file on open",
   pattern = "*",
   callback = function()

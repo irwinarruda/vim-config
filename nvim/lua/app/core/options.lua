@@ -38,9 +38,10 @@ opt.splitbelow = true
 opt.signcolumn = "yes"
 opt.scrolloff = 10
 opt.updatetime = 50
-opt.colorcolumn = "80"
+opt.colorcolumn = { "80", "120" }
 
 vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = false }),
   desc = "Hightlight selection on yank",
   pattern = "*",
   callback = function()
