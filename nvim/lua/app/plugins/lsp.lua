@@ -135,14 +135,14 @@ require("mason-lspconfig").setup({
               recommendedVariantOrder = "warning",
             },
             validate = true,
-            experimental = {
+            --[[ experimental = {
               classRegex = {
                 {
                   "tv\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
                   "[\"'`](.*?)[\"'`]",
                 },
               },
-            },
+            }, ]]
           },
         },
       })
