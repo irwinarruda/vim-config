@@ -21,6 +21,7 @@ nvimtreesitter.setup({
     "java",
     "json",
     "xml",
+    "go",
   },
   sync_install = false,
   autoinstall = true,

@@ -93,7 +93,7 @@ return packer.startup(function(use)
   use({
     "microsoft/vscode-js-debug",
     opt = true,
-    run = "git reset --hard && npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+    run = "git reset --hard && git clean -f && npm install && npx gulp vsDebugServerBundle && mv dist out",
   })
   use("folke/neodev.nvim")
   -- Github
