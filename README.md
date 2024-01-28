@@ -66,7 +66,11 @@ if has('nvim')
     hi! link @punctuation.special DraculaFg
     hi! link @comment DraculaComment
     hi! link @constant DraculaPurple
+    hi! link @constant.tsx DraculaPurple
     hi! link @constant.builtin DraculaPurple
+    hi! link @variable DraculaPurple
+    hi! link @variable.member DraculaPurple
+    hi! link @variable.builtin DraculaPurple
     hi! link @constant.macro DraculaPurple
     hi! link @string.regex DraculaRed
     hi! link @string DraculaYellow
@@ -86,7 +90,6 @@ if has('nvim')
     hi! link @field DraculaFg
     hi! link @property DraculaFg
     hi! link @constructor DraculaPink
-    hi! link @constructor.tsx DraculaCyan
     hi! link @conditional DraculaPink
     hi! link @repeat DraculaPink
     hi! link @label DraculaPink
@@ -101,11 +104,13 @@ if has('nvim')
     hi! link @storageClass DraculaCyan
     hi! link @structure DraculaCyan
     hi! link @include DraculaPink
-    hi! link @variable DraculaPurple
-    hi! link @variable.builtin DraculaPurpleItalic
     hi! link @tag DraculaPink
+    hi! link @tag.tsx DraculaCyan
+    hi! link @tag.javascript DraculaCyan
     hi! link @tag.delimiter DraculaFg
     hi! link @tag.attribute DraculaGreen
+    hi! link @tag.builtin DraculaPink
+    hi! link @module DraculaCyan
 
     " LSP
     hi! link @lsp.type.class DraculaCyan
@@ -114,7 +119,7 @@ if has('nvim')
     hi! link @lsp.type.method DraculaGreen
     hi! link @lsp.type.struct DraculaCyan
     hi! link @lsp.type.type DraculaCyanItalic
-    hi! link @lsp.type.typeParameter DraculaFg
+    hi! link @lsp.type.typeParameter DraculaCyanItalic
     hi! link @lsp.type.boolean DraculaPurple
     hi! link @lsp.type.builtinType DraculaCyan
     hi! link @lsp.type.comment DraculaComment
@@ -151,9 +156,12 @@ if has('nvim')
     hi! link @lsp.typemod.type.defaultLibrary DraculaCyanItalic
     hi! link @lsp.typemod.typeAlias.defaultLibrary DraculaPink
     hi! link @lsp.typemod.variable.callable DraculaGreen
-    hi! link @lsp.typemod.variable.defaultLibrary DraculaFg
+    hi! link @lsp.typemod.variable.globalScope DraculaPurple
     hi! link @lsp.typemod.variable.injected DraculaPurple
     hi! link @lsp.typemod.variable.static DraculaPurple
+    hi! link @lsp.mod.variable.builtin DraculaGreen
+    hi! link @lsp.mod.functionScope DraculaGreen
+    hi! link @lsp.mod.parameter.functionScope DraculaGreen
   endif
 else
   hi! link SpecialKey DraculaSubtle
