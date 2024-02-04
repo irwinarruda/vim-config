@@ -16,6 +16,7 @@ nvimtreesitter.setup({
     "typescript",
     "javascript",
     "tsx",
+    "rust",
     "svelte",
     "vue",
     "java",
