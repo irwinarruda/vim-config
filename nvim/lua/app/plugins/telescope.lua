@@ -52,7 +52,7 @@ keymap.set("n", "<leader>fg", function()
 end) -- find string in current working directory as you type
 
 local telescope_lsp_keymaps = function(opts)
-  local motions = require("app.core.motions")
+  local motions = require("app.libs.motions")
   vim.keymap.set("n", motions:get("lsp_definitions"), function()
     builtin.lsp_definitions()
   end, { noremap = true, buffer = opts.buffer })

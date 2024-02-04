@@ -3,7 +3,7 @@ if not s1 then
   return
 end
 
-local motions = require("app.core.motions")
+local motions = require("app.libs.motions")
 comment.setup({
   toggler = {
     line = motions:get("comment"),

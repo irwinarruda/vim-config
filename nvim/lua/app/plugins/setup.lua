@@ -100,7 +100,7 @@ return packer.startup(function(use)
   use("github/copilot.vim")
   use("lewis6991/gitsigns.nvim")
   -- Themes
-  use("dracula/vim")
+  -- use("dracula/vim")
   -- Meme
   --[[
   use("alanfortlink/blackjack.nvim", {

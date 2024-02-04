@@ -30,7 +30,7 @@
   {
     "command": {
       "action": "sendInput",
-      "input": "^dia"
+      "input": "^hdi"
     },
     "keys": "ctrl+shift+."
   },

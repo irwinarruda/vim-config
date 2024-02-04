@@ -1,6 +1,8 @@
 require("app.core.colorscheme")
 require("app.core.keymaps")
 require("app.core.options")
+require("app.libs.motions")
+require("app.libs.os")
 require("app.plugins.setup")
 require("app.plugins.autoclose")
 require("app.plugins.comment")

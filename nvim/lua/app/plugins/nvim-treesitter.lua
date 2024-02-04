@@ -42,7 +42,7 @@ nvimtreesittercontext.setup({
 })
 nvimautotag.setup()
 
-local os = require("app.core.os")
+local os = require("app.libs.os")
 if os:is_windows() then
   local s4, nvimtreesitterinstall = pcall(require, "nvim-treesitter.install")
   if not s4 then

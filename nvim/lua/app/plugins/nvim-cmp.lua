@@ -8,7 +8,7 @@ end
 require("luasnip.loaders.from_vscode").lazy_load()
 vim.opt.completeopt = "menu,menuone"
 
-local motions = require("app.core.motions")
+local motions = require("app.libs.motions")
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
