@@ -33,19 +33,19 @@ keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
 -- Split windows
-keymap.set("n", "<leader>wl", "<C-w>v") -- split window right
-keymap.set("n", "<leader>wj", "<C-w>s") -- split window down
-keymap.set("n", "<leader>we", "<C-w>=") -- make split windows equal width & height
-keymap.set("n", "<leader>ww", ":close<CR>") -- close current split window
+keymap.set("n", "<leader>wl", "<C-w>v")                -- split window right
+keymap.set("n", "<leader>wj", "<C-w>s")                -- split window down
+keymap.set("n", "<leader>we", "<C-w>=")                -- make split windows equal width & height
+keymap.set("n", "<leader>ww", ":close<CR>")            -- close current split window
 keymap.set("n", "<C-+>", "<C-w>>", { noremap = true }) -- increment window width
 keymap.set("n", "<C-=>", "<C-w><", { noremap = true }) -- decrement window width
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 -- Tabs
-keymap.set("n", "<leader>tn", ":tabnew<CR>") -- open new tab
+keymap.set("n", "<leader>tn", ":tabnew<CR>")   -- open new tab
 keymap.set("n", "<leader>tc", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tl", ":tabn<CR>") --  go to next tab
-keymap.set("n", "<leader>th", ":tabp< R>") --  go to previous tab
+keymap.set("n", "<leader>tl", ":tabn<CR>")     --  go to next tab
+keymap.set("n", "<leader>th", ":tabp<CR>")     --  go to previous tab
 
 vim.g.VM_maps = {
   ["Find Under"] = "gb",

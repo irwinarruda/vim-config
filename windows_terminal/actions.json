@@ -1,0 +1,58 @@
+[
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^com"
+    },
+    "keys": "ctrl+;"
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^bco"
+    },
+    "keys": "ctrl+c+;"
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^esp"
+    },
+    "keys": "ctrl+space"
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^hov"
+    },
+    "keys": "ctrl+shift+comma"
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^dia"
+    },
+    "keys": "ctrl+shift+."
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^act"
+    },
+    "keys": "ctrl+."
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^def"
+    },
+    "keys": "ctrl+,"
+  },
+  {
+    "command": {
+      "action": "sendInput",
+      "input": "^ref"
+    },
+    "keys": "ctrl+m"
+  }
+]

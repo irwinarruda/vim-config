@@ -14,18 +14,19 @@ lsp.set_sign_icons({
 
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr, remap = false }
+  local motions = require("app.core.motions")
   require("app.plugins.telescope").telescope_lsp_keymaps(opts)
 
   local keymap = vim.keymap
-  keymap.set("n", "<C->>", function()
+  keymap.set("n", motions:get("lsp_diagnostic"), function()
     vim.diagnostic.open_float()
     vim.diagnostic.open_float()
   end, opts)
-  keymap.set("n", "<C-<>", function()
+  keymap.set("n", motions:get("lsp_hover"), function()
     vim.lsp.buf.hover()
     vim.lsp.buf.hover()
   end, opts)
-  keymap.set("n", "<C-.>", function()
+  keymap.set("n", motions:get("lsp_code_action"), function()
     vim.lsp.buf.code_action()
   end, opts)
   keymap.set("n", "<F2>", function()

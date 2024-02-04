@@ -3,13 +3,16 @@ if not s1 then
   return
 end
 
+local motions = require("app.core.motions")
+
+motions:get("comment")
 comment.setup({
   toggler = {
-    line = "<C-;>",
-    block = "<C-c><C-;>",
+    line = motions:get("comment"),
+    block = motions:get("block_comment"),
   },
   opleader = {
-    line = "<C-;>",
-    block = "<C-c><C-;>",
-  },
+    line = motions:get("comment"),
+    block = motions:get("block_comment"),
+  }
 })
