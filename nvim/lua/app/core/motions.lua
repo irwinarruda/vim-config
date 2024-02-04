@@ -5,7 +5,7 @@ local Motion = {}
 --- @param keymap table<string, string | table<OsOptions, string>>
 --- @return Motion
 function Motion:setup(keymap)
-  self.keymaps = keymaps
+  self.keymaps = keymap
   self.__index = self
   return self
 end
