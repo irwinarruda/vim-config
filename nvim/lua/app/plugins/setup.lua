@@ -35,6 +35,7 @@ return packer.startup(function(use)
   use("m4xshen/autoclose.nvim")
   -- Color Highlight for hex colors
   use("norcalli/nvim-colorizer.lua")
+  use("hiphish/rainbow-delimiters.nvim")
   -- File explorer
   use("nvim-tree/nvim-tree.lua")
   -- Tabs
@@ -101,24 +102,7 @@ return packer.startup(function(use)
   use("lewis6991/gitsigns.nvim")
   -- Themes
   -- use("dracula/vim")
-  -- Meme
-  --[[
-  use("alanfortlink/blackjack.nvim", {
-    run = function()
-      require("blackjack").setup({
-        card_style = "large",
-        suit_style = "black",
-        scores_path = "~/.config/blackjack/scores.json",
-        keybindings = {
-          ["next"] = "j",
-          ["finish"] = "k",
-          ["quit"] = "q",
-        },
-      })
-    end,
-  })
-  ]]
-
+  --
   if packer_bootstrap then
     require("packer").sync()
   end
