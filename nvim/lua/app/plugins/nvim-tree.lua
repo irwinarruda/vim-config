@@ -21,9 +21,9 @@ nvimtree.setup({
   },
 })
 
-vim.keymap.set("n", "<leader>e", function()
+vim.keymap.set("n", "<Space>e", function()
   nvimtreeapi.tree.toggle({ find_file = true, focus = false })
-end)
+end, { noremap = true })
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   group = vim.api.nvim_create_augroup("NvimTreeOnOpen", { clear = false }),

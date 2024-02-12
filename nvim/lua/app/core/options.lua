@@ -1,6 +1,6 @@
 local opt = vim.opt
 
--- line numbers
+-- line
 opt.relativenumber = true
 opt.number = true
 
@@ -45,6 +45,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Hightlight selection on yank",
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 80 })
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
   end,
 })
