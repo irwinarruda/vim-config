@@ -94,15 +94,16 @@ return packer.startup(function(use)
   use({
     "microsoft/vscode-js-debug",
     opt = true,
-    run = "git reset --hard && git clean -f && npm install && npx gulp vsDebugServerBundle && mv dist out",
+    run = "npm install && npx gulp vsDebugServerBundle && mv dist out",
   })
+  use("nvim-telescope/telescope-dap.nvim")
   use("folke/neodev.nvim")
   -- Github
   use("github/copilot.vim")
   use("lewis6991/gitsigns.nvim")
   -- Themes
   -- use("dracula/vim")
-  --
+
   if packer_bootstrap then
     require("packer").sync()
   end

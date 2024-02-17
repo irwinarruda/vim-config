@@ -10,9 +10,14 @@ vim.cmd([[
 ]])
 
 rainbow.setup({
+  query = {
+    javascript = "rainbow-parens",
+    tsx = "rainbow-parens",
+    typescript = "rainbow-parens",
+  },
   highlight = {
     "CustomRainbowYellow",
     "CustomRainbowPink",
     "CustomRainbowBlue",
-  }
+  },
 })
