@@ -8,35 +8,6 @@ if not s1 or not s2 or not s2 or not s3 or not s4 then
 end
 
 dapui.setup({
-  controls = {
-    element = "repl",
-    enabled = true,
-    icons = {
-      disconnect = "",
-      pause = "",
-      play = "",
-      run_last = "",
-      step_back = "",
-      step_into = "",
-      step_out = "",
-      step_over = "",
-      terminate = "",
-    },
-  },
-  element_mappings = {},
-  expand_lines = true,
-  floating = {
-    border = "single",
-    mappings = {
-      close = { "q", "<Esc>" },
-    },
-  },
-  force_buffers = true,
-  icons = {
-    collapsed = "",
-    current_frame = "",
-    expanded = "",
-  },
   layouts = {
     {
       elements = {
@@ -75,18 +46,6 @@ dapui.setup({
       size = 7,
     },
   },
-  mappings = {
-    edit = "e",
-    expand = { "<CR>", "<2-LeftMouse>" },
-    open = "o",
-    remove = "d",
-    repl = "r",
-    toggle = "t",
-  },
-  render = {
-    indent = 1,
-    max_value_lines = 100,
-  },
 })
 
 dapvscode.setup({
@@ -107,23 +66,17 @@ end)
 keymap.set("n", "<leader>du", function()
   dap.continue()
 end)
-keymap.set("n", "<leader>di", function()
-  dap.step_out()
-end)
-keymap.set("n", "<leader>do", function()
-  dap.step_into()
-end)
-keymap.set("n", "<leader>dp", function()
+keymap.set("n", "<leader>dj", function()
   dap.step_over()
 end)
-keymap.set("n", "<leader>d5", function()
-  dap.down()
+keymap.set("n", "<leader>di", function()
+  dap.step_into()
 end)
-keymap.set("n", "<leader>d6", function()
-  dap.up()
+keymap.set("n", "<leader>do", function()
+  dap.step_out()
 end)
-keymap.set("n", "<leader>d7", function()
-  dap.run_last()
+keymap.set("n", "<leader>dh", function()
+  dap.resttart()
 end)
 
 vim.fn.sign_define(

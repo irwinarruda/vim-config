@@ -10,7 +10,6 @@ local dropdown_config = {
   layout_config = {
     preview_cutoff = 1,
     width = function(_, max_columns, _)
-      print(max_columns)
       return math.min(max_columns, 90)
     end,
     height = function(_, _, max_lines)
