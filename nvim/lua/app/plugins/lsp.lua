@@ -56,6 +56,7 @@ require("mason-lspconfig").setup({
   ensure_installed = {
     "tsserver",
     "eslint",
+    "svelte",
     "html",
     "cssls",
     "tailwindcss",

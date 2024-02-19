@@ -6,7 +6,6 @@ local Motion = {}
 --- @return Motion
 function Motion:setup(keymap)
   self.keymaps = keymap
-  self.__index = self
   return self
 end
 
