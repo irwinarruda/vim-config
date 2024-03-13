@@ -46,11 +46,9 @@ local builtin = require("telescope.builtin")
 local keymap = vim.keymap
 keymap.set("n", "<leader>fo", builtin.find_files) -- find files within current working directory, respects .gitignore
 keymap.set("n", "<leader>fp", builtin.git_files) -- find files in git
+keymap.set("n", "<leader>fg", builtin.git_status) -- find in changed files
 keymap.set("n", "<leader>ff", builtin.live_grep) -- find string in current working directory as you type
 keymap.set("n", "<leader>fb", builtin.buffers) -- find string in current working directory as you type
-keymap.set("n", "<leader>fg", function()
-  builtin.grep_string({ search = vim.fn.input("Grep > ") })
-end) -- find string in current working directory as you type
 
 local telescope_lsp_keymaps = function(opts)
   local motions = require("app.libs.motions")

@@ -63,6 +63,7 @@ require("mason-lspconfig").setup({
     "rust_analyzer",
     "lua_ls",
     "jsonls",
+    "gopls",
   },
   handlers = {
     lsp.default_setup,
@@ -105,10 +106,17 @@ require("mason-lspconfig").setup({
                 fileMatch = { "tsconfig*.json" },
                 url = "https://json.schemastore.org/tsconfig.json",
               },
-
               {
                 fileMatch = { "tauri.conf.json" },
                 url = "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
+              },
+              {
+                fileMatch = { ".prettierrc", ".prettierrc.json", ".prettierrc.json5" },
+                url = "https://json.schemastore.org/prettierrc",
+              },
+              {
+                fileMatch = { ".eslintrc.json" },
+                url = "https://json.schemastore.org/eslintrc",
               },
             },
           },

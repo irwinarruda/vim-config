@@ -6,6 +6,7 @@ if not s1 or not s2 or not s3 then
   return
 end
 
+---@diagnostic disable-next-line: missing-fields
 nvimtreesitter.setup({
   ensure_installed = {
     "c",
