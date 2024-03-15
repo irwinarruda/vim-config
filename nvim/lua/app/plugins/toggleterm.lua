@@ -6,6 +6,10 @@ end
 toggleterm.setup({
   open_mapping = "<leader>t",
   direction = "float",
+  start_in_insert = true,
+  hide_numbers = false,
+  insert_mappings = false,
+  terminal_mappings = false,
 })
 
-vim.keymap.set("n", "<leader>'", "<CMD>tabn<CR>")
+vim.keymap.set("t", "<C-q>", "<cmd>ToggleTerm<cr>", { silent = true })

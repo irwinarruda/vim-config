@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 
 -- Terminal
-keymap.set("t", "<C-Space>", "<C-\\><C-n>", { silent = true })
+keymap.set("t", "<ESC>", "<C-\\><C-n>", { silent = true })
 -- Lines
 keymap.set("n", "<leader>o", "o<Esc>")
 keymap.set("n", "<leader>O", "O<Esc>")
