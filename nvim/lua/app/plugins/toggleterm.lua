@@ -5,7 +5,7 @@ end
 
 toggleterm.setup({
   open_mapping = "<leader>t",
-  direction = "tab",
+  direction = "float",
 })
 
 vim.keymap.set("n", "<leader>'", "<CMD>tabn<CR>")
