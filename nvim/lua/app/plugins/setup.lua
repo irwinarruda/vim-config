@@ -31,6 +31,7 @@ return packer.startup(function(use)
   use("szw/vim-maximizer")
   -- Comment code
   use("numToStr/Comment.nvim")
+  use("folke/todo-comments.nvim")
   -- Autoclose
   use("m4xshen/autoclose.nvim")
   -- Color Highlight for hex colors
@@ -101,6 +102,10 @@ return packer.startup(function(use)
   -- Github
   use("github/copilot.vim")
   use("lewis6991/gitsigns.nvim")
+  -- Identing line
+  use("echasnovski/mini.indentscope")
+  -- Terminal
+  use("akinsho/toggleterm.nvim")
   -- Themes
   -- use("dracula/vim")
 

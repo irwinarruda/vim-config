@@ -41,11 +41,6 @@ keymap.set("n", "<M-->", "<C-w>>", { noremap = true }) -- increment window width
 keymap.set("n", "<M-=>", "<C-w><", { noremap = true }) -- decrement window width
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
--- Tabs
-keymap.set("n", "<leader>tn", ":tabnew<CR>") -- open new tab
-keymap.set("n", "<leader>tc", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tl", ":tabn<CR>") --  go to next tab
-keymap.set("n", "<leader>th", ":tabp<CR>") --  go to previous tab
 
 keymap.set("n", "H", ":bp<CR>")
 keymap.set("n", "L", ":bn<CR>")

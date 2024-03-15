@@ -9,7 +9,7 @@ end
 -- dracula_pro_van_helsing
 vim.cmd("syntax enable")
 vim.cmd("let g:dracula_colorterm = 0")
-vim.cmd("colorscheme dracula_pro")
+vim.cmd("colorscheme dracula_pro_van_helsing")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.cmd([[
@@ -139,6 +139,8 @@ vim.cmd([[
   hi! link @lsp.typemod.struct.defaultLibrary DraculaCyan
   hi! link @lsp.typemod.type.defaultLibrary DraculaCyanItalic
   hi! link @lsp.typemod.typeAlias.defaultLibrary DraculaPink
+  hi! link @lsp.typemod.member.async DraculaGreen
+  hi! link @lsp.typemod.member.declaration DraculaGreen
   hi! link @lsp.typemod.function.declaration DraculaGreen
   hi! link @lsp.typemod.function.readonly DraculaGreen
   hi! link @lsp.typemod.variable.callable DraculaGreen
