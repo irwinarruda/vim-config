@@ -12,6 +12,8 @@ vim.cmd([[
 rainbow.setup({
   query = {
     svelte = "rainbow-parens",
+    vue = "rainbow-parens",
+    html = "rainbow-parens",
     javascript = "rainbow-parens",
     tsx = "rainbow-parens",
     typescript = "rainbow-parens",

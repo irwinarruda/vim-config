@@ -14,9 +14,12 @@ nvimtreesitter.setup({
     "vim",
     "vimdoc",
     "html",
+    "css",
+    "scss",
     "typescript",
     "javascript",
     "tsx",
+    "jsdoc",
     "rust",
     "svelte",
     "vue",
@@ -35,7 +38,7 @@ nvimtreesitter.setup({
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 })
 
@@ -46,9 +49,6 @@ nvimautotag.setup()
 
 local os = require("app.libs.os")
 if os:is_windows() then
-  local s4, nvimtreesitterinstall = pcall(require, "nvim-treesitter.install")
-  if not s4 then
-    return
-  end
+  local nvimtreesitterinstall = require("nvim-treesitter.install")
   nvimtreesitterinstall.compilers = { "clang" }
 end

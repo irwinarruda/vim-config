@@ -37,7 +37,9 @@ return packer.startup(function(use)
   -- Color Highlight for hex colors
   use("norcalli/nvim-colorizer.lua")
   use("hiphish/rainbow-delimiters.nvim")
-  -- File explorer
+  -- File explorer | Status Line
+  use("nvim-lualine/lualine.nvim")
+  use("nvim-tree/nvim-web-devicons")
   use("nvim-tree/nvim-tree.lua")
   -- Tabs
   use({
@@ -47,9 +49,6 @@ return packer.startup(function(use)
   })
   -- Undo History
   use("mbbill/undotree")
-  -- Statusline
-  use("nvim-lualine/lualine.nvim")
-  use("kyazdani42/nvim-web-devicons")
   -- Fuzzy finding w/ telescope
   -- If not working, do :checkhealth telescope to download the other plugins
   use({
@@ -106,6 +105,8 @@ return packer.startup(function(use)
   use("echasnovski/mini.indentscope")
   -- Terminal
   use("akinsho/toggleterm.nvim")
+  -- Template Strings
+  use("axelvc/template-string.nvim")
   -- Themes
   -- use("dracula/vim")
 

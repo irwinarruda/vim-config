@@ -54,15 +54,18 @@ lsp.on_attach(on_attach)
 require("mason").setup({})
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "tsserver",
+    "dockerls",
     "eslint",
-    "svelte",
     "html",
     "cssls",
     "tailwindcss",
-    "rust_analyzer",
-    "lua_ls",
+    "tsserver",
+    "svelte",
+    "volar",
+    "vuels",
     "jsonls",
+    "lua_ls",
+    "rust_analyzer",
     "gopls",
   },
   handlers = {
@@ -171,6 +174,7 @@ conform.setup({
     javascriptreact = { "prettier" },
     typescriptreact = { "prettier" },
     svelte = { "prettier" },
+    vue = { "prettier" },
     css = { "prettier" },
     html = { "prettier" },
     json = { "prettier" },
@@ -207,6 +211,7 @@ lint.linters_by_ft = {
   javascriptreact = { "eslint" },
   typescriptreact = { "eslint" },
   svelte = { "eslint" },
+  vue = { "eslint" },
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

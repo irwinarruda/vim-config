@@ -9,7 +9,7 @@ end
 -- dracula_pro_van_helsing
 vim.cmd("syntax enable")
 vim.cmd("let g:dracula_colorterm = 0")
-vim.cmd("colorscheme dracula_pro_van_helsing")
+vim.cmd("colorscheme dracula_pro_blade")
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.cmd([[
@@ -63,7 +63,8 @@ vim.cmd([[
   hi! link @boolean DraculaPurple
   hi! link @float DraculaPurple
   hi! link @annotation DraculaPink
-  hi! link @attribute DraculaGreen
+  hi! link @attribute DraculaFg
+  " hi! link @attribute DraculaGreen
   hi! link @attribute.builtin DraculaGreen
   hi! link @namespace DraculaCyanItalic
   hi! link @parameter DraculaOrangeItalic
