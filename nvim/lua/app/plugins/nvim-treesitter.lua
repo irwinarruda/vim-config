@@ -14,8 +14,6 @@ nvimtreesitter.setup({
     "vim",
     "vimdoc",
     "html",
-    "css",
-    "scss",
     "typescript",
     "javascript",
     "tsx",
@@ -38,7 +36,8 @@ nvimtreesitter.setup({
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = false,
+    disable = { "css", "scss" },
   },
 })
 

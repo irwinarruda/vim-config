@@ -58,3 +58,7 @@ gitsigns.setup({
     -- keymap.set({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end,
 })
+
+vim.cmd([[
+  hi! GitSignsCurrentLineBlame guifg=#ffffff
+]])

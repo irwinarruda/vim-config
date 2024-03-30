@@ -4,9 +4,9 @@ if not s then
 end
 
 vim.cmd([[
-  highlight CustomRainbowYellow guifg=#FFD700
-  highlight CustomRainbowPink guifg=#DA70D6
-  highlight CustomRainbowBlue guifg=#179FFF
+  hi! CustomRainbowYellow guifg=#FFD700
+  hi! CustomRainbowPink guifg=#DA70D6
+  hi! CustomRainbowBlue guifg=#179FFF
 ]])
 
 rainbow.setup({

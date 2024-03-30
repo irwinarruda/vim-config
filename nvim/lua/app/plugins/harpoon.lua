@@ -8,6 +8,7 @@ harpoon:setup()
 local harpoon_select = function(index)
   return function()
     harpoon:list():select(index)
+    vim.cmd("normal! zz")
   end
 end
 
