@@ -122,6 +122,7 @@ M.toggle_unit = function()
   local cursor = vim.api.nvim_win_get_cursor(0)
   local cursor_line = cursor[1]
   local cursor_col = cursor[2]
+
   if not is_insert_mode() then
     cursor_col = cursor_col + 1
   end

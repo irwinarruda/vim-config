@@ -7,6 +7,9 @@ harpoon:setup()
 
 local harpoon_select = function(index)
   return function()
+    if require("app.plugins.toggleterm").is_terminals_open() then
+      return
+    end
     harpoon:list():select(index)
     vim.cmd("normal! zz")
   end

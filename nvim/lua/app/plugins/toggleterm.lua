@@ -3,6 +3,10 @@ if not s1 then
   return
 end
 
+local function is_terminals_open()
+  return require("toggleterm.ui").find_open_windows()
+end
+
 toggleterm.setup({
   open_mapping = "<leader>t",
   direction = "float",
@@ -13,3 +17,7 @@ toggleterm.setup({
 })
 
 vim.keymap.set("t", "<C-q>", "<cmd>ToggleTerm<cr>", { silent = true })
+
+return {
+  is_terminals_open = is_terminals_open
+}
