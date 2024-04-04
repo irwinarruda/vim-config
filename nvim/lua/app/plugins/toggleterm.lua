@@ -10,7 +10,7 @@ end
 toggleterm.setup({
   open_mapping = "<leader>t",
   direction = "float",
-  start_in_insert = true,
+  start_in_insert = false,
   hide_numbers = false,
   insert_mappings = false,
   terminal_mappings = false,
@@ -19,5 +19,5 @@ toggleterm.setup({
 vim.keymap.set("t", "<C-q>", "<cmd>ToggleTerm<cr>", { silent = true })
 
 return {
-  is_terminals_open = is_terminals_open
+  is_terminals_open = is_terminals_open,
 }

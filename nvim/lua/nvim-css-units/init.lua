@@ -1,7 +1,7 @@
 --- @return boolean
 local function is_insert_mode()
   local mode = vim.api.nvim_get_mode().mode
-  return mode == 'i' or mode == 'ic' or mode == 'ix' or mode == 'R'
+  return mode == "i" or mode == "ic" or mode == "ix" or mode == "R"
 end
 
 --- @param num number

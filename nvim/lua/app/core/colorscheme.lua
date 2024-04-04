@@ -1,17 +1,14 @@
-local s1, _ = pcall(vim.cmd, "packadd! dracula_pro")
-if not s1 then
-  return
-end
+-- dracula_pro
 -- dracula_pro_blade
 -- dracula_pro_buffy
 -- dracula_pro_lincoln
 -- dracula_pro_morbius
 -- dracula_pro_van_helsing
+vim.cmd("packadd! dracula_pro")
 vim.cmd("syntax enable")
 vim.cmd("let g:dracula_colorterm = 0")
-vim.cmd("colorscheme dracula_pro_van_helsing")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.cmd("colorscheme dracula_pro")
+vim.cmd("set background=dark")
 vim.cmd([[
   hi! link SpecialKey DraculaRed
   hi! link LspReferenceText DraculaSelection
@@ -156,4 +153,14 @@ vim.cmd([[
   hi! link @lsp.mod.parameter.functionScope DraculaGreen
 ]])
 
+if vim.g.neovide then
+  vim.o.guifont = "FiraCode Nerd Font Mono:h22"
+  vim.g.neovide_cursor_animation_length = 0.10
+  vim.g.neovide_cursor_trail_size = 0.5
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
+  vim.g.neovide_cursor_vfx_mode = "ripple"
+else
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+end
 -- vim.highlight.priorities.semantic_tokens = 95

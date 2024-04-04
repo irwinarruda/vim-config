@@ -3,14 +3,14 @@ if not s1 then
   return
 end
 
-local motions = require("app.libs.motions")
+local os = require("nvim-os-persist")
 comment.setup({
   toggler = {
-    line = motions:get("comment"),
-    block = motions:get("block_comment"),
+    line = os.keymap("comment"),
+    block = os.keymap("block_comment"),
   },
   opleader = {
-    line = motions:get("comment"),
-    block = motions:get("block_comment"),
-  }
+    line = os.keymap("comment"),
+    block = os.keymap("block_comment"),
+  },
 })

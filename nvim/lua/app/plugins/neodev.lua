@@ -5,5 +5,8 @@ if not s1 then
 end
 
 neodev.setup({
-  library = { plugins = { "nvim-dap-ui", "nvim-treesitter", "plenary.nvim", "telescope.nvim" }, types = true },
+  library = {
+    plugins = { "nvim-dap-ui", "nvim-treesitter", "plenary.nvim", "telescope.nvim", "lspsaga.nvim" },
+    types = true,
+  },
 })

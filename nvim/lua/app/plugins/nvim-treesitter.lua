@@ -46,7 +46,7 @@ nvimtreesittercontext.setup({
 })
 nvimautotag.setup()
 
-local os = require("app.libs.os")
+local os = require("nvim-os-persist")
 if os:is_windows() then
   local nvimtreesitterinstall = require("nvim-treesitter.install")
   nvimtreesitterinstall.compilers = { "clang" }

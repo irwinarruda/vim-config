@@ -41,6 +41,8 @@ return packer.startup(function(use)
   use("nvim-lualine/lualine.nvim")
   use("nvim-tree/nvim-web-devicons")
   use("nvim-tree/nvim-tree.lua")
+  use("stevearc/dressing.nvim")
+  use("nvimdev/lspsaga.nvim")
   -- Tabs
   use({
     "theprimeagen/harpoon",
