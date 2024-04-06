@@ -21,16 +21,16 @@ cmp.setup({
     ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select), -- previous suggestion
     ["<C-j>"] = cmp.mapping.select_next_item(cmp_select), -- next suggestion
     [os.motion("cmp_complete")] = cmp.mapping.complete(), -- show completion suggestions
-    ["<C-q>"] = cmp.mapping.abort(), -- close completion window
+    ["<C-q>"] = cmp.mapping.abort(),                      -- close completion window
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }),
   -- sources for autocompletion
   sources = cmp.config.sources({
     { name = "nvim_lsp" }, -- lsp
     { name = "nvim_lua" }, -- lsp lua
-    { name = "luasnip" }, -- snippets
-    { name = "buffer" }, -- text within current buffer
-    { name = "path" }, -- file system paths
+    { name = "luasnip" },  -- snippets
+    { name = "buffer" },   -- text within current buffer
+    { name = "path" },     -- file system paths
   }),
   formatting = require("lsp-zero").cmp_format(),
 })

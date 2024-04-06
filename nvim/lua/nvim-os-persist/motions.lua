@@ -18,7 +18,7 @@ function Motions:get(key)
   if type(maps) == "string" then
     return maps
   end
-  if utils.Os:is_windows() then
+  if utils.Os:is_windows() and not vim.g.neovide then
     return maps.windows
   end
   return maps.default

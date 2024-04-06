@@ -154,7 +154,7 @@ vim.cmd([[
 ]])
 
 if vim.g.neovide then
-  vim.o.guifont = "FiraCode Nerd Font Mono:h22"
+  vim.o.guifont = "FiraCode Nerd Font Mono:h18"
   vim.g.neovide_cursor_animation_length = 0.10
   vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
