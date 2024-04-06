@@ -159,6 +159,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_trail_size = 0.5
   vim.g.neovide_cursor_vfx_mode = "pixiedust"
   vim.g.neovide_cursor_vfx_mode = "ripple"
+  vim.g.neovide_input_macos_alt_is_meta = false
 else
   vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

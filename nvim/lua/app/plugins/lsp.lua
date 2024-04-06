@@ -14,40 +14,40 @@ lsp.set_sign_icons({
 
 local on_attach = function(_, bufnr)
   local opts = { buffer = bufnr, remap = false }
-  local os = require("nvim-os-persist")
+  local os = require("app.plugins.nvim-os-persist")
   require("app.plugins.telescope").telescope_lsp_keymaps(opts)
 
   local keymap = vim.keymap
-  keymap.set("n", os.keymap("lsp_hover_diagnostic"), function()
+  keymap.set("n", os.motion("lsp_hover_diagnostic"), function()
     vim.diagnostic.open_float()
     vim.diagnostic.open_float()
   end, opts)
-  keymap.set("n", os.keymap("lsp_hover"), function()
+  keymap.set("n", os.motion("lsp_hover"), function()
     vim.lsp.buf.hover()
     vim.lsp.buf.hover()
   end, opts)
-  -- keymap.set("n", os.keymap("lsp_code_action"), function()
+  -- keymap.set("n", os.motion("lsp_code_action"), function()
   --   vim.lsp.buf.code_action()
   -- end, opts)
-  keymap.set("n", os.keymap("lsp_code_action"), "<cmd>Lspsaga code_action<cr>", opts)
-  keymap.set("n", os.keymap("lsp_rename"), function()
+  keymap.set("n", os.motion("lsp_code_action"), "<cmd>Lspsaga code_action<cr>", opts)
+  keymap.set("n", os.motion("lsp_rename"), function()
     vim.lsp.buf.rename()
   end, opts)
-  keymap.set("n", os.keymap("lsp_workspace_symbol"), function()
+  keymap.set("n", os.motion("lsp_workspace_symbol"), function()
     vim.lsp.buf.workspace_symbol("")
   end, opts)
-  keymap.set("n", os.keymap("lsp_goto_next"), function()
+  keymap.set("n", os.motion("lsp_goto_next"), function()
     vim.diagnostic.goto_next()
   end, opts)
-  keymap.set("n", os.keymap("lsp_goto_prev"), function()
+  keymap.set("n", os.motion("lsp_goto_prev"), function()
     vim.diagnostic.goto_prev()
   end, opts)
-  keymap.set("i", os.keymap("lsp_signature_help"), function()
+  keymap.set("i", os.motion("lsp_signature_help"), function()
     vim.lsp.buf.signature_help()
   end, opts)
-  keymap.set("n", os.keymap("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
-  keymap.set("n", os.keymap("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
-  keymap.set("n", os.keymap("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
+  keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
+  keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
+  keymap.set("n", os.motion("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
 end
 
 lsp.on_attach(on_attach)
@@ -68,6 +68,7 @@ require("mason-lspconfig").setup({
     "lua_ls",
     "rust_analyzer",
     "gopls",
+    "pylsp",
   },
   handlers = {
     lsp.default_setup,

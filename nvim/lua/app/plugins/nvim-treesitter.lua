@@ -9,7 +9,6 @@ end
 ---@diagnostic disable-next-line: missing-fields
 nvimtreesitter.setup({
   ensure_installed = {
-    "c",
     "lua",
     "vim",
     "vimdoc",
@@ -25,6 +24,10 @@ nvimtreesitter.setup({
     "json",
     "xml",
     "go",
+    "python",
+    "regex",
+    "markdown",
+    "markdown_inline",
   },
   sync_install = false,
   autoinstall = true,

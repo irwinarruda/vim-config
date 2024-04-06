@@ -53,11 +53,11 @@ keymap.set("n", "<leader>ff", builtin.live_grep) -- find string in current worki
 keymap.set("n", "<leader>fb", builtin.buffers) -- find string in current working directory as you type
 
 local telescope_lsp_keymaps = function(opts)
-  local os = require("nvim-os-persist")
-  vim.keymap.set("n", os.keymap("lsp_definitions"), function()
+  local os = require("app.plugins.nvim-os-persist")
+  vim.keymap.set("n", os.motion("lsp_definitions"), function()
     builtin.lsp_definitions()
   end, { noremap = true, buffer = opts.buffer })
-  vim.keymap.set("n", os.keymap("lsp_references"), function()
+  vim.keymap.set("n", os.motion("lsp_references"), function()
     builtin.lsp_references()
   end, opts)
   vim.keymap.set("n", "<leader>.", function()

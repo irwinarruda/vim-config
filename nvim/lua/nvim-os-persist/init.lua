@@ -19,7 +19,7 @@ end
 
 --- @param key string
 --- @return string
-M.keymap = function(key)
+M.motion = function(key)
   return config.motion:get(key)
 end
 

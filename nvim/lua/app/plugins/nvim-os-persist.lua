@@ -51,3 +51,13 @@ os_persist.setup({
     },
   },
 })
+
+--- @param key string
+--- @return string
+local function motion(key)
+  return os_persist.motion(key)
+end
+
+return {
+  motion = motion,
+}

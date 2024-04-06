@@ -8,7 +8,7 @@ end
 require("luasnip.loaders.from_vscode").lazy_load()
 vim.opt.completeopt = "menu,menuone"
 
-local os = require("nvim-os-persist")
+local os = require("app.plugins.nvim-os-persist")
 
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
@@ -20,7 +20,7 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select), -- previous suggestion
     ["<C-j>"] = cmp.mapping.select_next_item(cmp_select), -- next suggestion
-    [os.keymap("cmp_complete")] = cmp.mapping.complete(), -- show completion suggestions
+    [os.motion("cmp_complete")] = cmp.mapping.complete(), -- show completion suggestions
     ["<C-q>"] = cmp.mapping.abort(), -- close completion window
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }),

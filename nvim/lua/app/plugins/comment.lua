@@ -3,14 +3,14 @@ if not s1 then
   return
 end
 
-local os = require("nvim-os-persist")
+local os = require("app.plugins.nvim-os-persist")
 comment.setup({
   toggler = {
-    line = os.keymap("comment"),
-    block = os.keymap("block_comment"),
+    line = os.motion("comment"),
+    block = os.motion("block_comment"),
   },
   opleader = {
-    line = os.keymap("comment"),
-    block = os.keymap("block_comment"),
+    line = os.motion("comment"),
+    block = os.motion("block_comment"),
   },
 })

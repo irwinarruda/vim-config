@@ -51,8 +51,10 @@ nvim_devicons.setup({
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 nvim_tree.setup({
+  reload_on_bufenter = false,
   view = {
-    preserve_window_proportions = false,
+    width = 30,
+    preserve_window_proportions = true,
   },
   actions = {
     open_file = {
@@ -65,7 +67,8 @@ nvim_tree.setup({
 })
 
 vim.keymap.set("n", "<Space>e", function()
-  nvim_tree_api.tree.toggle({ find_file = true, focus = false })
+  local nvimtree = require("nvim-tree.api")
+  nvimtree.tree.toggle({ find_file = true, focus = false })
 end, { noremap = true })
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
@@ -73,7 +76,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   desc = "Find file on open",
   pattern = "*",
   callback = function()
-    local nvim_tree = require("nvim-tree.api")
-    nvim_tree.tree.find_file({ open = false, focus = false })
+    local nvimtree = require("nvim-tree.api")
+    nvimtree.tree.find_file({ open = false, focus = false })
   end,
 })
