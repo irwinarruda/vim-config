@@ -1,16 +1,18 @@
-local s1, comment = pcall(require, "Comment")
-if not s1 then
-  return
-end
-
-local os = require("app.plugins.nvim-os-persist")
-comment.setup({
-  toggler = {
-    line = os.motion("comment"),
-    block = os.motion("block_comment"),
-  },
-  opleader = {
-    line = os.motion("comment"),
-    block = os.motion("block_comment"),
-  },
-})
+return {
+  "numToStr/Comment.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    local comment = require("Comment")
+    local os = require("app.plugins.nvim-os-persist")
+    comment.setup({
+      toggler = {
+        line = os.motion("comment"),
+        block = os.motion("block_comment"),
+      },
+      opleader = {
+        line = os.motion("comment"),
+        block = os.motion("block_comment"),
+      },
+    })
+  end,
+}

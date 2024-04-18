@@ -1,7 +1,11 @@
-local s1, lspsaga = pcall(require, "lspsaga")
-
-if not s1 then
-  return
-end
-
-lspsaga.setup({})
+return {
+  "nvimdev/lspsaga.nvim",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-tree/nvim-web-devicons",
+  },
+  config = function()
+    local lspsaga = require("lspsaga")
+    lspsaga.setup({})
+  end,
+}

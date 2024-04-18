@@ -1,56 +1,65 @@
-local s1, nvimtreesitter = pcall(require, "nvim-treesitter.configs")
-local s2, nvimtreesittercontext = pcall(require, "treesitter-context")
-local s3, nvimautotag = pcall(require, "nvim-ts-autotag")
-
-if not s1 or not s2 or not s3 then
-  return
-end
-
----@diagnostic disable-next-line: missing-fields
-nvimtreesitter.setup({
-  ensure_installed = {
-    "lua",
-    "vim",
-    "vimdoc",
-    "html",
-    "typescript",
-    "javascript",
-    "tsx",
-    "jsdoc",
-    "rust",
-    "svelte",
-    "vue",
-    "java",
-    "json",
-    "xml",
-    "go",
-    "python",
-    "regex",
-    "markdown",
-    "markdown_inline",
+return {
+  "nvim-treesitter/nvim-treesitter",
+  event = { "BufReadPre", "BufNewFile" },
+  build = ":TSUpdate",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter-context",
+    "windwp/nvim-ts-autotag",
   },
-  sync_install = false,
-  autoinstall = true,
-  autotag = {
-    enable = true,
-    enable_rename = true,
-    enable_close = true,
-    enable_close_on_slash = true,
-  },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-    disable = { "css", "scss" },
-  },
-})
+  config = function()
+    local nvimtreesitter = require("nvim-treesitter.configs")
+    local nvimtreesittercontext = require("treesitter-context")
+    local nvimautotag = require("nvim-ts-autotag")
 
-nvimtreesittercontext.setup({
-  multiline_threshold = 1,
-})
-nvimautotag.setup()
+    ---@diagnostic disable-next-line: missing-fields
+    nvimtreesitter.setup({
+      ensure_installed = {
+        "lua",
+        "vim",
+        "vimdoc",
+        "html",
+        "typescript",
+        "javascript",
+        "tsx",
+        "jsdoc",
+        "rust",
+        "svelte",
+        "vue",
+        "java",
+        "json",
+        "xml",
+        "go",
+        "gomod",
+        "python",
+        "regex",
+        "markdown",
+        "markdown_inline",
+      },
+      sync_install = false,
+      autoinstall = true,
+      autotag = {
+        enable = true,
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
+      },
+      indent = { enable = true },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+        disable = { "css", "scss" },
+      },
+    })
 
-local os = require("nvim-os-persist")
-if os:is_windows() then
-  local nvimtreesitterinstall = require("nvim-treesitter.install")
-  nvimtreesitterinstall.compilers = { "clang" }
-end
+    nvimtreesittercontext.setup({
+      multiline_threshold = 1,
+    })
+    nvimautotag.setup()
+
+    local os = require("nvim-os-persist")
+    if os:is_windows() then
+      local nvimtreesitterinstall = require("nvim-treesitter.install")
+      nvimtreesitterinstall.compilers = { "clang" }
+    end
+  end,
+}

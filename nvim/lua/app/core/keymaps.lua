@@ -21,8 +21,8 @@ keymap.set("v", "<leader>d", '"_d', { noremap = true })
 keymap.set("v", "<leader>c", '"_c', { noremap = true })
 keymap.set("n", "<leader>s", '"_s', { noremap = true })
 -- Move blocks of code
-keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
 keymap.set("v", ">", ">gv")
 keymap.set("v", "<", "<gv")
 keymap.set("v", "y", "y`]", { noremap = true })
@@ -33,17 +33,17 @@ keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
 -- Split windows
-keymap.set("n", "<leader>wl", "<C-w>v")                -- split window right
-keymap.set("n", "<leader>wj", "<C-w>s")                -- split window down
-keymap.set("n", "<leader>we", "<C-w>=")                -- make split windows equal width & height
-keymap.set("n", "<leader>ww", ":close<CR>")            -- close current split window
+keymap.set("n", "<leader>wl", "<C-w>v") -- split window right
+keymap.set("n", "<leader>wj", "<C-w>s") -- split window down
+keymap.set("n", "<leader>we", "<C-w>=") -- make split windows equal width & height
+keymap.set("n", "<leader>ww", ":close<CR>") -- close current split window
 keymap.set("n", "<M-->", "<C-w>>", { noremap = true }) -- increment window width
 keymap.set("n", "<M-=>", "<C-w><", { noremap = true }) -- decrement window width
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 
 -- Debug
-keymap.set("n", "<leader>xx", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
+keymap.set("n", "<leader><leader>w", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
 
 vim.g.VM_maps = {
   ["Find Under"] = "gb",

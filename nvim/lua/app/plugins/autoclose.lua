@@ -1,6 +1,8 @@
-local s1, autoclose = pcall(require, "autoclose")
-if not s1 then
-  return
-end
-
-autoclose.setup()
+return {
+  "m4xshen/autoclose.nvim",
+  event = { "InsertEnter" },
+  config = function()
+    local autoclose = require("autoclose")
+    autoclose.setup()
+  end,
+}

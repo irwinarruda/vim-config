@@ -133,11 +133,11 @@ function Globals:create_virt_text(ctx)
 end
 
 function Globals:show_virtual_text()
-  if not self.config.virt_text.enabled then
-    return
-  end
   if self.timer then
     vim.fn.timer_stop(self.timer)
+  end
+  if not self.config.virt_text.enabled then
+    return
   end
   local ctx = self:get_context()
   if ctx.row_values then
