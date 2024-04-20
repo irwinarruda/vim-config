@@ -11,9 +11,17 @@ return {
     local nvimtreesittercontext = require("treesitter-context")
     local nvimautotag = require("nvim-ts-autotag")
 
+    local os = require("nvim-os-persist")
+    if os:is_windows() then
+      local nvimtreesitterinstall = require("nvim-treesitter.install")
+      nvimtreesitterinstall.compilers = { "clang" }
+    end
+
     ---@diagnostic disable-next-line: missing-fields
     nvimtreesitter.setup({
       ensure_installed = {
+        "c",
+        "cpp",
         "lua",
         "vim",
         "vimdoc",
@@ -55,11 +63,5 @@ return {
       multiline_threshold = 1,
     })
     nvimautotag.setup()
-
-    local os = require("nvim-os-persist")
-    if os:is_windows() then
-      local nvimtreesitterinstall = require("nvim-treesitter.install")
-      nvimtreesitterinstall.compilers = { "clang" }
-    end
   end,
 }

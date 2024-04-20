@@ -10,6 +10,8 @@ else
   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
+local dracula_pro_path = vim.fn.stdpath("data") .. "/themes/dracula_pro"
+
 return {
   {
     "folke/tokyonight.nvim",
@@ -20,7 +22,7 @@ return {
     end,
   },
   {
-    dir = "~/.local/share/nvim/themes/dracula_pro",
+    dir = dracula_pro_path,
     priority = 1000,
     enabled = true,
     config = function()

@@ -2,9 +2,6 @@ return {
   {
     "microsoft/vscode-js-debug",
     build = [[
-      rm -rf opt &&
-      git reset --hard &&
-      git clean -f &&
       npm install --legacy-peer-deps &&
       npx gulp vsDebugServerBundle &&
       mv dist out
