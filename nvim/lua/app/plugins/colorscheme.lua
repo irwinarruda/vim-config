@@ -14,7 +14,7 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    enabled = true,
+    enabled = false,
     config = function()
       vim.cmd([[colorscheme tokyonight-night]])
     end,
@@ -22,7 +22,7 @@ return {
   {
     dir = "~/.local/share/nvim/themes/dracula_pro",
     priority = 1000,
-    enabled = false,
+    enabled = true,
     config = function()
       -- dracula_pro
       -- dracula_pro_blade
@@ -77,6 +77,7 @@ return {
       hi! link @variable DraculaFg
       hi! link @variable.member DraculaFg
       hi! link @variable.builtin DraculaPurple
+      hi! link @variable.parameter DraculaOrangeItalic
       hi! link @constant.macro DraculaPurple
       hi! link @string.regex DraculaRed
       hi! link @string DraculaYellow
@@ -96,6 +97,7 @@ return {
       hi! link @property.json DraculaCyan
       hi! link @conceal.json DraculaFg
       hi! link @constructor DraculaPink
+      hi! link @constructor.go DraculaCyan
       hi! link @conditional DraculaPink
       hi! link @repeat DraculaPink
       hi! link @label DraculaPink
@@ -118,6 +120,7 @@ return {
       hi! link @tag.attribute DraculaGreen
       hi! link @tag.builtin DraculaPink
       hi! link @module DraculaCyan
+      hi! link @module.go DraculaPurple
 
       " LSP
       hi! link @lsp.type.class DraculaCyan

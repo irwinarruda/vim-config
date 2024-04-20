@@ -52,7 +52,7 @@ return {
     nvim_tree.setup({
       reload_on_bufenter = false,
       view = {
-        width = 30,
+        width = 28,
         preserve_window_proportions = true,
       },
       actions = {
