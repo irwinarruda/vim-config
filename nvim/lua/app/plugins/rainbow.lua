@@ -18,6 +18,7 @@ return {
         javascript = "rainbow-parens",
         tsx = "rainbow-parens",
         typescript = "rainbow-parens",
+        templ = "rainbow-parens"
       },
       highlight = {
         "CustomRainbowYellow",

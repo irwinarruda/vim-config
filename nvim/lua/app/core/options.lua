@@ -49,3 +49,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
   end,
 })
+
+-- adding templ filetype for golang templates
+vim.filetype.add({ extension = { templ = "templ" } })

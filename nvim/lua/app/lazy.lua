@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({ { import = "app.plugins" } }, {
   checker = {
     enabled = true,
-    notify = true,
+    notify = false,
   },
   change_detection = {
     notify = false,

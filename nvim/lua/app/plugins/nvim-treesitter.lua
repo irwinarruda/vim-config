@@ -38,6 +38,7 @@ return {
         "xml",
         "go",
         "gomod",
+        "templ",
         "python",
         "regex",
         "markdown",
