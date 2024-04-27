@@ -5,7 +5,13 @@ return {
     local neodev = require("neodev")
     neodev.setup({
       library = {
-        plugins = { "nvim-dap-ui", "nvim-treesitter", "plenary.nvim", "telescope.nvim", "lspsaga.nvim" },
+        plugins = {
+          "nvim-dap-ui",
+          "nvim-treesitter",
+          "plenary.nvim",
+          "telescope.nvim",
+          "lspsaga.nvim",
+        },
         types = true,
       },
     })

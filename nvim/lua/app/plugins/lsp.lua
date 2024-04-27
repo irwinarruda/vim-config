@@ -65,6 +65,7 @@ return {
       require("mason").setup({})
       require("mason-lspconfig").setup({
         ensure_installed = {
+          "clangd",
           "dockerls",
           "eslint",
           "html",
@@ -84,6 +85,7 @@ return {
         handlers = {
           lsp.default_setup,
           tsserver = function()
+            -- Use for project wide diagnostics https://github.com/dmmulroy/tsc.nvim
             require("typescript-tools").setup({
               on_attach = on_attach,
               handlers = { lsp.default_setup },
@@ -169,6 +171,11 @@ return {
                 },
               },
             })
+          end,
+          clangd = function()
+            local default_config = require("lspconfig.server_configurations.clangd").default_config
+            default_config.capabilities.offsetEncoding = "utf-8"
+            require("lspconfig").clangd.setup(default_config)
           end,
         },
       })

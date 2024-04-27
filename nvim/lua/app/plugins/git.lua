@@ -32,7 +32,7 @@ return {
         end,
       })
       vim.cmd([[
-      hi! link GitSignsCurrentLineBlame DraculaFg
+        hi! link GitSignsCurrentLineBlame DraculaFg
       ]])
     end,
   },
