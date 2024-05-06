@@ -16,6 +16,21 @@ return {
         on_attach = function(bufnr)
           local keymap = vim.keymap
           local opts = { buffer = bufnr, remap = false }
+
+          keymap.set("n", "[g", function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "]g", bang = true })
+            else
+              gitsigns.nav_hunk("next")
+            end
+          end)
+          keymap.set("n", "]g", function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "[g", bang = true })
+            else
+              gitsigns.nav_hunk("prev")
+            end
+          end)
           keymap.set("n", "<leader>gr", gitsigns.reset_hunk, opts)
           keymap.set("n", "<leader>gp", function()
             gitsigns.preview_hunk()

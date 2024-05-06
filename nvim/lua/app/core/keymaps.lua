@@ -5,8 +5,8 @@ local keymap = vim.keymap
 -- Terminal
 keymap.set("t", "<ESC>", "<C-\\><C-n>", { silent = true })
 -- Lines
-keymap.set("n", "<leader>o", "o<Esc>")
-keymap.set("n", "<leader>O", "O<Esc>")
+keymap.set("n", "<leader>o", "o<Esc>k")
+keymap.set("n", "<leader>O", "O<Esc>k")
 -- Remove highlight
 keymap.set("n", "<leader><Esc>", ":nohlsearch<CR>")
 -- Increment and decrement

@@ -113,6 +113,7 @@ return {
           jsonls = function()
             require("lspconfig").jsonls.setup({
               on_attach = on_attach,
+              handlers = { lsp.default_setup },
               settings = {
                 json = {
                   schemas = {
@@ -160,14 +161,14 @@ return {
                     recommendedVariantOrder = "warning",
                   },
                   validate = true,
-                  --[[ experimental = {
-                classRegex = {
-                  {
-                    "tv\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
-                    "[\"'`](.*?)[\"'`]",
+                  experimental = {
+                    classRegex = {
+                      {
+                        "tv\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
+                        "[\"'`](.*?)[\"'`]",
+                      },
+                    },
                   },
-                },
-              }, ]]
                 },
               },
             })
