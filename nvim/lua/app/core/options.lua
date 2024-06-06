@@ -21,6 +21,7 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- apperance
+opt.inccommand = "split"
 opt.termguicolors = true
 opt.smartcase = true
 
@@ -37,7 +38,7 @@ opt.splitbelow = true
 
 -- gutter
 opt.signcolumn = "yes"
-opt.scrolloff = 10
+opt.scrolloff = 6
 opt.updatetime = 50
 opt.colorcolumn = { "80", "120" }
 

@@ -51,11 +51,11 @@ return {
         },
         comment = {
           default = "<C-;>",
-          windows = "^com",
+          windows = "^comgv",
         },
         block_comment = {
           default = "<C-c><C-;>",
-          windows = "^bco",
+          windows = "^bcogv",
         },
       },
     })

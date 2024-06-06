@@ -43,26 +43,28 @@ return {
         "regex",
         "markdown",
         "markdown_inline",
+        "css",
+        "scss",
       },
       sync_install = false,
       autoinstall = true,
-      autotag = {
-        enable = true,
-        enable_rename = true,
-        enable_close = true,
-        enable_close_on_slash = true,
-      },
       indent = { enable = true },
       highlight = {
         enable = true,
-        additional_vim_regex_highlighting = false,
-        disable = { "css", "scss" },
+        additional_vim_regex_highlighting = true,
+        -- disable = { "css", "scss" },
       },
     })
-
     nvimtreesittercontext.setup({
       multiline_threshold = 1,
     })
-    nvimautotag.setup()
+    nvimautotag.setup({
+      opts = {
+        enable = true, -- Enable autotag
+        enable_close = true, -- Auto close tags
+        enable_rename = true, -- Auto rename pairs of tags
+        enable_close_on_slash = true, -- Auto close on trailing </
+      },
+    })
   end,
 }

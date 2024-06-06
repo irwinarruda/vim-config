@@ -6,6 +6,10 @@ return {
   },
   config = function()
     local lspsaga = require("lspsaga")
-    lspsaga.setup({})
+    lspsaga.setup({
+      ui = {
+        code_action = "",
+      },
+    })
   end,
 }

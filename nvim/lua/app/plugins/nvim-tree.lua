@@ -50,14 +50,14 @@ return {
     vim.g.loaded = 1
     vim.g.loaded_netrwPlugin = 1
     nvim_tree.setup({
-      reload_on_bufenter = false,
+      reload_on_bufenter = true,
       view = {
         width = 28,
         preserve_window_proportions = true,
       },
       actions = {
         open_file = {
-          resize_window = true,
+          resize_window = false,
         },
       },
       git = {
@@ -65,9 +65,19 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<Space>e", function()
-      local nvimtree = require("nvim-tree.api")
-      nvimtree.tree.toggle({ find_file = true, focus = false })
+    local current_width = 28
+    vim.keymap.set("n", "<leader>e", function()
+      local nvim_tree_api = require("nvim-tree.api")
+      for _, winid in ipairs(vim.api.nvim_list_wins()) do
+        local bufnr = vim.api.nvim_win_get_buf(winid)
+        local bufwidth = vim.api.nvim_win_get_width(winid)
+        if nvim_tree_api.tree.is_tree_buf(bufnr) then
+          current_width = bufwidth
+        end
+      end
+
+      nvim_tree_api.tree.toggle({ find_file = true, focus = false })
+      vim.cmd(":NvimTreeResize " .. current_width)
     end, { noremap = true })
 
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {

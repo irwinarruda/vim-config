@@ -32,5 +32,8 @@ return {
     keymap.set("n", "<leader>4", harpoon_select(4))
     keymap.set("n", "<leader>5", harpoon_select(5))
     keymap.set("n", "<leader>6", harpoon_select(6))
+    keymap.set("n", "<leader>7", harpoon_select(7))
+    keymap.set("n", "<leader>8", harpoon_select(8))
+    keymap.set("n", "<leader>9", harpoon_select(9))
   end,
 }

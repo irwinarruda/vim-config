@@ -36,10 +36,10 @@ return {
           vim.lsp.buf.hover()
           vim.lsp.buf.hover()
         end, opts)
-        -- keymap.set("n", os.motion("lsp_code_action"), function()
-        --   vim.lsp.buf.code_action()
-        -- end, opts)
-        keymap.set("n", os.motion("lsp_code_action"), "<cmd>Lspsaga code_action<cr>", opts)
+        -- keymap.set("n", os.motion("lsp_code_action"), vim.lsp.buf.code_action, opts)
+        keymap.set("n", os.motion("lsp_code_action"), function()
+          require("lspsaga.command").load_command("code_action")
+        end, opts)
         keymap.set("n", os.motion("lsp_rename"), function()
           vim.lsp.buf.rename()
         end, opts)
@@ -48,9 +48,11 @@ return {
         end, opts)
         keymap.set("n", os.motion("lsp_goto_next"), function()
           vim.diagnostic.goto_next()
+          vim.cmd.normal("zz")
         end, opts)
         keymap.set("n", os.motion("lsp_goto_prev"), function()
           vim.diagnostic.goto_prev()
+          vim.cmd.normal("zz")
         end, opts)
         keymap.set("i", os.motion("lsp_signature_help"), function()
           vim.lsp.buf.signature_help()
@@ -61,6 +63,11 @@ return {
       end
 
       lsp.on_attach(on_attach)
+
+      vim.keymap.set("n", "<leader>h", function()
+        ---@diagnostic disable-next-line: missing-parameter
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { noremap = true })
 
       require("mason").setup({})
       require("mason-lspconfig").setup({
@@ -74,7 +81,6 @@ return {
           "tsserver",
           "svelte",
           "volar",
-          "vuels",
           "jsonls",
           "lua_ls",
           "rust_analyzer",
@@ -92,20 +98,28 @@ return {
               settings = {
                 separate_diagnostic_server = true,
                 publish_diagnostic_on = "insert_leave",
-                expose_as_code_action = {},
+                expose_as_code_action = "all",
                 tsserver_path = nil,
                 tsserver_plugins = {},
                 tsserver_max_memory = "auto",
                 tsserver_format_options = {},
-                tsserver_file_preferences = {},
                 tsserver_locale = "en",
                 complete_function_calls = false,
                 include_completions_with_insert_text = true,
                 code_lens = "off",
-                disable_member_code_lens = true,
+                disable_member_code_lens = false,
                 jsx_close_tag = {
                   enable = false,
                   filetypes = { "javascriptreact", "typescriptreact" },
+                },
+                tsserver_file_preferences = {
+                  includeInlayEnumMemberValueHints = false,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayParameterNameHints = "all",
+                  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayVariableTypeHints = false,
                 },
               },
             })
@@ -137,13 +151,19 @@ return {
                       fileMatch = { ".eslintrc.json" },
                       url = "https://json.schemastore.org/eslintrc",
                     },
+                    {
+                      fileMatch = { ".babelrc.json", ".babelrc.json5" },
+                      url = "https://json.schemastore.org/babelrc",
+                    },
                   },
                 },
               },
             })
           end,
           lua_ls = function()
-            require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
+            local lua_config = lsp.nvim_lua_ls()
+            lua_config.settings.Lua.hint = { enable = true }
+            require("lspconfig").lua_ls.setup(lua_config)
           end,
           tailwindcss = function()
             require("lspconfig").tailwindcss.setup({
@@ -178,6 +198,18 @@ return {
             default_config.capabilities.offsetEncoding = "utf-8"
             require("lspconfig").clangd.setup(default_config)
           end,
+          volar = function()
+            require("lspconfig").volar.setup({
+              on_attach = on_attach,
+              handlers = { lsp.default_setup },
+              filetypes = { "vue" },
+              init_options = {
+                vue = {
+                  hybridMode = false,
+                },
+              },
+            })
+          end,
         },
       })
     end,
@@ -190,34 +222,25 @@ return {
       conform.setup({
         format_on_save = {
           timeout_ms = 500,
-          async = false,
           lsp_fallback = true,
         },
+        log_level = vim.log.levels.ERROR,
         formatters_by_ft = {
           lua = { "stylua" },
-          javascript = { "prettier" },
-          typescript = { "prettier" },
-          javascriptreact = { "prettier" },
-          typescriptreact = { "prettier" },
-          svelte = { "prettier" },
-          vue = { "prettier" },
-          css = { "prettier" },
-          html = { "prettier" },
-          json = { "prettier" },
-          yaml = { "prettier" },
-          markdown = { "prettier" },
-          graphql = { "prettier" },
+          javascript = { { "prettierd", "prettier" } },
+          typescript = { { "prettierd", "prettier" } },
+          javascriptreact = { { "prettierd", "prettier" } },
+          typescriptreact = { { "prettierd", "prettier" } },
+          svelte = { { "prettierd", "prettier" } },
+          vue = { { "prettierd", "prettier" } },
+          css = { { "prettierd", "prettier" } },
+          html = { { "prettierd", "prettier" } },
+          json = { { "prettierd", "prettier" } },
+          yaml = { { "prettierd", "prettier" } },
+          markdown = { { "prettierd", "prettier" } },
+          graphql = { { "prettierd", "prettier" } },
           rust = { "rust_analyzer" },
         },
-      })
-
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = vim.api.nvim_create_augroup("ConformFormatOnSave", { clear = false }),
-        desc = "Conform format on save",
-        pattern = "*",
-        callback = function(args)
-          conform.format({ bufnr = args.buf })
-        end,
       })
 
       local keymap = vim.keymap

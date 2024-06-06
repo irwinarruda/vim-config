@@ -19,16 +19,18 @@ return {
 
           keymap.set("n", "[g", function()
             if vim.wo.diff then
-              vim.cmd.normal({ "]g", bang = true })
+              vim.cmd.normal({ "]gzz", bang = true })
             else
               gitsigns.nav_hunk("next")
+              vim.cmd.normal("zz")
             end
           end)
           keymap.set("n", "]g", function()
             if vim.wo.diff then
-              vim.cmd.normal({ "[g", bang = true })
+              vim.cmd.normal({ "[gzz", bang = true })
             else
               gitsigns.nav_hunk("prev")
+              vim.cmd.normal("zz")
             end
           end)
           keymap.set("n", "<leader>gr", gitsigns.reset_hunk, opts)

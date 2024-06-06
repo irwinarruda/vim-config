@@ -7,6 +7,9 @@ keymap.set("t", "<ESC>", "<C-\\><C-n>", { silent = true })
 -- Lines
 keymap.set("n", "<leader>o", "o<Esc>k")
 keymap.set("n", "<leader>O", "O<Esc>k")
+keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
+keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
+keymap.set("n", "<leader>O", "O<Esc>k")
 -- Remove highlight
 keymap.set("n", "<leader><Esc>", ":nohlsearch<CR>")
 -- Increment and decrement
@@ -37,8 +40,10 @@ keymap.set("n", "<leader>wl", "<C-w>v") -- split window right
 keymap.set("n", "<leader>wj", "<C-w>s") -- split window down
 keymap.set("n", "<leader>we", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>ww", ":close<CR>") -- close current split window
-keymap.set("n", "<M-->", "<C-w>>", { noremap = true }) -- increment window width
-keymap.set("n", "<M-=>", "<C-w><", { noremap = true }) -- decrement window width
+keymap.set("n", "<M-h>", "<C-w>5>", { noremap = true }) -- increment window width
+keymap.set("n", "<M-l>", "<C-w>5<", { noremap = true }) -- decrement window width
+keymap.set("n", "<M-k>", "<C-w>3+", { noremap = true }) -- increment window height
+keymap.set("n", "<M-j>", "<C-w>3-", { noremap = true }) -- decrement window height
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 
