@@ -25,6 +25,7 @@ return {
         "lua",
         "vim",
         "vimdoc",
+        "sql",
         "html",
         "typescript",
         "javascript",

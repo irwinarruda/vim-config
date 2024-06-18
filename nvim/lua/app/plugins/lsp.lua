@@ -72,10 +72,14 @@ return {
       require("mason").setup({})
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "clangd",
           "dockerls",
+          "docker_compose_language_service",
+          "yamlls",
+          "bashls",
           "eslint",
+          "clangd",
           "html",
+          "emmet_ls",
           "cssls",
           "tailwindcss",
           "tsserver",
@@ -193,12 +197,9 @@ return {
               },
             })
           end,
-          clangd = function()
-            local default_config = require("lspconfig.server_configurations.clangd").default_config
-            default_config.capabilities.offsetEncoding = "utf-8"
-            require("lspconfig").clangd.setup(default_config)
-          end,
           volar = function()
+            -- local path = require("mason-registry").get_package("typescript-language-server"):get_install_path()
+            --   .. "/node_modules/typescript/lib"
             require("lspconfig").volar.setup({
               on_attach = on_attach,
               handlers = { lsp.default_setup },
@@ -209,6 +210,11 @@ return {
                 },
               },
             })
+          end,
+          clangd = function()
+            local default_config = require("lspconfig.server_configurations.clangd").default_config
+            default_config.capabilities.offsetEncoding = "utf-8"
+            require("lspconfig").clangd.setup(default_config)
           end,
         },
       })
