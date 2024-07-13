@@ -23,3 +23,9 @@ Copy the `.config` code to the repo.
 $ rm -rf $PATH_TO_REPO/nvim
 $ cp -r ~/.config/nvim $PATH_TO_REPO/nvim
 ```
+
+### Symlink
+
+```bash
+$ ln -sP $PATH_TO_REPO/nvim ~/.config
+```
