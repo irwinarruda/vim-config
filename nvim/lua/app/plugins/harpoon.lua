@@ -5,7 +5,6 @@ local harpoon_select = function(index)
     end
     local harpoon = require("harpoon")
     harpoon:list():select(index)
-    vim.cmd("normal! zz")
   end
 end
 

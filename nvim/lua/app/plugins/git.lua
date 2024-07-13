@@ -34,6 +34,7 @@ return {
             end
           end)
           keymap.set("n", "<leader>gr", gitsigns.reset_hunk, opts)
+          keymap.set("n", "<leader>ga", gitsigns.reset_buffer, opts)
           keymap.set("n", "<leader>gp", function()
             gitsigns.preview_hunk()
             gitsigns.preview_hunk()

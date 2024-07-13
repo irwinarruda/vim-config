@@ -91,6 +91,7 @@ return {
           "gopls",
           "templ",
           "pylsp",
+          "kotlin_language_server",
         },
         handlers = {
           lsp.default_setup,

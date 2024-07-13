@@ -35,6 +35,7 @@ return {
         "svelte",
         "vue",
         "java",
+        "kotlin",
         "json",
         "xml",
         "go",

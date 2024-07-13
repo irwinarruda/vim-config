@@ -10,6 +10,7 @@ keymap.set("n", "<leader>O", "O<Esc>k")
 keymap.set("n", "<C-o>", "<C-o>zz", { noremap = true })
 keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
 keymap.set("n", "<leader>O", "O<Esc>k")
+keymap.set("n", "G", "Gzz", { noremap = true })
 -- Remove highlight
 keymap.set("n", "<leader><Esc>", ":nohlsearch<CR>")
 -- Increment and decrement
