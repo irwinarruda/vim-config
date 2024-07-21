@@ -1,9 +1,14 @@
 return {
   {
     "vonheikemen/lsp-zero.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
     dependencies = {
-      "williamboman/mason.nvim",
+      {
+        "williamboman/mason.nvim",
+        build = function()
+          vim.cmd("MasonUpdate")
+        end,
+      },
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
@@ -34,7 +39,9 @@ return {
         end, opts)
         keymap.set("n", os.motion("lsp_hover"), function()
           vim.lsp.buf.hover()
-          vim.lsp.buf.hover()
+          vim.defer_fn(function()
+            vim.lsp.buf.hover()
+          end, 50)
         end, opts)
         -- keymap.set("n", os.motion("lsp_code_action"), vim.lsp.buf.code_action, opts)
         keymap.set("n", os.motion("lsp_code_action"), function()
@@ -234,19 +241,20 @@ return {
         log_level = vim.log.levels.ERROR,
         formatters_by_ft = {
           lua = { "stylua" },
-          javascript = { { "prettierd", "prettier" } },
-          typescript = { { "prettierd", "prettier" } },
-          javascriptreact = { { "prettierd", "prettier" } },
-          typescriptreact = { { "prettierd", "prettier" } },
-          svelte = { { "prettierd", "prettier" } },
-          vue = { { "prettierd", "prettier" } },
-          css = { { "prettierd", "prettier" } },
-          html = { { "prettierd", "prettier" } },
-          json = { { "prettierd", "prettier" } },
-          yaml = { { "prettierd", "prettier" } },
-          markdown = { { "prettierd", "prettier" } },
-          graphql = { { "prettierd", "prettier" } },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+          typescript = { "prettierd", "prettier", stop_after_first = true },
+          javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+          typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+          svelte = { "prettierd", "prettier", stop_after_first = true },
+          vue = { "prettierd", "prettier", stop_after_first = true },
+          css = { "prettierd", "prettier", stop_after_first = true },
+          html = { "prettierd", "prettier", stop_after_first = true },
+          json = { "prettierd", "prettier", stop_after_first = true },
+          yaml = { "prettierd", "prettier", stop_after_first = true },
+          markdown = { "prettierd", "prettier", stop_after_first = true },
+          graphql = { "prettierd", "prettier", stop_after_first = true },
           rust = { "rust_analyzer" },
+          go = { "gofmt" },
         },
       })
 
