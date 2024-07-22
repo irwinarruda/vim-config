@@ -3,7 +3,7 @@ local opt = vim.opt
 -- line
 opt.relativenumber = true
 opt.number = true
-opt.cmdheight = 0
+-- opt.cmdheight = 0
 
 -- tabs & indentation
 opt.tabstop = 2

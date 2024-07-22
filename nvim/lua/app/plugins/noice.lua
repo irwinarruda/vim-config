@@ -17,8 +17,8 @@ return {
           silent = true,
           view = "hover",
         },
-        documentation = {
-          view = "popup",
+        signature = {
+          enabled = false,
         },
       },
       messages = {
@@ -37,5 +37,6 @@ return {
         lsp_doc_border = true, -- add a border to hover docs and signature help
       },
     })
+    vim.keymap.set("n", "<leader><leader>n", "<cmd>NoiceDismiss<CR>")
   end,
 }

@@ -12,7 +12,7 @@ keymap.set("n", "<C-i>", "<C-i>zz", { noremap = true })
 keymap.set("n", "<leader>O", "O<Esc>k")
 keymap.set("n", "G", "Gzz", { noremap = true })
 -- Remove highlight
-keymap.set("n", "<leader><Esc>", ":nohlsearch<CR>")
+keymap.set("n", "<leader><Esc>", ":nohlsearch<CR>", { silent = true })
 -- Increment and decrement
 keymap.set("n", "<leader>=", "<C-a>")
 keymap.set("n", "<leader>-", "<C-x>")
@@ -50,6 +50,13 @@ keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 
 -- Debug
 keymap.set("n", "<leader><leader>w", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
+keymap.set("n", "<leader><leader>s", function()
+  local path = vim.fn.stdpath("state") .. "/swap"
+  vim.fn.delete(path, "rf")
+  vim.cmd("messages clear")
+  vim.cmd("lua print('Swap files deleted.')")
+  vim.fn.mkdir(path, "p")
+end)
 
 vim.g.VM_maps = {
   ["Find Under"] = "gb",

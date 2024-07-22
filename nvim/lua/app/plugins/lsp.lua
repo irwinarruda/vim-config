@@ -41,7 +41,7 @@ return {
           vim.lsp.buf.hover()
           vim.defer_fn(function()
             vim.lsp.buf.hover()
-          end, 50)
+          end, 80)
         end, opts)
         -- keymap.set("n", os.motion("lsp_code_action"), vim.lsp.buf.code_action, opts)
         keymap.set("n", os.motion("lsp_code_action"), function()
