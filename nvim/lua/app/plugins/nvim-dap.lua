@@ -4,7 +4,10 @@ return {
     build = [[
       npm install --legacy-peer-deps &&
       npx gulp vsDebugServerBundle &&
-      mv dist out
+      mv dist out &&
+      rm -rf dist &&
+      git reset --hard &&
+      git clean -fd
     ]],
   },
   {

@@ -3,12 +3,7 @@ return {
     "vonheikemen/lsp-zero.nvim",
     event = "VeryLazy",
     dependencies = {
-      {
-        "williamboman/mason.nvim",
-        build = function()
-          vim.cmd("MasonUpdate")
-        end,
-      },
+      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
       "hrsh7th/nvim-cmp",
@@ -226,6 +221,7 @@ return {
           end,
         },
       })
+      vim.cmd("MasonUpdate")
     end,
   },
   {
