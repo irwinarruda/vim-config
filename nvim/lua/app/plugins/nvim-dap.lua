@@ -2,6 +2,8 @@ return {
   {
     "microsoft/vscode-js-debug",
     build = [[
+      source ~/.zshrc &&
+      nvm use 18 &&
       npm install --legacy-peer-deps &&
       npx gulp vsDebugServerBundle &&
       mv dist out &&
