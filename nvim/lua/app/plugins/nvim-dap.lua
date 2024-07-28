@@ -1,16 +1,25 @@
+local is_windows = require("nvim-os-persist").is_windows
+
+local build = ""
+if not is_windows() then
+  build = "\n  source ~/.zshrc &&\n  nvm use 18 &&"
+end
+
+build = build
+  .. [[
+  nvm use 18 &&
+  npm install --legacy-peer-deps &&
+  npx gulp vsDebugServerBundle &&
+  mv dist out &&
+  rm -rf dist &&
+  git reset --hard &&
+  git clean -fd
+]]
+
 return {
   {
     "microsoft/vscode-js-debug",
-    build = [[
-      source ~/.zshrc &&
-      nvm use 18 &&
-      npm install --legacy-peer-deps &&
-      npx gulp vsDebugServerBundle &&
-      mv dist out &&
-      rm -rf dist &&
-      git reset --hard &&
-      git clean -fd
-    ]],
+    build = build,
   },
   {
     "mfussenegger/nvim-dap",
