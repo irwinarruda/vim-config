@@ -14,7 +14,8 @@ return {
     local os = require("nvim-os-persist")
     if os:is_windows() then
       local nvimtreesitterinstall = require("nvim-treesitter.install")
-      nvimtreesitterinstall.compilers = { "clang" }
+      nvimtreesitterinstall.compilers = { "zig", "clang" }
+      nvimtreesitterinstall.prefer_git = false
     end
 
     ---@diagnostic disable-next-line: missing-fields
