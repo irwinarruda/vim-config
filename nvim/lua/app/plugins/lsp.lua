@@ -73,28 +73,6 @@ return {
 
       require("mason").setup({})
       require("mason-lspconfig").setup({
-        ensure_installed = {
-          "dockerls",
-          "docker_compose_language_service",
-          "yamlls",
-          "bashls",
-          "eslint",
-          "clangd",
-          "html",
-          "emmet_ls",
-          "cssls",
-          "tailwindcss",
-          "tsserver",
-          "svelte",
-          "volar",
-          "jsonls",
-          "lua_ls",
-          "rust_analyzer",
-          "gopls",
-          "templ",
-          "pylsp",
-          "kotlin_language_server",
-        },
         handlers = {
           lsp.default_setup,
           tsserver = function()
@@ -221,7 +199,6 @@ return {
           end,
         },
       })
-      vim.cmd("MasonUpdate")
     end,
   },
   {
@@ -270,12 +247,12 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        javascript = { "eslint" },
-        typescript = { "eslint" },
-        javascriptreact = { "eslint" },
-        typescriptreact = { "eslint" },
-        svelte = { "eslint" },
-        vue = { "eslint" },
+        javascript = { "eslint_d", "eslint" },
+        typescript = { "eslint_d", "eslint" },
+        javascriptreact = { "eslint_d", "eslint" },
+        typescriptreact = { "eslint_d", "eslint" },
+        svelte = { "eslint_d", "eslint" },
+        vue = { "eslint_d", "eslint" },
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
