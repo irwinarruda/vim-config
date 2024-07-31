@@ -3,7 +3,7 @@ local function is_terminals_open()
 end
 
 local is_windows = require("nvim-os-persist").is_windows
-if is_windows then
+if is_windows() then
   vim.opt.shell = "powershell"
   vim.opt.shellcmdflag =
     "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
