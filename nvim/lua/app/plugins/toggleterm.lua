@@ -4,7 +4,7 @@ end
 
 local is_windows = require("nvim-os-persist").is_windows
 if is_windows() then
-  vim.opt.shell = "powershell"
+  vim.opt.shell = "pwsh"
   vim.opt.shellcmdflag =
     "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
   vim.opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
