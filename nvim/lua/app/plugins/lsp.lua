@@ -247,12 +247,12 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        javascript = { "eslint_d", "eslint" },
-        typescript = { "eslint_d", "eslint" },
-        javascriptreact = { "eslint_d", "eslint" },
-        typescriptreact = { "eslint_d", "eslint" },
-        svelte = { "eslint_d", "eslint" },
-        vue = { "eslint_d", "eslint" },
+        javascript = { "eslint" },
+        typescript = { "eslint" },
+        javascriptreact = { "eslint" },
+        typescriptreact = { "eslint" },
+        svelte = { "eslint" },
+        vue = { "eslint" },
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
