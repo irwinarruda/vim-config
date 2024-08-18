@@ -184,6 +184,11 @@
     "when": "editorTextFocus"
   },
   {
+    "key": "escape",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminalFocus"
+  },
+  {
     "key": "q",
     "command": "workbench.action.closeActiveEditor",
     "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
