@@ -2,6 +2,7 @@ return {
   "WhoIsSethDaniel/mason-tool-installer.nvim",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
+    "Hoffs/omnisharp-extended-lsp.nvim",
   },
   priority = 1000,
   config = function()
@@ -19,6 +20,7 @@ return {
         "clangd",
         "html",
         "emmet_ls",
+        "omnisharp",
         "cssls",
         "cssmodules_ls",
         "tailwindcss",

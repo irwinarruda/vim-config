@@ -38,7 +38,6 @@ return {
             vim.lsp.buf.hover()
           end, 80)
         end, opts)
-        -- keymap.set("n", os.motion("lsp_code_action"), vim.lsp.buf.code_action, opts)
         keymap.set("n", os.motion("lsp_code_action"), function()
           require("lspsaga.command").load_command("code_action")
         end, opts)
@@ -196,6 +195,47 @@ return {
             local default_config = require("lspconfig.server_configurations.clangd").default_config
             default_config.capabilities.offsetEncoding = "utf-8"
             require("lspconfig").clangd.setup(default_config)
+          end,
+          omnisharp = function()
+            require("lspconfig").omnisharp.setup({
+              handlers = {
+                lsp.default_setup,
+                ["textDocument/definition"] = require("omnisharp_extended").definition_handler,
+                ["textDocument/typeDefinition"] = require("omnisharp_extended").type_definition_handler,
+                ["textDocument/references"] = require("omnisharp_extended").references_handler,
+                ["textDocument/implementation"] = require("omnisharp_extended").implementation_handler,
+              },
+              settings = {
+                FormattingOptions = {
+                  NewLinesForBracesInLambdaExpressionBody = false,
+                  NewLinesForBracesInAnonymousMethods = false,
+                  NewLinesForBracesInAnonymousTypes = false,
+                  NewLinesForBracesInControlBlocks = false,
+                  NewLinesForBracesInTypes = false,
+                  NewLinesForBracesInMethods = false,
+                  NewLinesForBracesInProperties = false,
+                  NewLinesForBracesInObjectCollectionArrayInitializers = false,
+                  NewLinesForBracesInAccessors = false,
+                  NewLineForElse = false,
+                  NewLineForCatch = false,
+                  NewLineForFinally = false,
+                  EnableEditorConfigSupport = false,
+                  OrganizeImports = true,
+                },
+                MsBuild = {
+                  LoadProjectsOnDemand = nil,
+                },
+                RoslynExtensionsOptions = {
+                  EnableDecompilationSupport = true,
+                  EnableImportCompletion = true,
+                  EnableAnalyzersSupport = nil,
+                  AnalyzeOpenDocumentsOnly = nil,
+                },
+                Sdk = {
+                  IncludePrereleases = true,
+                },
+              },
+            })
           end,
         },
       })

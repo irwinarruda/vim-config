@@ -18,6 +18,8 @@ return {
       vim.cmd([[colorscheme tokyonight-moon]])
       vim.cmd([[
         hi! link @lsp.typemod.variable.readonly Constant
+        hi! link @lsp.type.extensionMethodName.cs Function
+        hi! link @lsp.type.constantName.cs Constant
       ]])
       -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

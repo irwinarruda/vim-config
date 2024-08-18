@@ -1,16 +1,17 @@
 {
   "vim.normalModeKeyBindings": [
     {
+      "before": ["<leader>", "<ESC>"],
+      "commands": [":nohl"],
+      "slient": true
+    },
+    {
       "before": ["<leader>", "+"],
       "after": ["<C-a>"]
     },
     {
       "before": ["<leader>", "-"],
       "after": ["<C-x>"]
-    },
-    {
-      "before": ["x"],
-      "after": ["_", "x"]
     },
     {
       "before": ["<leader>", "p"],
@@ -21,20 +22,16 @@
       "after": ["\"", "_", "d"]
     },
     {
-      "before": ["J"],
-      "commands": ["editor.action.moveLinesDownAction"]
-    },
-    {
-      "before": ["K"],
-      "commands": ["editor.action.moveLinesUpAction"]
-    },
-    {
       "before": ["<C-d>"],
       "after": ["<C-d>", "z", "z"]
     },
     {
       "before": ["<C-u>"],
       "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["G"],
+      "after": ["G", "z", "z"]
     },
     {
       "before": ["n"],
@@ -57,12 +54,12 @@
       "after": ["<C-w>", "="]
     },
     {
-      "before": ["<leader>", "s", "s"],
-      "commands": ["workbench.action.closeActiveEditor"]
-    },
-    {
       "before": ["<leader>", "e"],
       "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["<leader>", "t"],
+      "commands": ["workbench.action.terminal.toggleTerminal"]
     },
     {
       "before": ["<leader>", "f", "s"],
@@ -75,6 +72,30 @@
     {
       "before": ["<leader>", "f", "p"],
       "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "f", "o"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["[", "d"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["]", "d"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["[", "g"],
+      "commands": ["workbench.action.editor.nextChange"]
+    },
+    {
+      "before": ["]", "g"],
+      "commands": ["workbench.action.editor.previousChange"]
+    },
+    {
+      "before": ["<leader>", "g", "p"],
+      "commands": ["git.openChange"]
     },
     {
       "before": ["<leader>", "a"],
@@ -135,6 +156,12 @@
       "commands": ["editor.action.outdentLines"]
     }
   ],
+  "vim.hlsearch": true,
+  "vim.ignorecase": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.color": "rgba(250, 180, 80, 1)",
+  "vim.highlightedyank.textColor": "black",
+  "vim.highlightedyank.duration": 120,
   "vim.useCtrlKeys": true,
   "vim.useSystemClipboard": true,
   "vim.leader": "<space>",

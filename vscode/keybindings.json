@@ -1,52 +1,6 @@
+// Place your key bindings in this file to override the defaultsauto[]
 [
-  {
-    "key": "f12",
-    "command": "editor.action.goToTypeDefinition"
-  },
-  {
-    "key": "ctrl+oem_comma",
-    "command": "editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-  },
-  {
-    "key": "f12",
-    "command": "-editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-  },
-  {
-    "key": "shift+f2",
-    "command": "explorer.newFile"
-  },
-  {
-    "key": "shift+alt+s",
-    "command": "editor.action.organizeImports",
-    "when": "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
-  },
-  {
-    "key": "shift+alt+o",
-    "command": "-editor.action.organizeImports",
-    "when": "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
-  },
-  {
-    "key": "alt+j",
-    "command": "editor.action.moveLinesDownAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "alt+down",
-    "command": "-editor.action.moveLinesDownAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "alt+k",
-    "command": "editor.action.moveLinesUpAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "alt+up",
-    "command": "-editor.action.moveLinesUpAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
+  // NAVIGATE FROM PANELS
   {
     "key": "ctrl+k",
     "command": "workbench.action.navigateUp"
@@ -83,9 +37,121 @@
     "command": "workbench.files.action.focusFilesExplorer",
     "when": "sideBarFocus && explorerViewletVisible && !filesExplorerFocus"
   },
+  // NAVIGATE FROM PANELS
+  // NAVIGATE ON AUTOCOMPLETE SUGGESTIONS
   {
-    "key": "ctrl+shift+oem_comma",
-    "command": "editor.action.showHover"
+    "key": "ctrl+j",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetVisible"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetVisible"
+  },
+  // NAVIGATE ON AUTOCOMPLETE SUGGESTIONS
+  // NAVIGATE ON COMMAND PALETTE
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "when": "inQuickOpen"
+  },
+  // NAVIGATE ON COMMAND PALETTE
+  // NAVIGATE ON EXPLORER
+  {
+    "key": "j",
+    "command": "list.focusDown",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "k",
+    "command": "list.focusUp",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "g g",
+    "command": "list.focusFirst",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "shift+g",
+    "command": "list.focusLast",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "r",
+    "command": "renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "enter",
+    "command": "list.select",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "space e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "c",
+    "command": "filesExplorer.copy",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "x",
+    "command": "filesExplorer.cut",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "p",
+    "command": "filesExplorer.paste",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "d",
+    "command": "deleteFile",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "shift+w",
+    "command": "list.collapseAll",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  // NAVIGATE ON EXPLORER
+  // VIM GLOBAL COMMANDS
+  {
+    "key": "space+f p",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "space+f o",
+    "command": "git.openFile"
+  },
+  {
+    "key": "space+f f",
+    "command": "workbench.action.findInFiles"
+  },
+  // VIM GLOBAL COMMANDS
+  {
+    "key": "ctrl+shift+,",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+;",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly"
   },
   {
     "key": "ctrl+shift+.",
@@ -93,13 +159,34 @@
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "shift+alt+a",
-    "command": "-editor.action.blockComment",
-    "when": "editorTextFocus && !editorReadonly"
+    "key": "alt+l",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "editorFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.increaseViewSize",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+,",
+    "command": "editor.action.goToDeclaration",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+m",
+    "command": "editor.action.goToReferences",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.quickFix",
+    "when": "editorTextFocus"
   },
   {
     "key": "q",
     "command": "workbench.action.closeActiveEditor",
     "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
   }
+  // VIM GLOBAL COMMANDS
 ]
