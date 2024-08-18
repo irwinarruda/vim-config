@@ -128,6 +128,16 @@
     "command": "list.collapseAll",
     "when": "explorerViewletVisible && filesExplorerFocus"
   },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.increaseViewSize",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
   // NAVIGATE ON EXPLORER
   // VIM GLOBAL COMMANDS
   {

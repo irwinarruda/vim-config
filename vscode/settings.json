@@ -159,7 +159,7 @@
   "vim.hlsearch": true,
   "vim.ignorecase": true,
   "vim.highlightedyank.enable": true,
-  "vim.highlightedyank.color": "rgba(250, 180, 80, 1)",
+  "vim.highlightedyank.color": "rgba(250, 200, 100, 1.0)",
   "vim.highlightedyank.textColor": "black",
   "vim.highlightedyank.duration": 120,
   "vim.useCtrlKeys": true,

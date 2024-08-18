@@ -40,8 +40,23 @@ keymap.set("n", "<leader>wl", "<C-w>v") -- split window right
 keymap.set("n", "<leader>wj", "<C-w>s") -- split window down
 keymap.set("n", "<leader>we", "<C-w>=") -- make split windows equal width & height
 keymap.set("n", "<leader>ww", ":close<CR>") -- close current split window
-keymap.set("n", "<M-h>", "<C-w>5>", { noremap = true }) -- increment window width
-keymap.set("n", "<M-l>", "<C-w>5<", { noremap = true }) -- decrement window width
+
+keymap.set("n", "<M-h>", function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname:match("NvimTree_1") then
+    vim.cmd("wincmd 5<")
+  else
+    vim.cmd("wincmd 5>")
+  end
+end) -- increment window width
+keymap.set("n", "<M-l>", function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname:match("NvimTree_1") then
+    vim.cmd("wincmd 5>")
+  else
+    vim.cmd("wincmd 5<")
+  end
+end) -- decrement window width
 keymap.set("n", "<M-k>", "<C-w>3+", { noremap = true }) -- increment window height
 keymap.set("n", "<M-j>", "<C-w>3-", { noremap = true }) -- decrement window height
 -- vim-maximizer
