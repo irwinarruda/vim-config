@@ -141,19 +141,6 @@
   // NAVIGATE ON EXPLORER
   // VIM GLOBAL COMMANDS
   {
-    "key": "space+f p",
-    "command": "workbench.action.quickOpen"
-  },
-  {
-    "key": "space+f o",
-    "command": "git.openFile"
-  },
-  {
-    "key": "space+f f",
-    "command": "workbench.action.findInFiles"
-  },
-  // VIM GLOBAL COMMANDS
-  {
     "key": "ctrl+shift+,",
     "command": "editor.action.showHover",
     "when": "editorTextFocus"
@@ -197,6 +184,11 @@
     "key": "escape",
     "command": "workbench.action.terminal.toggleTerminal",
     "when": "terminalFocus"
+  },
+  {
+    "key": "escape",
+    "command": "workbench.view.explorer",
+    "when": "searchViewletVisible"
   },
   {
     "key": "q",
