@@ -139,6 +139,18 @@
     "when": "explorerViewletVisible && filesExplorerFocus"
   },
   // NAVIGATE ON EXPLORER
+  // NAVIGATE ON TERMINAL
+  {
+    "key": "alt+j",
+    "command": "workbench.action.terminal.resizePaneDown",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.terminal.resizePaneUp",
+    "when": "terminalFocus"
+  },
+  // NAVIGATE ON TERMINAL
   // VIM GLOBAL COMMANDS
   {
     "key": "ctrl+shift+,",
