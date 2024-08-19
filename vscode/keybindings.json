@@ -66,77 +66,82 @@
   {
     "key": "j",
     "command": "list.focusDown",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "k",
     "command": "list.focusUp",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "g g",
     "command": "list.focusFirst",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "shift+g",
     "command": "list.focusLast",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "a",
     "command": "explorer.newFile",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "r",
     "command": "renameFile",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "enter",
     "command": "list.select",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "space e",
     "command": "workbench.action.toggleSidebarVisibility",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "c",
     "command": "filesExplorer.copy",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "x",
     "command": "filesExplorer.cut",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "p",
     "command": "filesExplorer.paste",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "d",
     "command": "deleteFile",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "f",
+    "command": "list.find",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "shift+w",
     "command": "list.collapseAll",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "alt+l",
     "command": "workbench.action.increaseViewSize",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
     "key": "alt+h",
     "command": "workbench.action.decreaseViewSize",
-    "when": "explorerViewletVisible && filesExplorerFocus"
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   // NAVIGATE ON EXPLORER
   // NAVIGATE ON TERMINAL
