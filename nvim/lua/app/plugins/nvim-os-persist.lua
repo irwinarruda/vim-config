@@ -33,6 +33,10 @@ return {
           default = "<C-,>",
           windows = "^def",
         },
+        lsp_implementation = {
+          default = "<C-n>",
+          windows = "^imp",
+        },
         lsp_references = {
           default = "<C-m>",
           windows = "^ref",
