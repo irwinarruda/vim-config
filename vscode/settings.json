@@ -168,5 +168,45 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1,
     "tailwindlabs.tailwindCSS": 1
-  }
+  },
+  "workbench.colorCustomizations": {
+    "editorBracketPairGuide.activeBackground1": "#FFD700",
+    "editorBracketPairGuide.activeBackground2": "#DA70D6",
+    "editorBracketPairGuide.activeBackground3": "#179FFF",
+    "editorBracketPairGuide.background1": "#FFFFFF00",
+    "editorBracketPairGuide.background2": "#FFFFFF00",
+    "editorBracketPairGuide.background3": "#FFFFFF00",
+    "editorBracketPairGuide.foreground1": "#FFD700",
+    "editorBracketPairGuide.foreground2": "#DA70D6",
+    "editorBracketPairGuide.foreground3": "#179FFF",
+    "editorBracketHighlight.foreground1": "#FFD700",
+    "editorBracketHighlight.foreground2": "#DA70D6",
+    "editorBracketHighlight.foreground3": "#179FFF"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.activeIconPack": "react_redux",
+  "material-icon-theme.folders.associations": {
+    "infra": "app",
+    "entities": "class",
+    "schemas": "class",
+    "typeorm": "database",
+    "repositories": "mappings",
+    "http": "container",
+    "migrations": "tools",
+    "modules": "components",
+    "implementations": "core",
+    "dtos": "typescript",
+    "fakes": "mock",
+    "enums": "scala",
+    "providers": "Hook",
+    "interfaces": "Class",
+    "atoms": "Redux-selector",
+    "molecules": "Redux-reducer",
+    "organisms": "Redux-store",
+    "templates": "Redux-actions",
+    "stores": "Redux-store",
+    "maps": "Target",
+    "features": "Template"
+  },
+  "material-icon-theme.folders.theme": "specific"
 }
