@@ -188,6 +188,11 @@
     "when": "editorTextFocus"
   },
   {
+    "key": "ctrl+n",
+    "command": "editor.action.goToImplementation",
+    "when": "editorTextFocus"
+  },
+  {
     "key": "ctrl+m",
     "command": "editor.action.goToReferences",
     "when": "editorTextFocus"
