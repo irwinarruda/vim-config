@@ -51,6 +51,13 @@
   {
     "command": {
       "action": "sendInput",
+      "input": "^imp"
+    },
+    "keys": "ctrl+n"
+  },
+  {
+    "command": {
+      "action": "sendInput",
       "input": "^ref"
     },
     "keys": "ctrl+m"
