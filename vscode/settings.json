@@ -42,15 +42,15 @@
       "after": ["N", "z", "z", "z", "v"]
     },
     {
-      "before": ["<leader>", "s", "l"],
+      "before": ["<leader>", "w", "l"],
       "after": ["<C-w>", "v"]
     },
     {
-      "before": ["<leader>", "s", "j"],
+      "before": ["<leader>", "w", "j"],
       "after": ["<C-w>", "s"]
     },
     {
-      "before": ["<leader>", "s", "e"],
+      "before": ["<leader>", "w", "e"],
       "after": ["<C-w>", "="]
     },
     {
@@ -92,6 +92,10 @@
     {
       "before": ["]", "g"],
       "commands": ["workbench.action.editor.previousChange"]
+    },
+    {
+      "before": ["<leader>", "g", "a"],
+      "commands": ["git.clean"]
     },
     {
       "before": ["<leader>", "g", "p"],
@@ -161,10 +165,14 @@
   "vim.highlightedyank.enable": true,
   "vim.highlightedyank.color": "rgba(250, 200, 100, 1.0)",
   "vim.highlightedyank.textColor": "black",
-  "vim.highlightedyank.duration": 120,
+  "vim.highlightedyank.duration": 150,
   "vim.useCtrlKeys": true,
   "vim.useSystemClipboard": true,
   "vim.leader": "<space>",
+  "vim.handleKeys": {
+    "<C-o>": false,
+    "<C-i>": false
+  },
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1,
     "tailwindlabs.tailwindCSS": 1
