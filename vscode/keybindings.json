@@ -163,13 +163,13 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+;",
-    "command": "editor.action.commentLine",
-    "when": "editorTextFocus && !editorReadonly"
+    "key": "ctrl+shift+.",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+.",
-    "command": "editor.action.blockComment",
+    "key": "ctrl+;",
+    "command": "editor.action.commentLine",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
