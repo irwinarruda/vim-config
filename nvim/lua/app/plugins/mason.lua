@@ -24,7 +24,7 @@ return {
         "cssls",
         "cssmodules_ls",
         "tailwindcss",
-        "tsserver",
+        "ts_ls",
         "svelte",
         "volar",
         "jsonls",
