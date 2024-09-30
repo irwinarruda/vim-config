@@ -1,17 +1,25 @@
 {
   "vim.normalModeKeyBindings": [
     {
-      "before": ["<leader>", "<ESC>"],
-      "commands": [":nohl"],
-      "slient": true
-    },
-    {
-      "before": ["<leader>", "+"],
+      "before": ["<leader>", "="],
       "after": ["<C-a>"]
     },
     {
       "before": ["<leader>", "-"],
       "after": ["<C-x>"]
+    },
+    {
+      "before": ["<leader>", "o"],
+      "after": ["o", "<ESC>", "k", "_"]
+    },
+    {
+      "before": ["<leader>", "O"],
+      "after": ["O", "<ESC>", "j", "_"]
+    },
+    {
+      "before": ["<leader>", "<ESC>"],
+      "commands": [":nohl"],
+      "slient": true
     },
     {
       "before": ["<leader>", "p"],

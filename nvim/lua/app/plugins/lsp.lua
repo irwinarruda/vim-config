@@ -74,7 +74,7 @@ return {
       require("mason-lspconfig").setup({
         handlers = {
           lsp.default_setup,
-          tsserver = function()
+          ts_ls = function()
             -- Use for project wide diagnostics https://github.com/dmmulroy/tsc.nvim
             require("typescript-tools").setup({
               on_attach = on_attach,
