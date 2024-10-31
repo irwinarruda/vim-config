@@ -17,7 +17,6 @@ return {
         "eslint_d",
         "prettier",
         "prettierd",
-        "clangd",
         "html",
         "emmet_ls",
         "omnisharp",
@@ -37,6 +36,6 @@ return {
         "kotlin_language_server",
       },
     })
-    vim.cmd("MasonUpdate")
+    vim.cmd("MasonToolsUpdate")
   end,
 }

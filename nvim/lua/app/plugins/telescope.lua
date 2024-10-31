@@ -1,18 +1,16 @@
 local telescope_lsp_keymaps = function(opts)
   local builtin = require("telescope.builtin")
   local os = require("app.plugins.nvim-os-persist")
-  vim.keymap.set("n", os.motion("lsp_definitions"), function()
-    builtin.lsp_definitions()
-  end, { noremap = true, buffer = opts.buffer })
-  vim.keymap.set("n", os.motion("lsp_references"), function()
-    builtin.lsp_references()
-  end, opts)
-  vim.keymap.set("n", os.motion("lsp_implementation"), function()
-    builtin.lsp_implementations()
-  end, { noremap = true, buffer = opts.buffer })
-  vim.keymap.set("n", "<leader>.", function()
-    builtin.diagnostics()
-  end, opts)
+  if vim.bo.filetype == "cs" then
+    vim.keymap.set("n", os.motion("lsp_definitions"), vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", os.motion("lsp_references"), builtin.lsp_references, opts)
+    vim.keymap.set("n", os.motion("lsp_implementation"), vim.lsp.buf.implementation, opts)
+  else
+    vim.keymap.set("n", os.motion("lsp_definitions"), builtin.lsp_definitions, opts)
+    vim.keymap.set("n", os.motion("lsp_references"), builtin.lsp_references, opts)
+    vim.keymap.set("n", os.motion("lsp_implementation"), builtin.lsp_implementations, opts)
+  end
+  vim.keymap.set("n", "<leader>.", builtin.diagnostics, opts)
 end
 
 return {

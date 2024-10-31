@@ -41,12 +41,7 @@ return {
         keymap.set("n", os.motion("lsp_code_action"), function()
           require("lspsaga.command").load_command("code_action")
         end, opts)
-        keymap.set("n", os.motion("lsp_rename"), function()
-          vim.lsp.buf.rename()
-        end, opts)
-        keymap.set("n", os.motion("lsp_workspace_symbol"), function()
-          vim.lsp.buf.workspace_symbol("")
-        end, opts)
+        keymap.set("n", os.motion("lsp_rename"), vim.lsp.buf.rename, opts)
         keymap.set("n", os.motion("lsp_goto_next"), function()
           vim.diagnostic.goto_next()
           vim.cmd.normal("zz")
@@ -54,9 +49,6 @@ return {
         keymap.set("n", os.motion("lsp_goto_prev"), function()
           vim.diagnostic.goto_prev()
           vim.cmd.normal("zz")
-        end, opts)
-        keymap.set("i", os.motion("lsp_signature_help"), function()
-          vim.lsp.buf.signature_help()
         end, opts)
         keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
         keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
@@ -154,23 +146,9 @@ return {
               on_attach = on_attach,
               settings = {
                 tailwindCSS = {
-                  classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
-                  lint = {
-                    cssConflict = "warning",
-                    invalidApply = "error",
-                    invalidConfigPath = "error",
-                    invalidScreen = "error",
-                    invalidTailwindDirective = "error",
-                    invalidVariant = "error",
-                    recommendedVariantOrder = "warning",
-                  },
-                  validate = true,
                   experimental = {
                     classRegex = {
-                      {
-                        "tv\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
-                        "[\"'`](.*?)[\"'`]",
-                      },
+                      { "([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]" },
                     },
                   },
                 },
@@ -179,7 +157,6 @@ return {
           end,
           volar = function()
             -- local path = require("mason-registry").get_package("typescript-language-server"):get_install_path()
-            --   .. "/node_modules/typescript/lib"
             require("lspconfig").volar.setup({
               on_attach = on_attach,
               handlers = { lsp.default_setup },
@@ -190,11 +167,6 @@ return {
                 },
               },
             })
-          end,
-          clangd = function()
-            local default_config = require("lspconfig.server_configurations.clangd").default_config
-            default_config.capabilities.offsetEncoding = "utf-8"
-            require("lspconfig").clangd.setup(default_config)
           end,
           omnisharp = function()
             require("lspconfig").omnisharp.setup({

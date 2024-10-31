@@ -72,6 +72,8 @@ keymap.set("n", "<leader><leader>s", function()
   vim.fn.mkdir(path, "p")
 end)
 
+vim.api.nvim_create_user_command("W", "write", {})
+
 vim.g.VM_maps = {
   ["Find Under"] = "gb",
   ["Find Subword Under"] = "gb",
