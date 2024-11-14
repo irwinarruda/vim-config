@@ -14,11 +14,11 @@ return {
     os_persist.setup({
       keymaps = {
         lsp_hover = {
-          default = "<C-<>",
+          default = "<C-S-,>",
           windows = "^hov",
         },
         lsp_hover_diagnostic = {
-          default = "<C->>",
+          default = "<C-S-.>",
           windows = "^hdi",
         },
         lsp_diagnostic = {

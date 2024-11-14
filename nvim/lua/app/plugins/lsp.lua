@@ -191,7 +191,7 @@ return {
                   NewLineForElse = false,
                   NewLineForCatch = false,
                   NewLineForFinally = false,
-                  EnableEditorConfigSupport = false,
+                  EnableEditorConfigSupport = true,
                   OrganizeImports = true,
                 },
                 MsBuild = {
