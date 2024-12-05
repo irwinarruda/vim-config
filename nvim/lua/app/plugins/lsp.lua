@@ -13,6 +13,7 @@ return {
     },
     branch = "v3.x",
     config = function()
+      local TYPESCRIPT_LSP = "vtsls"
       local lsp = require("lsp-zero")
       lsp.preset("recomended")
       lsp.set_sign_icons({
@@ -50,9 +51,24 @@ return {
           vim.diagnostic.goto_prev()
           vim.cmd.normal("zz")
         end, opts)
-        keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
-        keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
-        keymap.set("n", os.motion("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
+        if TYPESCRIPT_LSP == "typescript-tools" then
+          keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
+          keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
+          keymap.set("n", os.motion("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
+        else
+          keymap.set("n", os.motion("lsp_ts_rename_file"), function()
+            require("vtsls").commands.rename_file(opts.buffer)
+          end, opts)
+          keymap.set("n", os.motion("lsp_ts_remove_imports"), function()
+            require("vtsls").commands.remove_unused_imports(opts.buffer)
+          end, opts)
+          keymap.set("n", os.motion("lsp_ts_sort_imports"), function()
+            require("vtsls").commands.sort_imports(opts.buffer)
+          end, opts)
+          keymap.set("n", os.motion("lsp_ts_select_version"), function()
+            require("vtsls").commands.select_ts_version(opts.buffer)
+          end, opts)
+        end
       end
 
       lsp.on_attach(on_attach)
@@ -66,39 +82,56 @@ return {
       require("mason-lspconfig").setup({
         handlers = {
           lsp.default_setup,
+          vtsls = function() end,
           ts_ls = function()
-            -- Use for project wide diagnostics https://github.com/dmmulroy/tsc.nvim
-            -- require("typescript-tools").setup({
-            --   on_attach = on_attach,
-            --   handlers = { lsp.default_setup },
-            --   settings = {
-            --     separate_diagnostic_server = true,
-            --     publish_diagnostic_on = "insert_leave",
-            --     expose_as_code_action = "all",
-            --     tsserver_path = nil,
-            --     tsserver_plugins = {},
-            --     tsserver_max_memory = "auto",
-            --     tsserver_format_options = {},
-            --     tsserver_locale = "en",
-            --     complete_function_calls = false,
-            --     include_completions_with_insert_text = true,
-            --     code_lens = "off",
-            --     disable_member_code_lens = false,
-            --     jsx_close_tag = {
-            --       enable = false,
-            --       filetypes = { "javascriptreact", "typescriptreact" },
-            --     },
-            --     tsserver_file_preferences = {
-            --       includeInlayEnumMemberValueHints = false,
-            --       includeInlayFunctionLikeReturnTypeHints = true,
-            --       includeInlayFunctionParameterTypeHints = true,
-            --       includeInlayParameterNameHints = "all",
-            --       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            --       includeInlayPropertyDeclarationTypeHints = true,
-            --       includeInlayVariableTypeHints = false,
-            --     },
-            --   },
-            -- })
+            if TYPESCRIPT_LSP == "typescript-tools" then
+              require("typescript-tools").setup({
+                on_attach = on_attach,
+                handlers = { lsp.default_setup },
+                settings = {
+                  separate_diagnostic_server = true,
+                  publish_diagnostic_on = "insert_leave",
+                  expose_as_code_action = "all",
+                  tsserver_path = nil,
+                  tsserver_plugins = {},
+                  tsserver_max_memory = "auto",
+                  tsserver_format_options = {},
+                  tsserver_locale = "en",
+                  complete_function_calls = false,
+                  include_completions_with_insert_text = true,
+                  code_lens = "off",
+                  disable_member_code_lens = false,
+                  jsx_close_tag = {
+                    enable = false,
+                    filetypes = { "javascriptreact", "typescriptreact" },
+                  },
+                  tsserver_file_preferences = {
+                    includeInlayEnumMemberValueHints = false,
+                    includeInlayFunctionLikeReturnTypeHints = true,
+                    includeInlayFunctionParameterTypeHints = true,
+                    includeInlayParameterNameHints = "all",
+                    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                    includeInlayPropertyDeclarationTypeHints = true,
+                    includeInlayVariableTypeHints = false,
+                  },
+                },
+              })
+            else
+              require("lspconfig").vtsls.setup({
+                settings = {
+                  typescript = {
+                    inlayHints = {
+                      parameterNames = { enabled = "literals" },
+                      parameterTypes = { enabled = true },
+                      variableTypes = { enabled = true },
+                      propertyDeclarationTypes = { enabled = true },
+                      functionLikeReturnTypes = { enabled = true },
+                      enumMemberValues = { enabled = true },
+                    },
+                  },
+                },
+              })
+            end
           end,
           jsonls = function()
             require("lspconfig").jsonls.setup({
@@ -220,26 +253,26 @@ return {
       local conform = require("conform")
       conform.setup({
         format_on_save = {
-          timeout_ms = 500,
+          timeout_ms = 1000,
           lsp_fallback = true,
         },
         log_level = vim.log.levels.ERROR,
         formatters_by_ft = {
           lua = { "stylua" },
-          javascript = { "prettier", stop_after_first = true },
-          typescript = { "prettier", stop_after_first = true },
-          javascriptreact = { "prettier", stop_after_first = true },
-          typescriptreact = { "prettier", stop_after_first = true },
-          svelte = { "prettier", stop_after_first = true },
-          vue = { "prettier", stop_after_first = true },
-          css = { "prettier", stop_after_first = true },
-          html = { "prettier", stop_after_first = true },
-          json = { "prettier", stop_after_first = true },
-          yaml = { "prettier", stop_after_first = true },
-          markdown = { "prettier", stop_after_first = true },
-          graphql = { "prettier", stop_after_first = true },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+          typescript = { "prettierd", "prettier", stop_after_first = true },
+          javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+          typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+          svelte = { "prettierd", "prettier", stop_after_first = true },
+          vue = { "prettierd", "prettier", stop_after_first = true },
+          css = { "prettierd", "prettier", stop_after_first = true },
+          html = { "prettierd", "prettier", stop_after_first = true },
+          json = { "prettierd", "prettier", stop_after_first = true },
+          yaml = { "prettierd", "prettier", stop_after_first = true },
+          markdown = { "prettierd", "prettier", stop_after_first = true },
+          graphql = { "prettierd", "prettier", stop_after_first = true },
           rust = { "rust_analyzer" },
-          go = { "gofmt" },
+          go = { "gofmt", "goimports" },
         },
       })
 

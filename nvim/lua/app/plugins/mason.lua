@@ -3,6 +3,7 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "Hoffs/omnisharp-extended-lsp.nvim",
+    "yioneko/nvim-vtsls",
   },
   priority = 1000,
   config = function()
@@ -32,6 +33,7 @@ return {
         "stylua",
         "rust_analyzer",
         "gopls",
+        "goimports",
         "templ",
         "pylsp",
         "kotlin_language_server",

@@ -47,6 +47,7 @@ return {
         lsp_ts_rename_file = "<leader>rr",
         lsp_ts_remove_imports = "<leader>rc",
         lsp_ts_sort_imports = "<leader>ri",
+        lsp_ts_select_version = "<leader>rt",
         cmp_complete = {
           default = "<C-Space>",
           windows = "^esp",
