@@ -6,7 +6,7 @@ local function motion(key)
 end
 
 return {
-  "nvim-os-persist",
+  dir = vim.fn.stdpath("config") .. "/lua/nvim-os-persist",
   dev = true,
   priority = 1000,
   config = function()

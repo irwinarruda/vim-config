@@ -55,7 +55,7 @@ return {
           keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
           keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
           keymap.set("n", os.motion("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
-        else
+        elseif TYPESCRIPT_LSP == "vtsls" then
           keymap.set("n", os.motion("lsp_ts_rename_file"), function()
             require("vtsls").commands.rename_file(opts.buffer)
           end, opts)
@@ -116,7 +116,7 @@ return {
                   },
                 },
               })
-            else
+            elseif TYPESCRIPT_LSP == "vtsls" then
               require("lspconfig").vtsls.setup({
                 settings = {
                   typescript = {

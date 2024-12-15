@@ -1,5 +1,5 @@
 return {
-  "nvim-css-units",
+  dir = vim.fn.stdpath("config") .. "/lua/nvim-css-units",
   dev = true,
   priority = 1000,
   config = function()
