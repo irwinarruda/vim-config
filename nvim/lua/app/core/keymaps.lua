@@ -24,10 +24,10 @@ keymap.set("v", "<leader>d", '"_d', { noremap = true })
 keymap.set("v", "<leader>c", '"_c', { noremap = true })
 keymap.set("n", "<leader>s", '"_s', { noremap = true })
 -- Move blocks of code
-keymap.set("v", "J", ":m '>+1<CR><CR>gv=gv", { silent = true })
-keymap.set("v", "K", ":m '<-2<CR><CR>gv=gv", { silent = true })
-keymap.set("v", ">", ">gv")
 keymap.set("v", "<", "<gv")
+keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+keymap.set("v", ">", ">gv")
 keymap.set("v", "y", "y`]", { noremap = true })
 -- Ctrl D with cursor in the middle
 keymap.set("n", "<C-d>", "<C-d>zz")

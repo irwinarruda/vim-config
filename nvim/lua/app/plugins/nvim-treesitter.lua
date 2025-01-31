@@ -14,7 +14,7 @@ return {
     local os = require("nvim-os-persist")
     if os:is_windows() then
       local nvimtreesitterinstall = require("nvim-treesitter.install")
-      nvimtreesitterinstall.compilers = { "zig", "clang" }
+      nvimtreesitterinstall.compilers = { "clang", "zig" }
       nvimtreesitterinstall.prefer_git = false
     end
 
@@ -64,9 +64,9 @@ return {
     })
     nvimautotag.setup({
       opts = {
-        enable = true, -- Enable autotag
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
+        enable = true,                -- Enable autotag
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
         enable_close_on_slash = true, -- Auto close on trailing </
       },
     })

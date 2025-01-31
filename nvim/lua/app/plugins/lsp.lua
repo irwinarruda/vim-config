@@ -251,6 +251,28 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local conform = require("conform")
+
+      local current_bufnr = -1
+      local is_eslint_available = false
+      local function javascript_format(bufnr)
+        if current_bufnr == bufnr then
+          if is_eslint_available then
+            return { "prettierd", "eslint_d" }
+          end
+          return { "prettierd" }
+        end
+        current_bufnr = bufnr
+        is_eslint_available = false
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+        for _, client in ipairs(clients) do
+          if client.name == "eslint" then
+            is_eslint_available = true
+            return { "prettierd", "eslint_d" }
+          end
+        end
+        return { "prettierd" }
+      end
+
       conform.setup({
         format_on_save = {
           timeout_ms = 1000,
@@ -259,10 +281,10 @@ return {
         log_level = vim.log.levels.ERROR,
         formatters_by_ft = {
           lua = { "stylua" },
-          javascript = { "prettierd", "prettier", stop_after_first = true },
-          typescript = { "prettierd", "prettier", stop_after_first = true },
-          javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-          typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+          javascript = javascript_format,
+          typescript = javascript_format,
+          javascriptreact = javascript_format,
+          typescriptreact = javascript_format,
           svelte = { "prettierd", "prettier", stop_after_first = true },
           vue = { "prettierd", "prettier", stop_after_first = true },
           css = { "prettierd", "prettier", stop_after_first = true },
@@ -279,38 +301,10 @@ return {
       local keymap = vim.keymap
       keymap.set({ "n", "v" }, "<C-s>", function()
         conform.format({
-          timeout_ms = 500,
+          timeout_ms = 1000,
           async = false,
           lsp_fallback = true,
         })
-      end)
-    end,
-  },
-  {
-    "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local lint = require("lint")
-      lint.linters_by_ft = {
-        javascript = { "eslint" },
-        typescript = { "eslint" },
-        javascriptreact = { "eslint" },
-        typescriptreact = { "eslint" },
-        svelte = { "eslint" },
-        vue = { "eslint" },
-      }
-
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-        group = vim.api.nvim_create_augroup("LintOnSave", { clear = false }),
-        desc = "Lint on save",
-        callback = function()
-          lint.try_lint(nil, { ignore_errors = true })
-        end,
-      })
-
-      local keymap = vim.keymap
-      keymap.set({ "n", "v" }, "<leader><C-s>", function()
-        lint.try_lint(nil, { ignore_errors = true })
       end)
     end,
   },
