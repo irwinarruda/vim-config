@@ -78,3 +78,39 @@ vim.g.VM_maps = {
   ["Find Under"] = "gb",
   ["Find Subword Under"] = "gb",
 }
+
+local function open_qf_item()
+  local qf_info = vim.fn.getqflist({ idx = 0, items = true })
+  local idx = qf_info.idx
+  local qf_item = qf_info.items[idx]
+
+  if qf_item and qf_item.bufnr then
+    vim.cmd("buffer " .. qf_item.bufnr)
+    vim.cmd("wincmd p")
+  end
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    local opts = { noremap = true, silent = true, buffer = true }
+    vim.keymap.set("n", "J", function()
+      ---@diagnostic disable-next-line: param-type-mismatch
+      if pcall(vim.cmd, "cnext") then
+        open_qf_item()
+      end
+    end, opts)
+    vim.keymap.set("n", "K", function()
+      ---@diagnostic disable-next-line: param-type-mismatch
+      if pcall(vim.cmd, "cprev") then
+        open_qf_item()
+      end
+    end, opts)
+    vim.keymap.set("n", "dd", function()
+      local qf_list = vim.fn.getqflist()
+      local cursor_line = vim.fn.line(".")
+      table.remove(qf_list, cursor_line)
+      vim.fn.setqflist(qf_list, "r")
+    end, { buffer = true, desc = "Remove current item from quickfix list" })
+  end,
+})

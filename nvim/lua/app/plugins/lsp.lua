@@ -308,4 +308,19 @@ return {
       end)
     end,
   },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local lint = require("lint")
+      lint.linters_by_ft = {
+        svelte = { "eslint" },
+        vue = { "eslint" },
+      }
+      local keymap = vim.keymap
+      keymap.set({ "n", "v" }, "<leader><C-s>", function()
+        lint.try_lint(nil, { ignore_errors = true })
+      end)
+    end,
+  },
 }
