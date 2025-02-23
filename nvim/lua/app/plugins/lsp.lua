@@ -295,6 +295,13 @@ return {
           graphql = { "prettierd", "prettier", stop_after_first = true },
           rust = { "rust_analyzer" },
           go = { "gofmt", "goimports" },
+          nginx = { "nginxfmt" },
+        },
+        formatters = {
+          -- Need to install manually
+          nginxfmt = {
+            prepend_args = { "-i", "2" },
+          },
         },
       })
 

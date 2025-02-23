@@ -37,6 +37,7 @@ return {
         "templ",
         "pylsp",
         "kotlin_language_server",
+        "nginx_language_server",
       },
     })
     vim.cmd("MasonToolsUpdate")

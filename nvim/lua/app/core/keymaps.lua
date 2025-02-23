@@ -62,6 +62,9 @@ keymap.set("n", "<M-j>", "<C-w>3-", { noremap = true }) -- decrement window heig
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 
+keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
+keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
+
 -- Debug
 keymap.set("n", "<leader><leader>w", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
 keymap.set("n", "<leader><leader>s", function()
