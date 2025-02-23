@@ -66,8 +66,20 @@
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
+      "before": ["<leader>", "q"],
+      "commands": ["workbench.action.toggleAuxiliaryBar"]
+    },
+    {
       "before": ["<leader>", "t"],
       "commands": ["workbench.action.terminal.toggleTerminal"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "t"],
+      "commands": ["workbench.action.terminal.openNativeConsole"]
+    },
+    {
+      "before": ["<leader>", "s", "s"],
+      "commands": ["search.action.openNewEditorFromView"]
     },
     {
       "before": ["<leader>", "f", "s"],
@@ -75,7 +87,7 @@
     },
     {
       "before": ["<leader>", "f", "f"],
-      "commands": ["workbench.action.findInFiles"]
+      "commands": ["workbench.view.search"]
     },
     {
       "before": ["<leader>", "f", "p"],
@@ -166,6 +178,18 @@
     {
       "before": ["<"],
       "commands": ["editor.action.outdentLines"]
+    },
+    {
+      "before": ["n"],
+      "commands": ["editor.action.addSelectionToNextFindMatch"]
+    },
+    {
+      "before": ["N"],
+      "commands": ["editor.action.addSelectionToPreviousFindMatch"]
+    },
+    {
+      "before": ["*"],
+      "after": ["y", "/", "\\V", "<C-R>", "\"", "<CR>", "<Esc>"]
     }
   ],
   "vim.hlsearch": true,
@@ -186,27 +210,26 @@
     "tailwindlabs.tailwindCSS": 1
   },
   "workbench.colorCustomizations": {
-    "editorBracketPairGuide.activeBackground1": "#FFD700",
-    "editorBracketPairGuide.activeBackground2": "#DA70D6",
-    "editorBracketPairGuide.activeBackground3": "#179FFF",
-    "editorBracketPairGuide.activeBackground4": "#FFD700",
-    "editorBracketPairGuide.activeBackground5": "#DA70D6",
-    "editorBracketPairGuide.activeBackground6": "#179FFF",
-    "editorBracketPairGuide.background1": "#FFFFFF00",
-    "editorBracketPairGuide.background2": "#FFFFFF00",
-    "editorBracketPairGuide.background3": "#FFFFFF00",
-    "editorBracketPairGuide.background4": "#FFFFFF00",
-    "editorBracketPairGuide.background5": "#FFFFFF00",
-    "editorBracketPairGuide.background6": "#FFFFFF00",
-    "editorBracketPairGuide.foreground1": "#FFD700",
-    "editorBracketPairGuide.foreground2": "#DA70D6",
-    "editorBracketPairGuide.foreground3": "#179FFF",
-    "editorBracketHighlight.foreground1": "#FFD700",
-    "editorBracketHighlight.foreground2": "#DA70D6",
-    "editorBracketHighlight.foreground3": "#179FFF",
-    "editorBracketHighlight.foreground4": "#FFD700",
-    "editorBracketHighlight.foreground5": "#DA70D6",
-    "editorBracketHighlight.foreground6": "#179FFF"
+    "[Dracula Pro]": {
+      "editorBracketPairGuide.activeBackground1": "#FFD700",
+      "editorBracketPairGuide.activeBackground2": "#DA70D6",
+      "editorBracketPairGuide.activeBackground3": "#179FFF",
+      "editorBracketPairGuide.activeBackground4": "#FFD700",
+      "editorBracketPairGuide.activeBackground5": "#DA70D6",
+      "editorBracketPairGuide.activeBackground6": "#179FFF",
+      "editorBracketPairGuide.background1": "#FFFFFF00",
+      "editorBracketPairGuide.background2": "#FFFFFF00",
+      "editorBracketPairGuide.background3": "#FFFFFF00",
+      "editorBracketPairGuide.background4": "#FFFFFF00",
+      "editorBracketPairGuide.background5": "#FFFFFF00",
+      "editorBracketPairGuide.background6": "#FFFFFF00",
+      "editorBracketHighlight.foreground1": "#FFD700",
+      "editorBracketHighlight.foreground2": "#DA70D6",
+      "editorBracketHighlight.foreground3": "#179FFF",
+      "editorBracketHighlight.foreground4": "#FFD700",
+      "editorBracketHighlight.foreground5": "#DA70D6",
+      "editorBracketHighlight.foreground6": "#179FFF"
+    }
   },
   "workbench.iconTheme": "material-icon-theme",
   "material-icon-theme.activeIconPack": "react_redux",

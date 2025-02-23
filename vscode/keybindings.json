@@ -38,6 +38,23 @@
     "when": "sideBarFocus && explorerViewletVisible && !filesExplorerFocus"
   },
   // NAVIGATE FROM PANELS
+  // NAVIGATE ON GIT DIFFS
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.compareEditor.focusSecondarySide",
+    "when": "isInDiffEditor && editorTextFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.compareEditor.focusPrimarySide",
+    "when": "isInDiffEditor && editorTextFocus"
+  },
+  {
+    "key": "q",
+    "command": "git.openFile",
+    "when": "isInDiffEditor && editorTextFocus && vim.mode == 'Normal'"
+  },
+  // NAVIGATE ON GIT DIFFS
   // NAVIGATE ON AUTOCOMPLETE SUGGESTIONS
   {
     "key": "ctrl+j",
@@ -62,6 +79,18 @@
     "when": "inQuickOpen"
   },
   // NAVIGATE ON COMMAND PALETTE
+  // NAVIGATE ON QUICK FIX
+  {
+    "key": "ctrl+k",
+    "command": "selectPrevCodeAction",
+    "when": "codeActionMenuVisible"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "selectNextCodeAction",
+    "when": "codeActionMenuVisible"
+  },
+  // NAVIGATE ON QUICK FIX
   // NAVIGATE ON EXPLORER
   {
     "key": "j",
@@ -95,7 +124,7 @@
   },
   {
     "key": "enter",
-    "command": "list.select",
+    "command": "list.toggleExpand",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
@@ -129,21 +158,58 @@
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
+    "key": "v",
+    "command": "list.toggleSelection",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
     "key": "shift+w",
     "command": "list.collapseAll",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
+    "key": "ctrl+q",
+    "command": "workbench.files.action.focusOpenEditorsView",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "q",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "explorerViewletVisible && openEditorsFocus && !inputFocus"
+  },
+  {
+    "key": "shift+w",
+    "command": "workbench.action.closeAllEditors",
+    "when": "explorerViewletVisible && openEditorsFocus && !inputFocus"
+  },
+  {
     "key": "alt+l",
     "command": "workbench.action.increaseViewSize",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    "when": "sideBarFocus"
   },
   {
     "key": "alt+h",
     "command": "workbench.action.decreaseViewSize",
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    "when": "sideBarFocus"
   },
   // NAVIGATE ON EXPLORER
+  // NAVIGATE ON RIGHT SIDE BAR
+  {
+    "key": "space q",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "auxiliaryBarFocus && !inputFocus"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "auxiliaryBarFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.increaseViewSize",
+    "when": "auxiliaryBarFocus"
+  },
+  // NAVIGATE ON RIGHT SIDE BAR
   // NAVIGATE ON TERMINAL
   {
     "key": "alt+j",
@@ -155,7 +221,74 @@
     "command": "workbench.action.terminal.resizePaneUp",
     "when": "terminalFocus"
   },
+  {
+    "key": "escape",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminalFocus"
+  },
   // NAVIGATE ON TERMINAL
+  // NAVIGATE ON SOURCE CONTROL
+  {
+    "key": "ctrl+j",
+    "command": "workbench.scm.action.focusNextResourceGroup",
+    "when": "sideBarVisible && focusedView == 'workbench.scm'"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.scm.action.focusNextInput",
+    "when": "sideBarVisible && focusedView == 'workbench.scm'"
+  },
+  // NAVIGATE ON SOURCE CONTROL
+  // NAVIGATE ON SEARCH
+  {
+    "key": "ctrl+j",
+    "command": "search.action.focusSearchList",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "search.action.focusSearchFromResults",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "search.action.replace",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  {
+    "key": "q",
+    "command": "search.action.remove",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  // NAVIGATE ON SEARCH
+  // NAVIGATE ON SEARCH IN EDITOR
+  {
+    "key": "ctrl+j",
+    "args": {
+      "commands": [
+        "search.action.focusNextSearchResult",
+        "extension.vim_escape"
+      ]
+    },
+    "command": "runCommands",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "search.action.focusQueryEditorWidget",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "ctrl+s",
+    "command": "searchEditorApplyChanges.apply",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "q",
+    "command": "search.searchEditor.action.deleteFileResults",
+    "when": "inSearchEditor && editorTextFocus && vim.mode == 'Normal'"
+  },
+  // NAVIGATE ON SEARCH IN EDITOR
   // VIM GLOBAL COMMANDS
   {
     "key": "ctrl+shift+,",
@@ -213,19 +346,25 @@
     "when": "editorTextFocus && vim.mode == 'Normal'"
   },
   {
-    "key": "escape",
-    "command": "workbench.action.terminal.toggleTerminal",
-    "when": "terminalFocus"
+    "key": "q",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
   },
   {
     "key": "escape",
     "command": "workbench.view.explorer",
-    "when": "searchViewletVisible"
+    "when": "sideBarVisible && sideBarFocus"
+  },
+  // VIM GLOBAL COMMANDS
+  // OTHER DEFAULT THINGS
+  {
+    "key": "ctrl+o",
+    "command": "-workbench.action.files.openFile",
+    "when": "true"
   },
   {
-    "key": "q",
-    "command": "workbench.action.closeActiveEditor",
-    "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
+    "key": "shift+alt+p",
+    "command": "workbench.action.openView"
   }
-  // VIM GLOBAL COMMANDS
+  // OTHER DEFAULT THINGS
 ]
