@@ -1,4 +1,5 @@
 {
+  // VIM
   "vim.normalModeKeyBindings": [
     {
       "before": ["<leader>", "="],
@@ -122,6 +123,10 @@
       "commands": ["git.openChange"]
     },
     {
+      "before": ["<leader>", "g", "b"],
+      "commands": ["gitlens.toggleLineBlame"]
+    },
+    {
       "before": ["<leader>", "a"],
       "commands": ["vscode-harpoon.addEditor"]
     },
@@ -190,6 +195,14 @@
     {
       "before": ["*"],
       "after": ["y", "/", "\\V", "<C-R>", "\"", "<CR>", "<Esc>"]
+    },
+    {
+      "before": ["<leader>", "<C-e>"],
+      "commands": ["github.copilot.edits.attachSelection"]
+    },
+    {
+      "before": ["<leader>", "<C-c>"],
+      "commands": ["github.copilot.chat.attachSelection"]
     }
   ],
   "vim.hlsearch": true,
@@ -209,6 +222,110 @@
     "vscodevim.vim": 1,
     "tailwindlabs.tailwindCSS": 1
   },
+  // VIM
+  // LANGUAGES
+  "vue.server.includeLanguages": ["vue"],
+  "vue.format.style.initialIndent": false,
+  "svelte.enable-ts-plugin": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte"
+  ],
+  "[javascript][javascriptreact][typescript][typescriptreact][vue][svelte]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "quickfix.insertSemicolon": "explicit"
+    },
+    "editor.selectionHighlight": false
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "gopls": {
+    "ui.navigation.importShortcut": "Link"
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "emmet.includeLanguages": {
+    "rust": "html",
+    "*.rs": "html"
+  },
+  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"],
+  // LANGUAGES
+  // UTILS
+  "tailwindCSS.includeLanguages": {
+    "rust": "html",
+    "*.rs": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "gitlens.graph.layout": "editor",
+  "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "yaml": false
+  },
+  // UTILS
+  // EDITOR
+  "terminal.external.osxExec": "Warp.app",
+  "terminal.integrated.fontFamily": "'FiraCode Nerd Font', 'Fira Code', 'Cascadia Code PL', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
+  "breadcrumbs.enabled": false,
+  "window.zoomLevel": 1,
+  "window.titleBarStyle": "custom",
+  "explorer.openEditors.visible": 4,
+  "explorer.compactFolders": false,
+  "editor.formatOnSave": true,
+  "editor.fontSize": 14,
+  "editor.fontFamily": "'FiraCode Nerd Font', 'Fira Code', 'Cascadia Code PL', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.wordWrap": "off",
+  "editor.rulers": [80, 120],
+  "editor.minimap.enabled": false,
+  "editor.renderLineHighlight": "none",
+  "editor.guides.bracketPairs": true,
+  "editor.lineNumbers": "relative",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "files.associations": {
+    "*.rmd": "markdown",
+    "*.rs": "rust"
+  },
+  "prettier.tabWidth": 2,
+  "prettier.endOfLine": "auto",
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.useTabs": false,
+  "prettier.trailingComma": "all",
+  "prettier.experimentalTernaries": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.enablePreview": false,
   "workbench.colorCustomizations": {
     "[Dracula Pro]": {
       "editorBracketPairGuide.activeBackground1": "#FFD700",
@@ -232,6 +349,11 @@
     }
   },
   "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Dracula Pro",
+  "workbench.activityBar.location": "hidden",
+  "workbench.editor.showTabs": "none",
+  // EDITOR
+  // MATERIAL ICONS FOLDER
   "material-icon-theme.activeIconPack": "react_redux",
   "material-icon-theme.folders.associations": {
     "infra": "app",
@@ -257,4 +379,5 @@
     "features": "Template"
   },
   "material-icon-theme.folders.theme": "specific"
+  // MATERIAL ICONS FOLDER
 }

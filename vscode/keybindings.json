@@ -163,6 +163,30 @@
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
+    "key": "ctrl+c",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "list.select",
+        "github.copilot.chat.attachFile",
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && !explorerResourceIsOpen"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "list.select",
+        "github.copilot.edits.attachFile",
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && !explorerResourceIsOpen"
+  },
+  {
     "key": "shift+w",
     "command": "list.collapseAll",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
@@ -360,6 +384,21 @@
   {
     "key": "ctrl+o",
     "command": "-workbench.action.files.openFile",
+    "when": "true"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.newWindow",
+    "when": "true"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.closeWindow",
+    "when": "true"
+  },
+  {
+    "key": "ctrl+y",
+    "command": "workbench.action.files.openFolder",
     "when": "true"
   },
   {
