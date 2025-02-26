@@ -157,6 +157,42 @@
     {
       "before": ["<leader>", "5"],
       "commands": ["vscode-harpoon.gotoEditor5"]
+    },
+    {
+      "before": ["<leader>", "d", "e"],
+      "commands": ["workbench.debug.action.toggleRepl"]
+    },
+    {
+      "before": ["<leader>", "d", "d"],
+      "commands": ["editor.debug.action.toggleBreakpoint"]
+    },
+    {
+      "before": ["<leader>", "d", "r"],
+      "commands": ["workbench.action.debug.start"]
+    },
+    {
+      "before": ["<leader>", "d", "y"],
+      "commands": ["workbench.action.debug.stop"]
+    },
+    {
+      "before": ["<leader>", "d", "u"],
+      "commands": ["workbench.action.debug.continue"]
+    },
+    {
+      "before": ["<leader>", "d", "j"],
+      "commands": ["workbench.action.debug.stepOver"]
+    },
+    {
+      "before": ["<leader>", "d", "i"],
+      "commands": ["workbench.action.debug.stepInto"]
+    },
+    {
+      "before": ["<leader>", "d", "o"],
+      "commands": ["workbench.action.debug.stepOut"]
+    },
+    {
+      "before": ["<leader>", "d", "h"],
+      "commands": ["workbench.action.debug.restart"]
     }
   ],
   "vim.visualModeKeyBindings": [

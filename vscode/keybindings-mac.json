@@ -382,11 +382,6 @@
   // VIM GLOBAL COMMANDS
   // OTHER DEFAULT THINGS
   {
-    "key": "cmd+o", // MAC
-    "command": "-workbench.action.files.openFile",
-    "when": "true"
-  },
-  {
     "key": "cmd+t", // MAC
     "command": "workbench.action.newWindow",
     "when": "true"
