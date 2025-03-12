@@ -163,6 +163,11 @@
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
+    "key": "escape",
+    "command": "",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
     "key": "ctrl+c",
     "command": "runCommands",
     "args": {
@@ -377,7 +382,7 @@
   {
     "key": "escape",
     "command": "workbench.view.explorer",
-    "when": "sideBarVisible && sideBarFocus"
+    "when": "!explorerViewletVisible &&sideBarVisible && sideBarFocus"
   },
   // VIM GLOBAL COMMANDS
   // OTHER DEFAULT THINGS

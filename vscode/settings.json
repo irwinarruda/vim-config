@@ -254,6 +254,12 @@
     "<C-o>": false,
     "<C-i>": false
   },
+  "vim.commandLineModeKeyBindings": [
+    {
+      "before": ["W"],
+      "after": ["w"]
+    }
+  ],
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1,
     "tailwindlabs.tailwindCSS": 1
@@ -288,23 +294,25 @@
     },
     "editor.selectionHighlight": false
   },
-  "go.toolsManagement.autoUpdate": true,
-  "gopls": {
-    "ui.navigation.importShortcut": "Link"
-  },
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
     "editor.autoIndent": "advanced"
   },
-  "[json][jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+  "json.format.enable": false,
+  "json.validate.enable": true,
+  "[json][jsonc][jsonl]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"],
+  "go.toolsManagement.autoUpdate": true,
+  "gopls": {
+    "ui.navigation.importShortcut": "Link"
   },
   "emmet.includeLanguages": {
     "rust": "html",
     "*.rs": "html"
   },
-  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"],
   // LANGUAGES
   // UTILS
   "tailwindCSS.includeLanguages": {
@@ -414,6 +422,7 @@
     "maps": "Target",
     "features": "Template"
   },
-  "material-icon-theme.folders.theme": "specific"
+  "material-icon-theme.folders.theme": "specific",
+  "githubPullRequests.pullBranch": "never"
   // MATERIAL ICONS FOLDER
 }
