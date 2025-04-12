@@ -159,6 +159,10 @@
       "commands": ["vscode-harpoon.gotoEditor5"]
     },
     {
+      "before": ["<leader>", "6"],
+      "commands": ["vscode-harpoon.gotoEditor6"]
+    },
+    {
       "before": ["<leader>", "d", "e"],
       "commands": ["workbench.debug.action.toggleRepl"]
     },
@@ -323,7 +327,7 @@
     ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
   "gitlens.graph.layout": "editor",
-  "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.editor.enableCodeActions": true,
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -331,12 +335,13 @@
     "scminput": false,
     "yaml": false
   },
+  "githubPullRequests.pullBranch": "never",
+  "github.copilot.nextEditSuggestions.enabled": true,
   // UTILS
   // EDITOR
-  "terminal.external.osxExec": "Warp.app",
   "terminal.integrated.fontFamily": "'FiraCode Nerd Font', 'Fira Code', 'Cascadia Code PL', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
   "breadcrumbs.enabled": false,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0.4,
   "window.titleBarStyle": "custom",
   "explorer.openEditors.visible": 4,
   "explorer.compactFolders": false,
@@ -345,7 +350,7 @@
   "editor.fontFamily": "'FiraCode Nerd Font', 'Fira Code', 'Cascadia Code PL', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.stickyScroll.enabled": true,
-  "editor.wordWrap": "off",
+  "editor.wordWrap": "on",
   "editor.rulers": [80, 120],
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
@@ -370,6 +375,7 @@
   "prettier.experimentalTernaries": true,
   "workbench.startupEditor": "newUntitledFile",
   "workbench.editor.enablePreview": false,
+  "workbench.editorAssociations": { "*.svg": "default" },
   "workbench.colorCustomizations": {
     "[Dracula Pro]": {
       "editorBracketPairGuide.activeBackground1": "#FFD700",
@@ -422,7 +428,6 @@
     "maps": "Target",
     "features": "Template"
   },
-  "material-icon-theme.folders.theme": "specific",
-  "githubPullRequests.pullBranch": "never"
+  "material-icon-theme.folders.theme": "specific"
   // MATERIAL ICONS FOLDER
 }

@@ -51,7 +51,7 @@
   },
   {
     "key": "q",
-    "command": "git.openFile",
+    "command": "workbench.action.closeActiveEditor",
     "when": "isInDiffEditor && editorTextFocus && vim.mode == 'Normal'"
   },
   // NAVIGATE ON GIT DIFFS
@@ -160,6 +160,11 @@
   {
     "key": "v",
     "command": "list.toggleSelection",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "escape",
+    "command": "",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
@@ -275,6 +280,17 @@
     "when": "searchViewletVisible && searchViewletFocus"
   },
   {
+    "key": "ctrl+c",
+    "args": {
+      "commands": [
+        "search.action.clearHistory",
+        "search.action.clearSearchResults"
+      ]
+    },
+    "command": "runCommands",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  {
     "key": "ctrl+r",
     "command": "search.action.replace",
     "when": "searchViewletVisible && searchViewletFocus"
@@ -282,7 +298,7 @@
   {
     "key": "q",
     "command": "search.action.remove",
-    "when": "searchViewletVisible && searchViewletFocus"
+    "when": "searchViewletVisible && searchViewletFocus && !inputFocus"
   },
   // NAVIGATE ON SEARCH
   // NAVIGATE ON SEARCH IN EDITOR
@@ -377,7 +393,7 @@
   {
     "key": "escape",
     "command": "workbench.view.explorer",
-    "when": "sideBarVisible && sideBarFocus"
+    "when": "!explorerViewletVisible &&sideBarVisible && sideBarFocus"
   },
   // VIM GLOBAL COMMANDS
   // OTHER DEFAULT THINGS
