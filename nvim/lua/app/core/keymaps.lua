@@ -65,6 +65,10 @@ keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
 keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
 keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
 
+-- Paste actions
+
+keymap.set("n", "<leader><leader>p", "p=`[v`]=")
+
 -- Debug
 keymap.set("n", "<leader><leader>w", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
 keymap.set("n", "<leader><leader>s", function()
@@ -76,11 +80,6 @@ keymap.set("n", "<leader><leader>s", function()
 end)
 
 vim.api.nvim_create_user_command("W", "write", {})
-
-vim.g.VM_maps = {
-  ["Find Under"] = "gb",
-  ["Find Subword Under"] = "gb",
-}
 
 local function open_qf_item()
   local qf_info = vim.fn.getqflist({ idx = 0, items = true })
