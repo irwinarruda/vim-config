@@ -5,7 +5,6 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
-    "vonheikemen/lsp-zero.nvim",
   },
   config = function()
     local cmp = require("cmp")
@@ -38,7 +37,6 @@ return {
         { name = "buffer" }, -- text within current buffer
         { name = "path" }, -- file system paths
       }),
-      formatting = require("lsp-zero").cmp_format(),
     })
   end,
 }

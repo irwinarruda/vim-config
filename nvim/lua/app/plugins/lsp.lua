@@ -1,28 +1,24 @@
 return {
   {
-    "vonheikemen/lsp-zero.nvim",
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {},
+  },
+  {
+    "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
+      "folke/lazydev.nvim",
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
       "L3MON4D3/LuaSnip",
       "pmizio/typescript-tools.nvim",
+      "yioneko/nvim-vtsls",
     },
-    branch = "v3.x",
     config = function()
       local TYPESCRIPT_LSP = "vtsls"
-      local lsp = require("lsp-zero")
-      lsp.preset("recomended")
-      lsp.set_sign_icons({
-        error = "✘",
-        warn = "▲",
-        hint = "⚑",
-        info = "»",
-      })
-
       local on_attach = function(_, bufnr)
         local opts = { buffer = bufnr, remap = false }
         local os = require("app.plugins.nvim-os-persist")
@@ -44,11 +40,11 @@ return {
         end, opts)
         keymap.set("n", os.motion("lsp_rename"), vim.lsp.buf.rename, opts)
         keymap.set("n", os.motion("lsp_goto_next"), function()
-          vim.diagnostic.goto_next()
+          vim.diagnostic.jump({ count = 1 })
           vim.cmd.normal("zz")
         end, opts)
         keymap.set("n", os.motion("lsp_goto_prev"), function()
-          vim.diagnostic.goto_prev()
+          vim.diagnostic.jump({ count = -1 })
           vim.cmd.normal("zz")
         end, opts)
         if TYPESCRIPT_LSP == "typescript-tools" then
@@ -69,181 +65,153 @@ return {
             require("vtsls").commands.select_ts_version(opts.buffer)
           end, opts)
         end
+        vim.keymap.set("n", "<leader>h", function()
+          ---@diagnostic disable-next-line: missing-parameter
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, { noremap = true })
       end
+      vim.lsp.config("*", {
+        on_attach = on_attach,
+      })
 
-      lsp.on_attach(on_attach)
-
-      vim.keymap.set("n", "<leader>h", function()
-        ---@diagnostic disable-next-line: missing-parameter
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-      end, { noremap = true })
-
-      require("mason").setup({})
-      require("mason-lspconfig").setup({
-        handlers = {
-          lsp.default_setup,
-          vtsls = function() end,
-          ts_ls = function()
-            if TYPESCRIPT_LSP == "typescript-tools" then
-              require("typescript-tools").setup({
-                on_attach = on_attach,
-                handlers = { lsp.default_setup },
-                settings = {
-                  separate_diagnostic_server = true,
-                  publish_diagnostic_on = "insert_leave",
-                  expose_as_code_action = "all",
-                  tsserver_path = nil,
-                  tsserver_plugins = {},
-                  tsserver_max_memory = "auto",
-                  tsserver_format_options = {},
-                  tsserver_locale = "en",
-                  complete_function_calls = false,
-                  include_completions_with_insert_text = true,
-                  code_lens = "off",
-                  disable_member_code_lens = false,
-                  jsx_close_tag = {
-                    enable = false,
-                    filetypes = { "javascriptreact", "typescriptreact" },
-                  },
-                  tsserver_file_preferences = {
-                    includeInlayEnumMemberValueHints = false,
-                    includeInlayFunctionLikeReturnTypeHints = true,
-                    includeInlayFunctionParameterTypeHints = true,
-                    includeInlayParameterNameHints = "all",
-                    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                    includeInlayPropertyDeclarationTypeHints = true,
-                    includeInlayVariableTypeHints = false,
-                  },
-                },
-              })
-            elseif TYPESCRIPT_LSP == "vtsls" then
-              require("lspconfig").vtsls.setup({
-                settings = {
-                  typescript = {
-                    inlayHints = {
-                      parameterNames = { enabled = "literals" },
-                      parameterTypes = { enabled = true },
-                      variableTypes = { enabled = true },
-                      propertyDeclarationTypes = { enabled = true },
-                      functionLikeReturnTypes = { enabled = true },
-                      enumMemberValues = { enabled = true },
-                    },
-                  },
-                },
-              })
-            end
-          end,
-          jsonls = function()
-            require("lspconfig").jsonls.setup({
-              on_attach = on_attach,
-              handlers = { lsp.default_setup },
-              settings = {
-                json = {
-                  schemas = {
-                    {
-                      fileMatch = { "package.json" },
-                      url = "https://json.schemastore.org/package.json",
-                    },
-                    {
-                      fileMatch = { "tsconfig*.json" },
-                      url = "https://json.schemastore.org/tsconfig.json",
-                    },
-                    {
-                      fileMatch = { "tauri.conf.json" },
-                      url = "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
-                    },
-                    {
-                      fileMatch = { ".prettierrc", ".prettierrc.json", ".prettierrc.json5" },
-                      url = "https://json.schemastore.org/prettierrc",
-                    },
-                    {
-                      fileMatch = { ".eslintrc.json" },
-                      url = "https://json.schemastore.org/eslintrc",
-                    },
-                    {
-                      fileMatch = { ".babelrc.json", ".babelrc.json5" },
-                      url = "https://json.schemastore.org/babelrc",
-                    },
-                  },
-                },
+      if TYPESCRIPT_LSP == "typescript-tools" then
+        require("typescript-tools").setup({
+          on_attach = on_attach,
+          settings = {
+            separate_diagnostic_server = true,
+            publish_diagnostic_on = "insert_leave",
+            expose_as_code_action = "all",
+            tsserver_path = nil,
+            tsserver_plugins = {},
+            tsserver_max_memory = "auto",
+            tsserver_format_options = {},
+            tsserver_locale = "en",
+            complete_function_calls = false,
+            include_completions_with_insert_text = true,
+            code_lens = "off",
+            disable_member_code_lens = false,
+            jsx_close_tag = {
+              enable = false,
+              filetypes = { "javascriptreact", "typescriptreact" },
+            },
+            tsserver_file_preferences = {
+              includeInlayEnumMemberValueHints = false,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayVariableTypeHints = false,
+            },
+          },
+        })
+      elseif TYPESCRIPT_LSP == "vtsls" then
+        vim.lsp.enable("vtsls")
+      end
+      vim.lsp.config("jsonls", {
+        on_attach = on_attach,
+        settings = {
+          json = {
+            schemas = {
+              {
+                fileMatch = { "package.json" },
+                url = "https://json.schemastore.org/package.json",
               },
-            })
-          end,
-          lua_ls = function()
-            local lua_config = lsp.nvim_lua_ls()
-            lua_config.settings.Lua.hint = { enable = true }
-            require("lspconfig").lua_ls.setup(lua_config)
-          end,
-          tailwindcss = function()
-            require("lspconfig").tailwindcss.setup({
-              on_attach = on_attach,
-              settings = {
-                tailwindCSS = {
-                  experimental = {
-                    classRegex = {
-                      { "([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                    },
-                  },
-                },
+              {
+                fileMatch = { "tsconfig*.json" },
+                url = "https://json.schemastore.org/tsconfig.json",
               },
-            })
-          end,
-          volar = function()
-            -- local path = require("mason-registry").get_package("typescript-language-server"):get_install_path()
-            require("lspconfig").volar.setup({
-              on_attach = on_attach,
-              handlers = { lsp.default_setup },
-              filetypes = { "vue" },
-              init_options = {
-                vue = {
-                  hybridMode = false,
-                },
+              {
+                fileMatch = { "tauri.conf.json" },
+                url = "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
               },
-            })
-          end,
-          omnisharp = function()
-            require("lspconfig").omnisharp.setup({
-              handlers = {
-                lsp.default_setup,
-                ["textDocument/definition"] = require("omnisharp_extended").definition_handler,
-                ["textDocument/typeDefinition"] = require("omnisharp_extended").type_definition_handler,
-                ["textDocument/references"] = require("omnisharp_extended").references_handler,
-                ["textDocument/implementation"] = require("omnisharp_extended").implementation_handler,
+              {
+                fileMatch = { ".prettierrc", ".prettierrc.json", ".prettierrc.json5" },
+                url = "https://json.schemastore.org/prettierrc",
               },
-              settings = {
-                FormattingOptions = {
-                  NewLinesForBracesInLambdaExpressionBody = false,
-                  NewLinesForBracesInAnonymousMethods = false,
-                  NewLinesForBracesInAnonymousTypes = false,
-                  NewLinesForBracesInControlBlocks = false,
-                  NewLinesForBracesInTypes = false,
-                  NewLinesForBracesInMethods = false,
-                  NewLinesForBracesInProperties = false,
-                  NewLinesForBracesInObjectCollectionArrayInitializers = false,
-                  NewLinesForBracesInAccessors = false,
-                  NewLineForElse = false,
-                  NewLineForCatch = false,
-                  NewLineForFinally = false,
-                  EnableEditorConfigSupport = true,
-                  OrganizeImports = true,
-                },
-                MsBuild = {
-                  LoadProjectsOnDemand = nil,
-                },
-                RoslynExtensionsOptions = {
-                  EnableDecompilationSupport = true,
-                  EnableImportCompletion = true,
-                  EnableAnalyzersSupport = nil,
-                  AnalyzeOpenDocumentsOnly = nil,
-                },
-                Sdk = {
-                  IncludePrereleases = true,
-                },
+              {
+                fileMatch = { ".eslintrc.json" },
+                url = "https://json.schemastore.org/eslintrc",
               },
-            })
-          end,
+              {
+                fileMatch = { ".babelrc.json", ".babelrc.json5" },
+                url = "https://json.schemastore.org/babelrc",
+              },
+            },
+          },
         },
       })
+      vim.lsp.config("tailwindcss", {
+        on_attach = on_attach,
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                { "([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]" },
+              },
+            },
+          },
+        },
+      })
+      vim.lsp.config("omnisharp", {
+        handlers = {
+          ["textDocument/definition"] = require("omnisharp_extended").definition_handler,
+          ["textDocument/typeDefinition"] = require("omnisharp_extended").type_definition_handler,
+          ["textDocument/references"] = require("omnisharp_extended").references_handler,
+          ["textDocument/implementation"] = require("omnisharp_extended").implementation_handler,
+        },
+        settings = {
+          FormattingOptions = {
+            NewLinesForBracesInLambdaExpressionBody = false,
+            NewLinesForBracesInAnonymousMethods = false,
+            NewLinesForBracesInAnonymousTypes = false,
+            NewLinesForBracesInControlBlocks = false,
+            NewLinesForBracesInTypes = false,
+            NewLinesForBracesInMethods = false,
+            NewLinesForBracesInProperties = false,
+            NewLinesForBracesInObjectCollectionArrayInitializers = false,
+            NewLinesForBracesInAccessors = false,
+            NewLineForElse = false,
+            NewLineForCatch = false,
+            NewLineForFinally = false,
+            EnableEditorConfigSupport = true,
+            OrganizeImports = true,
+          },
+          MsBuild = {
+            LoadProjectsOnDemand = nil,
+          },
+          RoslynExtensionsOptions = {
+            EnableDecompilationSupport = true,
+            EnableImportCompletion = true,
+            EnableAnalyzersSupport = nil,
+            AnalyzeOpenDocumentsOnly = nil,
+          },
+          Sdk = {
+            IncludePrereleases = true,
+          },
+        },
+      })
+      require("mason-lspconfig").setup({
+        automatic_enable = {
+          exclude = { "ts_ls", "vtsls", "jsonls", "tailwindcss", "omnisharp" },
+        },
+      })
+      local levels = vim.diagnostic.severity
+      local opts = {
+        virtual_text = true,
+        float = {
+          border = "rounded",
+        },
+        signs = {
+          text = {
+            [levels.ERROR] = "✘",
+            [levels.WARN] = "▲",
+            [levels.HINT] = "⚑",
+            [levels.INFO] = "»",
+          },
+        },
+      }
+      vim.diagnostic.config(opts)
     end,
   },
   {

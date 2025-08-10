@@ -1,13 +1,13 @@
 return {
   "WhoIsSethDaniel/mason-tool-installer.nvim",
   dependencies = {
+    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "Hoffs/omnisharp-extended-lsp.nvim",
-    "yioneko/nvim-vtsls",
   },
   priority = 1000,
   config = function()
-    require("mason").setup({})
+    require("mason").setup()
     require("mason-tool-installer").setup({
       ensure_installed = {
         "dockerls",
@@ -27,7 +27,7 @@ return {
         "ts_ls",
         "vtsls",
         "svelte",
-        "volar",
+        "vue-language-server",
         "jsonls",
         "lua_ls",
         "stylua",
@@ -39,7 +39,7 @@ return {
         "kotlin_language_server",
         "nginx_language_server",
       },
+      auto_update = true,
     })
-    vim.cmd("MasonToolsUpdate")
   end,
 }

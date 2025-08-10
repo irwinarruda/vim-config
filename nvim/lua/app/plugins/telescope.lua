@@ -6,7 +6,7 @@ local telescope_lsp_keymaps = function(opts)
     vim.keymap.set("n", os.motion("lsp_references"), builtin.lsp_references, opts)
     vim.keymap.set("n", os.motion("lsp_implementation"), vim.lsp.buf.implementation, opts)
   else
-    vim.keymap.set("n", os.motion("lsp_definitions"), builtin.lsp_definitions, opts)
+    vim.keymap.set("n", os.motion("lsp_definitions"), vim.lsp.buf.definition, opts)
     vim.keymap.set("n", os.motion("lsp_references"), builtin.lsp_references, opts)
     vim.keymap.set("n", os.motion("lsp_implementation"), builtin.lsp_implementations, opts)
   end
@@ -15,7 +15,7 @@ end
 
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  branch = "master",
   dependencies = { "nvim-telescope/telescope-dap.nvim", "nvim-lua/plenary.nvim" },
   config = function()
     local telescope = require("telescope")
