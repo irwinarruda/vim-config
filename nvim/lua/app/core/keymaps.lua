@@ -69,7 +69,17 @@ keymap.set("n", "<leader><leader>p", "p=`[v`]=")
 
 keymap.set("n", "<leader><leader>w", "<cmd>noa w<CR>", { desc = "Write without autocommands" })
 
-keymap.set("n", "<leader><leader>b", ":%bd|e#|bd#<CR>", { desc = "Close all buffers except current" })
+keymap.set("n", "<leader><leader>b", function()
+  local current = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+      local ft = vim.bo[buf].filetype
+      if ft ~= "NvimTree" then
+        vim.api.nvim_buf_delete(buf, {})
+      end
+    end
+  end
+end, { desc = "Close all buffers except current and NvimTree" })
 -- Debug
 keymap.set("n", "<leader><leader>s", function()
   local path = vim.fn.stdpath("state") .. "/swap"
