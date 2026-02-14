@@ -23,6 +23,14 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
+        ["<C-p>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_prev_item(cmp_select)
+          else
+            local keys = vim.api.nvim_replace_termcodes("<C-r>+", true, false, true)
+            vim.api.nvim_feedkeys(keys, "i", false)
+          end
+        end, { "i" }),
         ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select), -- previous suggestion
         ["<C-j>"] = cmp.mapping.select_next_item(cmp_select), -- next suggestion
         [os.motion("cmp_complete")] = cmp.mapping.complete(), -- show completion suggestions

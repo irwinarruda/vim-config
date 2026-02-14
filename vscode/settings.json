@@ -30,6 +30,10 @@
       ]
     },
     {
+      "before": ["<leader>", "<leader>", "w"],
+      "commands": ["workbench.action.files.saveWithoutFormatting"]
+    },
+    {
       "before": ["<leader>", "p"],
       "after": ["\"", "_", "d", "P"]
     },
@@ -283,7 +287,11 @@
   ],
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1,
-    "tailwindlabs.tailwindCSS": 1
+    "bradlc.vscode-tailwindcss": 3,
+    "vue.volar": 2,
+    "vscode.typescript-language-features": 2,
+    "typescriptteam.native-preview": 4,
+    "dbaeumer.vscode-eslint": 4
   },
   // VIM
   // LANGUAGES
@@ -299,6 +307,8 @@
     "vue",
     "svelte"
   ],
+  "typescript.experimental.useTsgo": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "[javascript][javascriptreact][typescript][typescriptreact][vue][svelte]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
@@ -316,6 +326,10 @@
     "editor.selectionHighlight": false
   },
   "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
     "editor.autoIndent": "advanced"
@@ -334,31 +348,67 @@
     "rust": "html",
     "*.rs": "html"
   },
+  "docker.extension.enableComposeLanguageServer": false,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "makefile.configureOnOpen": false,
   // LANGUAGES
   // UTILS
-  "tailwindCSS.includeLanguages": {
-    "rust": "html",
-    "*.rs": "html"
-  },
-  // "tailwindCSS.experimental.classRegex": [
-  //   ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  // ],
   "gitlens.graph.layout": "editor",
-  "github.copilot.editor.enableCodeActions": true,
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false,
-    "yaml": false
-  },
   "githubPullRequests.pullBranch": "never",
-  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.useResponsesApi": true,
+  "github.copilot.chat.responsesApiReasoningEffort": "high",
+  "github.copilot.nextEditSuggestions.extendedRange": true,
+  "github.copilot.chat.tools.memory.enabled": false,
+  "github.copilot.enable": {
+    "secret": false,
+    "appsettings_secret": false
+  },
+  "files.associations": {
+    "*.rmd": "markdown",
+    "*.rs": "rust",
+    "**/appsettings.*.json": "appsettings_secret",
+    "**/.env*": "secret"
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "chat.agent.maxRequests": 100,
+  "chat.tools.global.autoApprove": true,
+  "chat.tools.terminal.autoApprove": {
+    "/^pnpm tsc --noEmit 2>&1 \\| head -100$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  },
   // UTILS
   // EDITOR
   "terminal.integrated.fontFamily": "'FiraCode Nerd Font', 'Fira Code', 'Cascadia Code PL', 'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
-  "breadcrumbs.enabled": false,
-  "window.zoomLevel": 0.4,
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "docker-desktop"
+  ],
+  "terminal.integrated.commandsToSkipShell": ["workbench.action.togglePanel"],
+  "terminal.integrated.allowChords": false,
+  "window.zoomLevel": 0.1,
   "window.titleBarStyle": "custom",
   "explorer.openEditors.visible": 4,
   "explorer.compactFolders": false,
@@ -369,7 +419,7 @@
   "editor.fontLigatures": true,
   "editor.stickyScroll.enabled": true,
   "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
+  "editor.rulers": [120],
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
   "editor.guides.bracketPairs": true,
@@ -380,10 +430,7 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "files.associations": {
-    "*.rmd": "markdown",
-    "*.rs": "rust"
-  },
+  "prettier.printWidth": 120,
   "prettier.tabWidth": 2,
   "prettier.endOfLine": "auto",
   "prettier.singleQuote": true,
@@ -391,9 +438,14 @@
   "prettier.useTabs": false,
   "prettier.trailingComma": "all",
   "prettier.experimentalTernaries": true,
+  "workbench.colorTheme": "Dracula Pro",
+  "workbench.editor.showTabs": "none",
+  "workbench.editor.revealIfOpen": true,
   "workbench.startupEditor": "newUntitledFile",
   "workbench.editor.enablePreview": false,
+  "workbench.activityBar.location": "hidden",
   "workbench.editorAssociations": { "*.svg": "default" },
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.colorCustomizations": {
     "[Dracula Pro]": {
       "editorBracketPairGuide.activeBackground1": "#FFD700",
@@ -416,10 +468,6 @@
       "editorBracketHighlight.foreground6": "#179FFF"
     }
   },
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Dracula Pro (Blade)",
-  "workbench.activityBar.location": "hidden",
-  "workbench.editor.showTabs": "none",
   // EDITOR
   // MATERIAL ICONS FOLDER
   "material-icon-theme.activeIconPack": "react_redux",

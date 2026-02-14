@@ -34,7 +34,6 @@ keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
-
 -- Split windows
 keymap.set("n", "<leader>wl", "<C-w>v") -- split window right
 keymap.set("n", "<leader>wj", "<C-w>s") -- split window down
@@ -59,18 +58,19 @@ keymap.set("n", "<M-l>", function()
 end) -- decrement window width
 keymap.set("n", "<M-k>", "<C-w>3+", { noremap = true }) -- increment window height
 keymap.set("n", "<M-j>", "<C-w>3-", { noremap = true }) -- decrement window height
+
 -- vim-maximizer
 keymap.set("n", "<leader>wm", ":MaximizerToggle<CR>")
-
 keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
 keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
 
 -- Paste actions
-
 keymap.set("n", "<leader><leader>p", "p=`[v`]=")
 
+keymap.set("n", "<leader><leader>w", "<cmd>noa w<CR>", { desc = "Write without autocommands" })
+
+keymap.set("n", "<leader><leader>b", ":%bd|e#|bd#<CR>", { desc = "Close all buffers except current" })
 -- Debug
-keymap.set("n", "<leader><leader>w", "<cmd>w<cr><cmd>source %<cr><cmd>messages clear<cr>")
 keymap.set("n", "<leader><leader>s", function()
   local path = vim.fn.stdpath("state") .. "/swap"
   vim.fn.delete(path, "rf")
@@ -80,6 +80,33 @@ keymap.set("n", "<leader><leader>s", function()
 end)
 
 vim.api.nvim_create_user_command("W", "write", {})
+
+vim.api.nvim_create_user_command("LspChange", function(opts)
+  local ts_lsp = require("app.core.typescript-lsp")
+  local name = opts.args
+  if not vim.tbl_contains(ts_lsp.valid_names, name) then
+    vim.notify("Invalid LSP: " .. name .. ". Valid: " .. table.concat(ts_lsp.valid_names, ", "), vim.log.levels.ERROR)
+    return
+  end
+  local current = ts_lsp.get()
+  if current == name then
+    vim.notify("TypeScript LSP is already set to " .. name, vim.log.levels.INFO)
+    return
+  end
+  ts_lsp.set(name)
+  ts_lsp.set_pending_restore()
+  -- Save session via persistence.nvim, save all buffers, then quit
+  require("persistence").save()
+  vim.cmd("silent! wall")
+  vim.notify("TypeScript LSP changed to " .. name .. ". Run `nvim .` to restore your session.", vim.log.levels.INFO)
+  vim.cmd("qa!")
+end, {
+  nargs = 1,
+  complete = function()
+    return require("app.core.typescript-lsp").valid_names
+  end,
+  desc = "Change TypeScript LSP and restart Neovim",
+})
 
 local function open_qf_item()
   local qf_info = vim.fn.getqflist({ idx = 0, items = true })

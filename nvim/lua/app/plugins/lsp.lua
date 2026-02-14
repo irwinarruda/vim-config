@@ -18,7 +18,7 @@ return {
       "yioneko/nvim-vtsls",
     },
     config = function()
-      local TYPESCRIPT_LSP = "vtsls"
+      local TYPESCRIPT_LSP = require("app.core.typescript-lsp").get()
       local on_attach = function(_, bufnr)
         local opts = { buffer = bufnr, remap = false }
         local os = require("app.plugins.nvim-os-persist")
@@ -64,15 +64,23 @@ return {
           keymap.set("n", os.motion("lsp_ts_select_version"), function()
             require("vtsls").commands.select_ts_version(opts.buffer)
           end, opts)
+        elseif TYPESCRIPT_LSP == "tsgo" then
+          -- Use vtsls commands for file operations (vtsls runs alongside for semantic tokens)
+          keymap.set("n", os.motion("lsp_ts_rename_file"), function()
+            require("vtsls").commands.rename_file(opts.buffer)
+          end, opts)
+          keymap.set("n", os.motion("lsp_ts_remove_imports"), function()
+            require("vtsls").commands.remove_unused_imports(opts.buffer)
+          end, opts)
+          keymap.set("n", os.motion("lsp_ts_sort_imports"), function()
+            require("vtsls").commands.sort_imports(opts.buffer)
+          end, opts)
         end
         vim.keymap.set("n", "<leader>h", function()
           ---@diagnostic disable-next-line: missing-parameter
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, { noremap = true })
       end
-      vim.lsp.config("*", {
-        on_attach = on_attach,
-      })
 
       if TYPESCRIPT_LSP == "typescript-tools" then
         require("typescript-tools").setup({
@@ -107,9 +115,42 @@ return {
         })
       elseif TYPESCRIPT_LSP == "vtsls" then
         vim.lsp.enable("vtsls")
+      elseif TYPESCRIPT_LSP == "tsgo" then
+        -- Load vtsls ONLY for semantic tokens (tsgo doesn't support them yet)
+        vim.lsp.config("vtsls", {
+          on_attach = function(client)
+            client.server_capabilities.completionProvider = nil
+            client.server_capabilities.hoverProvider = nil
+            client.server_capabilities.signatureHelpProvider = nil
+            client.server_capabilities.definitionProvider = nil
+            client.server_capabilities.typeDefinitionProvider = nil
+            client.server_capabilities.implementationProvider = nil
+            client.server_capabilities.referencesProvider = nil
+            client.server_capabilities.documentHighlightProvider = nil
+            client.server_capabilities.documentSymbolProvider = nil
+            client.server_capabilities.workspaceSymbolProvider = nil
+            client.server_capabilities.codeActionProvider = nil
+            client.server_capabilities.codeLensProvider = nil
+            client.server_capabilities.documentFormattingProvider = nil
+            client.server_capabilities.documentRangeFormattingProvider = nil
+            client.server_capabilities.documentOnTypeFormattingProvider = nil
+            client.server_capabilities.renameProvider = nil
+            client.server_capabilities.documentLinkProvider = nil
+            client.server_capabilities.colorProvider = nil
+            client.server_capabilities.foldingRangeProvider = nil
+            client.server_capabilities.executeCommandProvider = nil
+            client.server_capabilities.selectionRangeProvider = nil
+            client.server_capabilities.linkedEditingRangeProvider = nil
+            client.server_capabilities.callHierarchyProvider = nil
+            client.server_capabilities.typeHierarchyProvider = nil
+            client.server_capabilities.inlayHintProvider = nil
+            client.server_capabilities.diagnosticProvider = nil
+          end,
+        })
+        vim.lsp.enable("tsgo")
+        vim.lsp.enable("vtsls")
       end
       vim.lsp.config("jsonls", {
-        on_attach = on_attach,
         settings = {
           json = {
             schemas = {
@@ -120,10 +161,6 @@ return {
               {
                 fileMatch = { "tsconfig*.json" },
                 url = "https://json.schemastore.org/tsconfig.json",
-              },
-              {
-                fileMatch = { "tauri.conf.json" },
-                url = "https://raw.githubusercontent.com/tauri-apps/tauri/dev/tooling/cli/schema.json",
               },
               {
                 fileMatch = { ".prettierrc", ".prettierrc.json", ".prettierrc.json5" },
@@ -141,59 +178,29 @@ return {
           },
         },
       })
-      vim.lsp.config("tailwindcss", {
-        on_attach = on_attach,
-        settings = {
-          tailwindCSS = {
-            experimental = {
-              classRegex = {
-                { "([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]" },
-              },
-            },
-          },
+      vim.lsp.config("omnisharp", {
+        cmd = {
+          vim.fn.executable("OmniSharp") == 1 and "OmniSharp" or "omnisharp",
+          "-z",
+          "--hostPID",
+          tostring(vim.fn.getpid()),
+          "DotNet:enablePackageRestore=true",
+          "--encoding",
+          "utf-8",
+          "--languageserver",
+          "FormattingOptions:EnableEditorConfigSupport=true",
+          "FormattingOptions:OrganizeImports=true",
+          "RoslynExtensionsOptions:EnableImportCompletion=true",
+          "RoslynExtensionsOptions:EnableDecompilationSupport=true",
+          -- "RoslynExtensionsOptions:EnableAnalyzersSupport=true",
         },
       })
-      vim.lsp.config("omnisharp", {
-        handlers = {
-          ["textDocument/definition"] = require("omnisharp_extended").definition_handler,
-          ["textDocument/typeDefinition"] = require("omnisharp_extended").type_definition_handler,
-          ["textDocument/references"] = require("omnisharp_extended").references_handler,
-          ["textDocument/implementation"] = require("omnisharp_extended").implementation_handler,
-        },
-        settings = {
-          FormattingOptions = {
-            NewLinesForBracesInLambdaExpressionBody = false,
-            NewLinesForBracesInAnonymousMethods = false,
-            NewLinesForBracesInAnonymousTypes = false,
-            NewLinesForBracesInControlBlocks = false,
-            NewLinesForBracesInTypes = false,
-            NewLinesForBracesInMethods = false,
-            NewLinesForBracesInProperties = false,
-            NewLinesForBracesInObjectCollectionArrayInitializers = false,
-            NewLinesForBracesInAccessors = false,
-            NewLineForElse = false,
-            NewLineForCatch = false,
-            NewLineForFinally = false,
-            EnableEditorConfigSupport = true,
-            OrganizeImports = true,
-          },
-          MsBuild = {
-            LoadProjectsOnDemand = nil,
-          },
-          RoslynExtensionsOptions = {
-            EnableDecompilationSupport = true,
-            EnableImportCompletion = true,
-            EnableAnalyzersSupport = nil,
-            AnalyzeOpenDocumentsOnly = nil,
-          },
-          Sdk = {
-            IncludePrereleases = true,
-          },
-        },
+      vim.lsp.config("*", {
+        on_attach = on_attach,
       })
       require("mason-lspconfig").setup({
         automatic_enable = {
-          exclude = { "ts_ls", "vtsls", "jsonls", "tailwindcss", "omnisharp" },
+          exclude = { "ts_ls", "vtsls", "tsgo" },
         },
       })
       local levels = vim.diagnostic.severity

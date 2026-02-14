@@ -1,0 +1,367 @@
+.git
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+################################################################################
+# Logs / temp files
+################################################################################
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.swn
+*.orig
+*.old
+*.pid
+*.pid.lock
+
+################################################################################
+# Secrets / environment files
+################################################################################
+!.env
+!.env.local
+!.env.example
+!.env.sample
+!.env.template
+!.env.defaults
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+
+################################################################################
+# Editor / IDE settings
+################################################################################
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains (IntelliJ, Rider, WebStorm, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.vim
+.*.sw?
+Session.vim
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+################################################################################
+# Git tooling
+################################################################################
+*.patch
+*.diff
+*.rej
+
+################################################################################
+# Node.js / JavaScript / TypeScript (web dev)
+################################################################################
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Plug'n'Play (Yarn)
+.pnp/
+.pnp.js
+.pnp.cjs
+
+# Yarn (modern) cache/install state (keep releases if you use them)
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarnrc.yml
+
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
+# npm
+npm-debug.log*
+.npmrc.user
+.npm/_logs/
+.npm/
+.npx/
+*.tgz
+
+# Lerna / Turborepo / Nx
+lerna-debug.log*
+.turbo/
+.nx/
+.nx-cache/
+workspace.json.bak
+
+# TypeScript
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+.nyc_output/
+junit.xml
+test-results/
+playwright-report/
+playwright/.cache/
+cypress/videos/
+cypress/screenshots/
+
+# Bundler / build caches
+.cache/
+.parcel-cache/
+.vite/
+.vitest/
+.eslintcache
+.stylelintcache
+.rollup.cache/
+.webpack/
+.snowpack/
+.rspack-cache/
+
+# Common build outputs (adjust if you have a source folder named these)
+dist/
+dist-ssr/
+build/
+out/
+
+# Framework-specific outputs
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vercel/
+.netlify/
+.firebase/
+.angular/cache/
+storybook-static/
+
+# Static site generators
+.gatsby-cache/
+public/
+
+# Local runtime data
+.runtimeconfig.json.user
+tmp/
+temp/
+
+################################################################################
+# .NET / C# (Visual Studio / Rider / dotnet)
+################################################################################
+# Build results
+[Bb]in/
+[Oo]bj/
+artifacts/
+TestResults/
+BenchmarkDotNet.Artifacts/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+*.cache
+*.ilk
+*.idb
+*.pdb
+*.opendb
+
+# MSBuild / NuGet
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.snupkg
+
+# ASP.NET / IIS
+*.publishsettings
+PublishProfiles/
+wwwroot/lib/
+
+# Azure / Functions local
+local.settings.json
+
+# Resharper / Rider
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+################################################################################
+# Java (Maven / Gradle / IntelliJ / Eclipse)
+################################################################################
+# Compiled classes
+*.class
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+.gradle/
+**/build/
+!**/src/**/build/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.factorypath
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# IntelliJ (already covered above, but kept for Java-centric repos)
+.idea/
+*.iml
+
+################################################################################
+# C / C++ (generic + common toolchains)
+################################################################################
+# Object / dependency files
+*.o
+*.obj
+*.lo
+*.slo
+*.d
+*.dep
+*.pch
+*.gch
+
+# Libraries
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug / symbols
+*.pdb
+*.dSYM/
+*.su
+*.gcno
+*.gcda
+*.gcov
+*.profraw
+*.profdata
+
+# Autotools
+autom4te.cache/
+aclocal.m4
+compile
+config.h
+config.h.in
+config.log
+config.status
+configure
+depcomp
+install-sh
+missing
+mkinstalldirs
+Makefile.in
+Makefile
+stamp-h1
+libtool
+ltmain.sh
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+CMakeScripts/
+compile_commands.json
+cmake-build-*/
+build-cmake/
+_build/
+
+# Meson
+meson-logs/
+meson-private/
+meson-info/
+subprojects/packagecache/
+
+# Conan / vcpkg (local artifacts)
+conan.lock
+conanbuildinfo.*
+conaninfo.txt
+conanfile.pyc
+vcpkg_installed/
+
+################################################################################
+# Containers / local orchestrations (optional but common)
+################################################################################
+docker-compose.override.yml
+docker-compose.local.yml
+
+################################################################################
+# Misc common language/tool artifacts
+################################################################################
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Crash dumps
+*.dmp
+core
+
+# Lockfiles you typically DO want committed (explicitly keep)
+!package-lock.json
+!yarn.lock
+!pnpm-lock.yaml
+!composer.lock
+!Pipfile.lock

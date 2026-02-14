@@ -7,6 +7,28 @@ return {
       "rcarriga/nvim-notify",
     },
     config = function()
+      require("notify").setup({
+        background_colour = "#0B0D0F",
+        merge_duplicates = true,
+      })
+
+      local shown_once_messages = {}
+      local function skip_after_first(pattern)
+        return function(message)
+          local content = ""
+          if message._lines and message._lines[1] and message._lines[1]._texts and message._lines[1]._texts[1] then
+            content = message._lines[1]._texts[1]._content or ""
+          end
+          if content:find(pattern, 1, true) then
+            if shown_once_messages[pattern] then
+              return true
+            end
+            shown_once_messages[pattern] = true
+          end
+          return false
+        end
+      end
+
       require("noice").setup({
         routes = {
           {
@@ -14,6 +36,12 @@ return {
               event = "msg_show",
               kind = "",
               find = "gravado",
+            },
+            opts = { skip = true },
+          },
+          {
+            filter = {
+              cond = skip_after_first("Request textDocument/diagnostic failed"),
             },
             opts = { skip = true },
           },

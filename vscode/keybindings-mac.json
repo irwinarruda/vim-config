@@ -42,16 +42,34 @@
   {
     "key": "ctrl+h",
     "command": "workbench.action.compareEditor.focusSecondarySide",
-    "when": "isInDiffEditor && editorTextFocus"
+    "when": "inDiffEditor && editorTextFocus"
   },
   {
     "key": "ctrl+l",
     "command": "workbench.action.compareEditor.focusPrimarySide",
-    "when": "isInDiffEditor && editorTextFocus"
+    "when": "inDiffEditor && editorTextFocus"
   },
   {
     "key": "q",
     "command": "workbench.action.closeActiveEditor",
+    "when": "inDiffEditor && editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "g",
+    "command": "git.openFile",
+    "when": "inDiffEditor && editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+g",
+    "args": {
+      "commands": [
+        "git.openFile",
+        "workbench.action.navigateBack",
+        "workbench.action.navigateBack",
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    "command": "runCommands",
     "when": "isInDiffEditor && editorTextFocus && vim.mode == 'Normal'"
   },
   // NAVIGATE ON GIT DIFFS
@@ -168,30 +186,6 @@
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
-    "key": "ctrl+c",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "list.select",
-        "github.copilot.chat.attachFile",
-        "workbench.action.closeActiveEditor"
-      ]
-    },
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && !explorerResourceIsOpen"
-  },
-  {
-    "key": "ctrl+e",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        "list.select",
-        "github.copilot.edits.attachFile",
-        "workbench.action.closeActiveEditor"
-      ]
-    },
-    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && !explorerResourceIsOpen"
-  },
-  {
     "key": "shift+w",
     "command": "list.collapseAll",
     "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
@@ -238,6 +232,58 @@
     "command": "workbench.action.increaseViewSize",
     "when": "auxiliaryBarFocus"
   },
+  // CURSOR
+  {
+    "key": "cmd+t",
+    "command": "composer.createNewComposerTab",
+    "when": "composerFocused"
+  },
+  {
+    "key": "cmd+w",
+    "command": "composer.closeComposerTab",
+    "when": "composerFocused"
+  },
+  {
+    "key": "cmd+;",
+    "command": "composer.openModelToggle",
+    "when": "composerFocused"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "composer.nextChatTab",
+    "when": "composerFocused"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "composer.previousChatTab",
+    "when": "composerFocused"
+  },
+  // VSCODE
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.chat.newChat",
+    "when": "inChat"
+  },
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.chat.clearHistory",
+    "when": "inChat"
+  },
+  {
+    "key": "cmd+;",
+    "command": "workbench.action.chat.openModelPicker",
+    "when": "inChat"
+  },
+  {
+    "key": "cmd+.",
+    "command": "workbench.action.chat.toggleAgentMode",
+    "when": "inChat"
+  },
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.chat.history",
+    "when": "inChat"
+  },
   // NAVIGATE ON RIGHT SIDE BAR
   // NAVIGATE ON TERMINAL
   {
@@ -251,8 +297,33 @@
     "when": "terminalFocus"
   },
   {
+    "key": "ctrl+tab",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+r",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminal.visible"
+  },
+  {
+    "key": "cmd+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  {
     "key": "escape",
-    "command": "workbench.action.terminal.toggleTerminal",
+    "command": "workbench.action.togglePanel",
     "when": "terminalFocus"
   },
   // NAVIGATE ON TERMINAL
@@ -293,6 +364,11 @@
   {
     "key": "ctrl+r",
     "command": "search.action.replace",
+    "when": "searchViewletVisible && searchViewletFocus"
+  },
+  {
+    "key": "ctrl+a",
+    "command": "search.action.replaceAll",
     "when": "searchViewletVisible && searchViewletFocus"
   },
   {
@@ -391,6 +467,11 @@
     "when": "editorIsOpen && resourceFilename == vscodeHarpoon.harpoon"
   },
   {
+    "key": "q",
+    "command": "workbench.action.closeQuickOpen",
+    "when": "vscode-harpoon.isQuickPick"
+  },
+  {
     "key": "escape",
     "command": "workbench.view.explorer",
     "when": "!explorerViewletVisible &&sideBarVisible && sideBarFocus"
@@ -398,14 +479,24 @@
   // VIM GLOBAL COMMANDS
   // OTHER DEFAULT THINGS
   {
+    "key": "alt+t",
+    "command": "workbench.action.hideEditorTabs",
+    "when": "editorTabsVisible"
+  },
+  {
+    "key": "alt+t",
+    "command": "workbench.action.showMultipleEditorTabs",
+    "when": "!editorTabsVisible"
+  },
+  {
     "key": "cmd+t", // MAC
     "command": "workbench.action.newWindow",
-    "when": "true"
+    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "cmd+w", // MAC
     "command": "workbench.action.closeWindow",
-    "when": "true"
+    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "cmd+o", // MAC

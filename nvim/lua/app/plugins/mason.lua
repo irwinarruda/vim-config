@@ -24,6 +24,7 @@ return {
         "cssls",
         "cssmodules_ls",
         "tailwindcss",
+        "tsgo",
         "ts_ls",
         "vtsls",
         "svelte",
