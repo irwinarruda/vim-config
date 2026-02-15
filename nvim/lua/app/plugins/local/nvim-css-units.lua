@@ -1,5 +1,6 @@
 return {
-  dir = vim.fn.stdpath("config") .. "/lua/nvim-css-units",
+  name = "nvim-css-units",
+  dir = vim.fn.stdpath("config") .. "/lua/plugins/local/nvim-css-units",
   dev = true,
   priority = 1000,
   config = function()

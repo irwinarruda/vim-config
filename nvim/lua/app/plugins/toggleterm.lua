@@ -1,26 +1,22 @@
-local function is_terminals_open()
-  return require("toggleterm.ui").find_open_windows()
-end
-
-local is_windows = require("nvim-os-persist").is_windows
-if is_windows() then
-  vim.opt.shell = "pwsh"
-  vim.opt.shellcmdflag =
-    "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
-  vim.opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
-  vim.opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-  vim.opt.shellquote = ""
-  vim.opt.shellxquote = ""
-end
-
 return {
   "akinsho/toggleterm.nvim",
   event = "VeryLazy",
+  init = function()
+    if vim.loop.os_uname().sysname == "Windows_NT" then
+      vim.opt.shell = "pwsh"
+      vim.opt.shellcmdflag =
+        "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+      vim.opt.shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait"
+      vim.opt.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+      vim.opt.shellquote = ""
+      vim.opt.shellxquote = ""
+    end
+  end,
   config = function()
     local toggleterm = require("toggleterm")
     local workspace = require("app.core.workspace")
     local cwd = vim.fn.getcwd()
-    local repos = not vim.loop.fs_stat(cwd .. "/.git") and workspace.find_git_repos(cwd) or {}
+    local repos = not workspace.is_inside_git_repo(cwd) and workspace.find_git_repos(cwd) or {}
     local is_workspace_mode = #repos > 0
 
     toggleterm.setup({
@@ -58,5 +54,4 @@ return {
 
     vim.keymap.set("t", "<C-q>", "<cmd>ToggleTerm<cr>", { silent = true })
   end,
-  is_terminals_open = is_terminals_open,
 }

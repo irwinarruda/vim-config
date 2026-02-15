@@ -1,6 +1,6 @@
 local harpoon_select = function(index)
   return function()
-    if require("app.plugins.toggleterm").is_terminals_open() then
+    if require("app.core.toggleterm-state").is_terminals_open() then
       return
     end
     local harpoon = require("harpoon")

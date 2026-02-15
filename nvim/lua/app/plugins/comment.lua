@@ -3,10 +3,11 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "JoosepAlviste/nvim-ts-context-commentstring",
+    "nvim-os-persist",
   },
   config = function()
     local comment = require("Comment")
-    local os = require("app.plugins.nvim-os-persist")
+    local os = require("nvim-os-persist")
     comment.setup({
       pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       post_hook = function(ctx)

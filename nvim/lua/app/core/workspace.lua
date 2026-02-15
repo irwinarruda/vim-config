@@ -29,11 +29,19 @@ function M.find_git_repos(dir)
   return repos
 end
 
+--- Returns true when dir (or any parent) is inside a git work tree.
+--- Walks up the directory tree looking for .git, just like git itself.
+function M.is_inside_git_repo(dir)
+  dir = dir or vim.fn.getcwd()
+  local found = vim.fn.finddir(".git", dir .. ";")
+  return found ~= ""
+end
+
 --- Returns true when cwd looks like a workspace directory:
---- no .git at root but at least one subdirectory with .git.
+--- not inside any git repo but at least one subdirectory with .git.
 function M.is_workspace(dir)
   dir = dir or vim.fn.getcwd()
-  if vim.loop.fs_stat(dir .. "/.git") then
+  if M.is_inside_git_repo(dir) then
     return false
   end
   local repos = M.find_git_repos(dir)

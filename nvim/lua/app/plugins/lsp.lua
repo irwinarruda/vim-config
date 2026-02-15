@@ -11,6 +11,7 @@ return {
       "folke/lazydev.nvim",
       "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
+      "nvim-os-persist",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
       "L3MON4D3/LuaSnip",
@@ -21,8 +22,8 @@ return {
       local TYPESCRIPT_LSP = require("app.core.typescript-lsp").get()
       local on_attach = function(_, bufnr)
         local opts = { buffer = bufnr, remap = false }
-        local os = require("app.plugins.nvim-os-persist")
-        require("app.plugins.telescope").telescope_lsp_keymaps(opts)
+        local os = require("nvim-os-persist")
+        require("app.core.lsp-keymaps").setup(opts)
 
         local keymap = vim.keymap
         keymap.set("n", os.motion("lsp_hover_diagnostic"), function()

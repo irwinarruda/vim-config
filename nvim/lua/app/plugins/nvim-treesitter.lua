@@ -5,6 +5,7 @@ return {
   dependencies = {
     "nvim-treesitter/nvim-treesitter-context",
     "windwp/nvim-ts-autotag",
+    "nvim-os-persist",
   },
   config = function()
     local nvimtreesitter = require("nvim-treesitter.configs")

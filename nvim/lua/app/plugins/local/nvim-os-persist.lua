@@ -1,12 +1,6 @@
---- @param key string
---- @return string
-local function motion(key)
-  local os_persist = require("nvim-os-persist")
-  return os_persist.motion(key)
-end
-
 return {
-  dir = vim.fn.stdpath("config") .. "/lua/nvim-os-persist",
+  name = "nvim-os-persist",
+  dir = vim.fn.stdpath("config") .. "/lua/plugins/local/nvim-os-persist",
   dev = true,
   priority = 1000,
   config = function()
@@ -63,5 +57,4 @@ return {
       },
     })
   end,
-  motion = motion,
 }

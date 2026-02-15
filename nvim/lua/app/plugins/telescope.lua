@@ -3,8 +3,8 @@ local workspace = require("app.core.workspace")
 local function workspace_git_status()
   local cwd = vim.fn.getcwd()
 
-  -- If cwd is already a git repo, fall back to builtin
-  if vim.loop.fs_stat(cwd .. "/.git") then
+  -- If cwd is inside a git repo, fall back to builtin
+  if workspace.is_inside_git_repo(cwd) then
     require("telescope.builtin").git_status()
     return
   end
@@ -110,30 +110,6 @@ local function workspace_git_status()
     :find()
 end
 
-local telescope_lsp_keymaps = function(opts)
-  local builtin = require("telescope.builtin")
-  local os = require("app.plugins.nvim-os-persist")
-  local has_omnisharp = false
-  local bufnr = opts and opts.buffer or 0
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-    if client.name == "omnisharp" or client.name == "omnisharp_mono" then
-      has_omnisharp = true
-      break
-    end
-  end
-  if has_omnisharp then
-    local omnisharp = require("omnisharp_extended")
-    vim.keymap.set("n", os.motion("lsp_definitions"), omnisharp.telescope_lsp_definition, opts)
-    vim.keymap.set("n", os.motion("lsp_references"), omnisharp.telescope_lsp_references, opts)
-    vim.keymap.set("n", os.motion("lsp_implementation"), omnisharp.telescope_lsp_implementation, opts)
-  else
-    vim.keymap.set("n", os.motion("lsp_definitions"), vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", os.motion("lsp_references"), builtin.lsp_references, opts)
-    vim.keymap.set("n", os.motion("lsp_implementation"), builtin.lsp_implementations, opts)
-  end
-  vim.keymap.set("n", "<leader>.", builtin.diagnostics, opts)
-end
-
 return {
   "nvim-telescope/telescope.nvim",
   branch = "master",
@@ -206,5 +182,4 @@ return {
     keymap.set("n", "<leader>ff", builtin.live_grep) -- find string in current working directory as you type
     keymap.set("n", "<leader>fb", builtin.buffers) -- find string in current working directory as you type
   end,
-  telescope_lsp_keymaps = telescope_lsp_keymaps,
 }

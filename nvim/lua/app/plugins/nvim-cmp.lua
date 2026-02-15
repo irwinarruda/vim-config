@@ -5,6 +5,7 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
+    "nvim-os-persist",
   },
   config = function()
     local cmp = require("cmp")
@@ -13,7 +14,7 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
     vim.opt.completeopt = "menu,menuone"
 
-    local os = require("app.plugins.nvim-os-persist")
+    local os = require("nvim-os-persist")
 
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
     cmp.setup({
