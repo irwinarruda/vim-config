@@ -39,7 +39,7 @@ return {
       ]]
       vim.cmd("syntax enable")
       vim.cmd("let g:dracula_colorterm = 0")
-      vim.cmd("colorscheme dracula_pro_buffy")
+      vim.cmd("colorscheme dracula_pro")
       vim.cmd([[
         " Default TS
         hi! link @type DraculaCyan
@@ -69,7 +69,6 @@ return {
         hi! link @constructor.typescript DraculaPink
         hi! link @constructor.javascript DraculaPink
         hi! link @constructor.tsx DraculaPink
-        hi! link @tag.builtin.tsx DraculaCyan
 
         " JSON
         hi! link @property.json DraculaCyan
