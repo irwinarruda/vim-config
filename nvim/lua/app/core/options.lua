@@ -52,4 +52,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- adding templ filetype for golang templates
-vim.filetype.add({ extension = { templ = "templ" } })
+vim.filetype.add({
+  extension = {
+    templ = "templ",
+    mdx = "mdx",
+  },
+})

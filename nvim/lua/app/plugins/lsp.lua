@@ -6,7 +6,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "folke/lazydev.nvim",
       "mason-org/mason.nvim",
@@ -193,8 +193,12 @@ return {
           "FormattingOptions:OrganizeImports=true",
           "RoslynExtensionsOptions:EnableImportCompletion=true",
           "RoslynExtensionsOptions:EnableDecompilationSupport=true",
-          -- "RoslynExtensionsOptions:EnableAnalyzersSupport=true",
         },
+      })
+      vim.lsp.config("mdx_analyzer", {
+        on_attach = function(client, _)
+          client.server_capabilities.documentHighlightProvider = false
+        end,
       })
       vim.lsp.config("*", {
         on_attach = on_attach,

@@ -30,6 +30,7 @@ return {
         "svelte",
         "vue-language-server",
         "jsonls",
+        "mdx_analyzer",
         "lua_ls",
         "stylua",
         "rust_analyzer",

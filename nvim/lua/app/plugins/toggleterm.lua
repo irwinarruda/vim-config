@@ -42,12 +42,23 @@ return {
         })
       end
 
+      local last_count = 1
+
       vim.keymap.set("n", "<leader>t", function()
-        local count = vim.v.count1
-        if workspace_terms[count] then
-          workspace_terms[count]:toggle()
+        local count = vim.v.count
+        if count > 0 then
+          last_count = count
+          if workspace_terms[count] then
+            workspace_terms[count]:toggle()
+          else
+            vim.cmd(count .. "ToggleTerm direction=float")
+          end
         else
-          vim.cmd(count .. "ToggleTerm direction=float")
+          if workspace_terms[last_count] then
+            workspace_terms[last_count]:toggle()
+          else
+            vim.cmd(last_count .. "ToggleTerm direction=float")
+          end
         end
       end, { silent = true, desc = "Toggle workspace terminal" })
     end

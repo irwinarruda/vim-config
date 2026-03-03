@@ -57,6 +57,11 @@ return {
   {
     "github/copilot.vim",
     event = { "BufReadPre", "BufNewFile" },
+    init = function()
+      vim.g.copilot_filetypes = {
+        mdx = false,
+      }
+    end,
     config = function()
       local keymap = vim.keymap
       keymap.set("n", "<leader>gce", ":Copilot enable<CR>")

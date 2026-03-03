@@ -72,10 +72,11 @@ keymap.set("n", "<leader><leader>w", "<cmd>noa w<CR>", { desc = "Write without a
 keymap.set("n", "<leader><leader>b", function()
   local current = vim.api.nvim_get_current_buf()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
-      local ft = vim.bo[buf].filetype
-      if ft ~= "NvimTree" then
-        vim.api.nvim_buf_delete(buf, {})
+    if buf ~= current and vim.api.nvim_buf_is_valid(buf) and vim.fn.buflisted(buf) == 1 then
+      local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+      local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+      if ft ~= "NvimTree" and bt ~= "terminal" then
+        pcall(vim.api.nvim_buf_delete, buf, {})
       end
     end
   end

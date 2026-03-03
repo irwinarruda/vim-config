@@ -11,6 +11,7 @@ return {
     local nvimtreesitter = require("nvim-treesitter.configs")
     local nvimtreesittercontext = require("treesitter-context")
     local nvimautotag = require("nvim-ts-autotag")
+    vim.treesitter.language.register("markdown", "mdx")
 
     local os = require("nvim-os-persist")
     if os:is_windows() then
@@ -65,9 +66,9 @@ return {
     })
     nvimautotag.setup({
       opts = {
-        enable = true,                -- Enable autotag
-        enable_close = true,          -- Auto close tags
-        enable_rename = true,         -- Auto rename pairs of tags
+        enable = true, -- Enable autotag
+        enable_close = true, -- Auto close tags
+        enable_rename = true, -- Auto rename pairs of tags
         enable_close_on_slash = true, -- Auto close on trailing </
       },
     })
