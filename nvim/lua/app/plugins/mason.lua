@@ -16,6 +16,7 @@ return {
         "bashls",
         "eslint",
         "eslint_d",
+        "biome",
         "prettier",
         "prettierd",
         "html",

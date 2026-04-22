@@ -357,7 +357,6 @@ docker-compose.local.yml
 
 # Crash dumps
 *.dmp
-core
 
 # Lockfiles you typically DO want committed (explicitly keep)
 !package-lock.json

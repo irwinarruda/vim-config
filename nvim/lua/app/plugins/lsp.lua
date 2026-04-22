@@ -1,3 +1,151 @@
+local BIOME_CONFIG_FILES = {
+  "biome.json",
+  "biome.jsonc",
+  ".biome.json",
+  ".biome.jsonc",
+}
+
+local ESLINT_CONFIG_FILES = {
+  ".eslintrc",
+  ".eslintrc.js",
+  ".eslintrc.cjs",
+  ".eslintrc.yaml",
+  ".eslintrc.yml",
+  ".eslintrc.json",
+  "eslint.config.js",
+  "eslint.config.mjs",
+  "eslint.config.cjs",
+  "eslint.config.ts",
+  "eslint.config.mts",
+  "eslint.config.cts",
+}
+
+local PACKAGE_JSON_FILES = { "package.json", "package.json5" }
+
+local PROJECT_ROOT_MARKERS = {
+  "package-lock.json",
+  "yarn.lock",
+  "pnpm-lock.yaml",
+  "bun.lockb",
+  "bun.lock",
+  "deno.lock",
+  ".git",
+}
+
+local function get_project_root(bufnr)
+  return vim.fs.root(bufnr, PROJECT_ROOT_MARKERS) or vim.fn.getcwd()
+end
+
+local function package_json_has_field(filename, field, stop_dir)
+  local package_json_files = vim.fs.find(PACKAGE_JSON_FILES, {
+    path = filename,
+    upward = true,
+    type = "file",
+    stop = stop_dir,
+  })
+
+  for _, package_json_file in ipairs(package_json_files) do
+    local file = io.open(package_json_file, "r")
+    if file then
+      local content = file:read("*a")
+      file:close()
+      if content and content:find(field, 1, true) then
+        return true
+      end
+    end
+  end
+
+  return false
+end
+
+local function package_json_root_with_field(filename, field, stop_dir)
+  local package_json_files = vim.fs.find(PACKAGE_JSON_FILES, {
+    path = filename,
+    upward = true,
+    type = "file",
+    stop = stop_dir,
+  })
+
+  for _, package_json_file in ipairs(package_json_files) do
+    local file = io.open(package_json_file, "r")
+    if file then
+      local content = file:read("*a")
+      file:close()
+      if content and content:find(field, 1, true) then
+        return vim.fs.dirname(package_json_file)
+      end
+    end
+  end
+
+  return nil
+end
+
+local function has_project_file(filename, files, stop_dir)
+  return vim.fs.find(files, {
+    path = filename,
+    upward = true,
+    type = "file",
+    limit = 1,
+    stop = stop_dir,
+  })[1] ~= nil
+end
+
+local function project_file_root(filename, files, stop_dir)
+  local matched_file = vim.fs.find(files, {
+    path = filename,
+    upward = true,
+    type = "file",
+    limit = 1,
+    stop = stop_dir,
+  })[1]
+
+  return matched_file and vim.fs.dirname(matched_file) or nil
+end
+
+local function uses_biome(bufnr)
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if client.name == "biome" then
+      return true
+    end
+  end
+
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  if filename == "" then
+    return false
+  end
+
+  local project_root = get_project_root(bufnr)
+  local stop_dir = vim.fs.dirname(project_root)
+
+  return has_project_file(filename, BIOME_CONFIG_FILES, stop_dir)
+    or package_json_has_field(filename, "@biomejs/biome", stop_dir)
+end
+
+local function uses_eslint(bufnr)
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  if filename == "" then
+    return false
+  end
+
+  if vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "deno.lock" }) then
+    return false
+  end
+
+  local project_root = get_project_root(bufnr)
+  local stop_dir = vim.fs.dirname(project_root)
+  local eslint_root = project_file_root(filename, ESLINT_CONFIG_FILES, stop_dir)
+    or package_json_root_with_field(filename, "eslintConfig", stop_dir)
+
+  if not eslint_root then
+    return false
+  end
+
+  local biome_root = project_file_root(filename, BIOME_CONFIG_FILES, stop_dir)
+    or package_json_root_with_field(filename, "@biomejs/biome", stop_dir)
+
+  return not biome_root or #eslint_root >= #biome_root
+end
+
 return {
   {
     "folke/lazydev.nvim",
@@ -200,6 +348,15 @@ return {
           client.server_capabilities.documentHighlightProvider = false
         end,
       })
+      vim.lsp.config("eslint", {
+        root_dir = function(bufnr, on_dir)
+          if not uses_eslint(bufnr) then
+            return
+          end
+
+          on_dir(get_project_root(bufnr))
+        end,
+      })
       vim.lsp.config("*", {
         on_attach = on_attach,
       })
@@ -234,7 +391,19 @@ return {
 
       local current_bufnr = -1
       local is_eslint_available = false
+      local function biome_format(bufnr, fallback)
+        if uses_biome(bufnr) then
+          return { "biome-check" }
+        end
+
+        return fallback
+      end
+
       local function javascript_format(bufnr)
+        if uses_biome(bufnr) then
+          return { "biome-check" }
+        end
+
         if current_bufnr == bufnr then
           if is_eslint_available then
             return { "prettierd", "eslint_d" }
@@ -265,14 +434,32 @@ return {
           typescript = javascript_format,
           javascriptreact = javascript_format,
           typescriptreact = javascript_format,
-          svelte = { "prettierd", "prettier", stop_after_first = true },
-          vue = { "prettierd", "prettier", stop_after_first = true },
-          css = { "prettierd", "prettier", stop_after_first = true },
-          html = { "prettierd", "prettier", stop_after_first = true },
-          json = { "prettierd", "prettier", stop_after_first = true },
+          astro = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          svelte = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          vue = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          css = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          html = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          json = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
+          jsonc = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
           yaml = { "prettierd", "prettier", stop_after_first = true },
           markdown = { "prettierd", "prettier", stop_after_first = true },
-          graphql = { "prettierd", "prettier", stop_after_first = true },
+          graphql = function(bufnr)
+            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
+          end,
           rust = { "rust_analyzer" },
           go = { "gofmt", "goimports" },
           nginx = { "nginxfmt" },
@@ -304,9 +491,28 @@ return {
         svelte = { "eslint" },
         vue = { "eslint" },
       }
+
+      local function run_lint(bufnr)
+        if vim.bo[bufnr].buftype ~= "" then
+          return
+        end
+
+        vim.api.nvim_buf_call(bufnr, function()
+          lint.try_lint(nil, { ignore_errors = true })
+        end)
+      end
+
+      local lint_group = vim.api.nvim_create_augroup("app_nvim_lint", { clear = true })
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        group = lint_group,
+        callback = function(event)
+          run_lint(event.buf)
+        end,
+      })
+
       local keymap = vim.keymap
       keymap.set({ "n", "v" }, "<leader><C-s>", function()
-        lint.try_lint(nil, { ignore_errors = true })
+        run_lint(vim.api.nvim_get_current_buf())
       end)
     end,
   },

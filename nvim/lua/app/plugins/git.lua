@@ -2,6 +2,15 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
+    keys = {
+      {
+        "<leader>gb",
+        function()
+          require("gitsigns").toggle_current_line_blame()
+        end,
+        desc = "Toggle current line blame",
+      },
+    },
     config = function()
       local gitsigns = require("gitsigns")
       gitsigns.setup({
@@ -45,7 +54,6 @@ return {
               gitsigns.blame_line({ full = true })
             end, 50)
           end, opts)
-          keymap.set("n", "<leader>gb", gitsigns.toggle_current_line_blame, opts)
           keymap.set("n", "<leader>gf", gitsigns.diffthis, opts)
         end,
       })

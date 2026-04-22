@@ -2,6 +2,8 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
+require("app.core.tailwind-lsp").setup()
+
 -- Terminal
 keymap.set("t", "<ESC>", "<C-\\><C-n>", { silent = true })
 -- Lines
@@ -68,6 +70,9 @@ keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
 keymap.set("n", "<leader><leader>p", "p=`[v`]=")
 
 keymap.set("n", "<leader><leader>w", "<cmd>noa w<CR>", { desc = "Write without autocommands" })
+keymap.set("n", "<leader>at", function()
+  require("app.core.tailwind-lsp").apply_buffer_suggestions()
+end, { desc = "Apply Tailwind LSP fixes in current buffer" })
 
 keymap.set("n", "<leader><leader>b", function()
   local current = vim.api.nvim_get_current_buf()
@@ -81,6 +86,24 @@ keymap.set("n", "<leader><leader>b", function()
     end
   end
 end, { desc = "Close all buffers except current and NvimTree" })
+
+keymap.set("n", "<leader><leader>r", function()
+  local current = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.api.nvim_buf_is_valid(buf) and vim.fn.buflisted(buf) == 1 then
+      local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+      local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+      if ft ~= "NvimTree" and bt ~= "terminal" then
+        pcall(vim.api.nvim_buf_delete, buf, {})
+      end
+    end
+  end
+  vim.lsp.stop_client(vim.lsp.get_clients())
+  vim.defer_fn(function()
+    vim.cmd("e!")
+  end, 500)
+  vim.cmd("e!")
+end, { desc = "Reload LSP and buffers" })
 -- Debug
 keymap.set("n", "<leader><leader>s", function()
   local path = vim.fn.stdpath("state") .. "/swap"

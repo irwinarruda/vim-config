@@ -9,7 +9,13 @@ return {
     local comment = require("Comment")
     local os = require("nvim-os-persist")
     comment.setup({
-      pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+      pre_hook = function(ctx)
+        local commentstring = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()(ctx)
+        if commentstring ~= nil then
+          return commentstring
+        end
+        return vim.bo.commentstring ~= "" and vim.bo.commentstring or "# %s"
+      end,
       post_hook = function(ctx)
         local U = require("Comment.utils")
         if ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
