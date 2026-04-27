@@ -3,11 +3,15 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "Hoffs/omnisharp-extended-lsp.nvim",
   },
   priority = 1000,
   config = function()
-    require("mason").setup()
+    require("mason").setup({
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
+    })
     require("mason-tool-installer").setup({
       ensure_installed = {
         "dockerls",
@@ -21,11 +25,12 @@ return {
         "prettierd",
         "html",
         "emmet_ls",
-        "omnisharp",
+        "roslyn",
         "cssls",
         "cssmodules_ls",
         "tailwindcss",
-        "tsgo",
+        -- Latest tsgo currently does not advertise semantic tokens; keep the working build pinned.
+        { "tsgo", version = "7.0.0-dev.20260423.1" },
         "ts_ls",
         "vtsls",
         "svelte",

@@ -102,6 +102,11 @@ local function project_file_root(filename, files, stop_dir)
   return matched_file and vim.fs.dirname(matched_file) or nil
 end
 
+local function mason_bin(name)
+  local bin = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin", name)
+  return vim.fn.executable(bin) == 1 and bin or name
+end
+
 local function uses_biome(bufnr)
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
     if client.name == "biome" then
@@ -165,9 +170,24 @@ return {
       "L3MON4D3/LuaSnip",
       "pmizio/typescript-tools.nvim",
       "yioneko/nvim-vtsls",
+      {
+        "seblyng/roslyn.nvim",
+        commit = "f2ec6ee6384c3b611ddc817b9e78b20cd0334bbb",
+        opts = {
+          broad_search = true,
+          filewatching = "roslyn",
+          silent = true,
+        },
+      },
     },
     config = function()
       local TYPESCRIPT_LSP = require("app.core.typescript-lsp").get()
+      local ts_actions = require("app.core.typescript-actions")
+      local roslyn_codelens_group = vim.api.nvim_create_augroup("app_roslyn_codelens", { clear = true })
+      local function refresh_roslyn_codelens(bufnr)
+        pcall(vim.lsp.codelens.refresh, { bufnr = bufnr })
+      end
+
       local on_attach = function(_, bufnr)
         local opts = { buffer = bufnr, remap = false }
         local os = require("nvim-os-persist")
@@ -214,15 +234,14 @@ return {
             require("vtsls").commands.select_ts_version(opts.buffer)
           end, opts)
         elseif TYPESCRIPT_LSP == "tsgo" then
-          -- Use vtsls commands for file operations (vtsls runs alongside for semantic tokens)
           keymap.set("n", os.motion("lsp_ts_rename_file"), function()
-            require("vtsls").commands.rename_file(opts.buffer)
+            ts_actions.rename_file({ bufnr = opts.buffer, client_name = "tsgo" })
           end, opts)
           keymap.set("n", os.motion("lsp_ts_remove_imports"), function()
-            require("vtsls").commands.remove_unused_imports(opts.buffer)
+            ts_actions.apply_source_action("source.removeUnusedImports", { bufnr = opts.buffer, client_name = "tsgo" })
           end, opts)
           keymap.set("n", os.motion("lsp_ts_sort_imports"), function()
-            require("vtsls").commands.sort_imports(opts.buffer)
+            ts_actions.apply_source_action("source.sortImports", { bufnr = opts.buffer, client_name = "tsgo" })
           end, opts)
         end
         vim.keymap.set("n", "<leader>h", function()
@@ -263,41 +282,18 @@ return {
           },
         })
       elseif TYPESCRIPT_LSP == "vtsls" then
+        vim.lsp.config("vtsls", {
+          on_attach = on_attach,
+        })
         vim.lsp.enable("vtsls")
       elseif TYPESCRIPT_LSP == "tsgo" then
-        -- Load vtsls ONLY for semantic tokens (tsgo doesn't support them yet)
-        vim.lsp.config("vtsls", {
-          on_attach = function(client)
-            client.server_capabilities.completionProvider = nil
-            client.server_capabilities.hoverProvider = nil
-            client.server_capabilities.signatureHelpProvider = nil
-            client.server_capabilities.definitionProvider = nil
-            client.server_capabilities.typeDefinitionProvider = nil
-            client.server_capabilities.implementationProvider = nil
-            client.server_capabilities.referencesProvider = nil
-            client.server_capabilities.documentHighlightProvider = nil
-            client.server_capabilities.documentSymbolProvider = nil
-            client.server_capabilities.workspaceSymbolProvider = nil
-            client.server_capabilities.codeActionProvider = nil
-            client.server_capabilities.codeLensProvider = nil
-            client.server_capabilities.documentFormattingProvider = nil
-            client.server_capabilities.documentRangeFormattingProvider = nil
-            client.server_capabilities.documentOnTypeFormattingProvider = nil
-            client.server_capabilities.renameProvider = nil
-            client.server_capabilities.documentLinkProvider = nil
-            client.server_capabilities.colorProvider = nil
-            client.server_capabilities.foldingRangeProvider = nil
-            client.server_capabilities.executeCommandProvider = nil
-            client.server_capabilities.selectionRangeProvider = nil
-            client.server_capabilities.linkedEditingRangeProvider = nil
-            client.server_capabilities.callHierarchyProvider = nil
-            client.server_capabilities.typeHierarchyProvider = nil
-            client.server_capabilities.inlayHintProvider = nil
-            client.server_capabilities.diagnosticProvider = nil
+        vim.lsp.config("tsgo", {
+          on_attach = on_attach,
+          cmd = function(dispatchers)
+            return vim.lsp.rpc.start({ mason_bin("tsgo"), "--lsp", "--stdio" }, dispatchers)
           end,
         })
         vim.lsp.enable("tsgo")
-        vim.lsp.enable("vtsls")
       end
       vim.lsp.config("jsonls", {
         settings = {
@@ -327,20 +323,56 @@ return {
           },
         },
       })
-      vim.lsp.config("omnisharp", {
-        cmd = {
-          vim.fn.executable("OmniSharp") == 1 and "OmniSharp" or "omnisharp",
-          "-z",
-          "--hostPID",
-          tostring(vim.fn.getpid()),
-          "DotNet:enablePackageRestore=true",
-          "--encoding",
-          "utf-8",
-          "--languageserver",
-          "FormattingOptions:EnableEditorConfigSupport=true",
-          "FormattingOptions:OrganizeImports=true",
-          "RoslynExtensionsOptions:EnableImportCompletion=true",
-          "RoslynExtensionsOptions:EnableDecompilationSupport=true",
+      vim.lsp.config("roslyn", {
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+
+          if client.server_capabilities.codeLensProvider then
+            vim.api.nvim_clear_autocmds({ group = roslyn_codelens_group, buffer = bufnr })
+            vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "BufWritePost" }, {
+              group = roslyn_codelens_group,
+              buffer = bufnr,
+              callback = function(event)
+                refresh_roslyn_codelens(event.buf)
+              end,
+            })
+            refresh_roslyn_codelens(bufnr)
+          end
+        end,
+        settings = {
+          ["csharp|background_analysis"] = {
+            dotnet_analyzer_diagnostics_scope = "fullSolution",
+            dotnet_compiler_diagnostics_scope = "fullSolution",
+          },
+          ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+          },
+          ["csharp|completion"] = {
+            dotnet_provide_regex_completions = true,
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+          },
+          ["csharp|formatting"] = {
+            dotnet_organize_imports_on_format = true,
+          },
+          ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+            csharp_enable_inlay_hints_for_types = true,
+            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+            dotnet_enable_inlay_hints_for_literal_parameters = true,
+            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+            dotnet_enable_inlay_hints_for_other_parameters = true,
+            dotnet_enable_inlay_hints_for_parameters = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+          },
+          ["csharp|symbol_search"] = {
+            dotnet_search_reference_assemblies = true,
+          },
         },
       })
       vim.lsp.config("mdx_analyzer", {
@@ -362,7 +394,7 @@ return {
       })
       require("mason-lspconfig").setup({
         automatic_enable = {
-          exclude = { "ts_ls", "vtsls", "tsgo" },
+          exclude = { "ts_ls", "vtsls", "tsgo", "omnisharp" },
         },
       })
       local levels = vim.diagnostic.severity
