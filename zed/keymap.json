@@ -238,8 +238,8 @@
       "cmd-o": "workspace::Open",
       "cmd-alt-o": "workspace::AddFolderToProject",
       // Windows
-      // "ctrl-o": "workspace::Open",
-      // "ctrl-alt-o": "workspace::AddFolderToProject",
+      // "alt-o": "workspace::Open",
+      // "alt-win-o": "workspace::AddFolderToProject",
     },
   },
   {
@@ -249,8 +249,9 @@
       "cmd-t": "workspace::NewWindow",
       "cmd-w": "workspace::CloseWindow",
       // Windows
-      // "ctrl-t": "workspace::NewWindow",
-      // "ctrl-w": "workspace::CloseWindow",
+      // "alt-t": "workspace::NewWindow",
+      // "alt-w": "workspace::CloseWindow",
+      // "ctrl-q": null
     },
   },
   {
@@ -261,7 +262,7 @@
       // MacOS
       "cmd-w": "workspace::CloseWindow",
       // Windows
-      // "ctrl-w": "workspace::CloseWindow",
+      // "alt-w": "workspace::CloseWindow",
     },
   },
   {
@@ -320,10 +321,10 @@
       "cmd-w": ["pane::CloseActiveItem", { "close_pinned": false }],
       "cmd-t": "workspace::NewTerminal",
       // Windows
-      // "ctrl-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+      // "alt-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+      // "alt-t": "workspace::NewTerminal",
       // "ctrl-p": null,
       // "ctrl-n": null,
-      // "ctrl-t": "workspace::NewTerminal",
       // "shift-enter": ["terminal::SendKeystroke", "shift-enter"],
     },
   },
@@ -390,8 +391,8 @@
       "cmd-;": "agent::ToggleModelSelector",
       "cmd-.": "agent::ToggleProfileSelector",
       // Windows
-      // "ctrl-;": "agent::ToggleModelSelector",
-      // "ctrl-.": "agent::ToggleProfileSelector",
+      // "alt-;": "agent::ToggleModelSelector",
+      // "alt-.": "agent::ToggleProfileSelector",
     },
   },
   {
@@ -404,8 +405,8 @@
       "cmd-;": "agent::ToggleModelSelector",
       "cmd-.": "agent::ToggleProfileSelector",
       // Windows
-      // "ctrl-;": "agent::ToggleModelSelector",
-      // "ctrl-.": "agent::ToggleProfileSelector",
+      // "alt-;": "agent::ToggleModelSelector",
+      // "alt-.": "agent::ToggleProfileSelector",
     },
   },
 ]
