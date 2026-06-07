@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+buffer_path="${1:-}"
+
+if [[ -z "$buffer_path" ]]; then
+  echo "Usage: biome-prettier-fallback <buffer-path>" >&2
+  exit 2
+fi
+
+find_up() {
+  local start_dir="$1"
+  local name="$2"
+  local dir="$start_dir"
+
+  while [[ "$dir" != "/" ]]; do
+    if [[ -e "$dir/$name" ]]; then
+      printf '%s\n' "$dir/$name"
+      return 0
+    fi
+
+    dir="$(dirname "$dir")"
+  done
+
+  return 1
+}
+
+find_command() {
+  local start_dir="$1"
+  local command_name="$2"
+  local dir="$start_dir"
+
+  while [[ "$dir" != "/" ]]; do
+    if [[ -x "$dir/node_modules/.bin/$command_name" ]]; then
+      printf '%s\n' "$dir/node_modules/.bin/$command_name"
+      return 0
+    fi
+
+    dir="$(dirname "$dir")"
+  done
+
+  command -v "$command_name"
+}
+
+buffer_dir="$(dirname "$buffer_path")"
+project_root="$(dirname "$(find_up "$buffer_dir" "package.json" || printf '%s/package.json\n' "$buffer_path")")"
+
+if find_up "$buffer_dir" "biome.json" >/dev/null || find_up "$buffer_dir" "biome.jsonc" >/dev/null; then
+  biome_command="$(find_command "$buffer_dir" "biome")"
+  cd "$project_root"
+  exec "$biome_command" format --stdin-file-path "$buffer_path"
+fi
+
+prettier_command="$(find_command "$buffer_dir" "prettier")"
+cd "$project_root"
+exec "$prettier_command" --stdin-filepath "$buffer_path"
