@@ -1,0 +1,311 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "show_edit_predictions": true,
+  "auto_update_extensions": {
+    "csharp": false,
+  },
+  "file_types": {
+    "XML": ["csproj", "props", "targets"],
+    "Nginx": ["nginx_*.conf"],
+  },
+  "diff_view_style": "unified",
+  "agent_servers": {
+    "opencode": {
+      "type": "registry",
+    },
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Material Icon Theme Custom",
+  },
+  "project_panel": {
+    "dock": "left",
+  },
+  "command_aliases": {
+    "W": "w",
+  },
+  "close_on_file_delete": true,
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "dock": "left",
+  },
+  "terminal": {
+    "line_height": "standard",
+    "font_family": "FiraCode Nerd Font",
+    "font_features": {
+      "calt": true,
+      "liga": true,
+    },
+    "env": {
+      "DOTNET_ROOT": "/usr/local/share/dotnet",
+    },
+  },
+  "tab_bar": {
+    "show": false,
+  },
+  "agent": {
+    "dock": "right",
+    "default_profile": "write",
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-5.5",
+      "enable_thinking": false,
+    },
+    "model_parameters": [],
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "claude-haiku-4.5",
+    },
+  },
+  "edit_predictions": {
+    "provider": "copilot",
+  },
+  "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_weight": 450,
+  "buffer_font_size": 14,
+  "text_rendering_mode": "subpixel",
+  "ui_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
+  "telemetry": {
+    "metrics": true,
+  },
+  "semantic_tokens": "combined",
+  "global_lsp_settings": {
+    "semantic_token_rules": [
+      {
+        "token_type": "class",
+        "style": ["lsp.type.class", "type.class", "type"],
+      },
+      {
+        "token_type": "decorator",
+        "style": ["lsp.type.decorator", "attribute"],
+      },
+      {
+        "token_type": "enum",
+        "style": ["lsp.type.enum", "enum", "type"],
+      },
+      {
+        "token_type": "enumMember",
+        "style": ["lsp.type.enumMember", "variant", "constant"],
+      },
+      {
+        "token_type": "function",
+        "style": ["lsp.type.function", "function"],
+      },
+      {
+        "token_type": "interface",
+        "style": ["lsp.type.interface", "type.interface", "type"],
+      },
+      {
+        "token_type": "macro",
+        "style": ["lsp.type.macro", "function", "preproc"],
+      },
+      {
+        "token_type": "method",
+        "style": ["lsp.type.method", "function.method", "method", "function"],
+      },
+      {
+        "token_type": "namespace",
+        "style": ["lsp.type.namespace", "namespace", "module"],
+      },
+      {
+        "token_type": "parameter",
+        "style": ["variable.parameter"],
+      },
+      {
+        "token_type": "property",
+        "style": ["property"],
+      },
+      {
+        "token_type": "struct",
+        "style": ["lsp.type.struct", "type.class", "type"],
+      },
+      {
+        "token_type": "type",
+        "style": ["type.builtin", "type"],
+      },
+      {
+        "token_type": "typeParameter",
+        "style": ["lsp.type.typeParameter", "typeParameter"],
+      },
+      {
+        "token_type": "variable",
+        "token_modifiers": ["readonly"],
+        "style": ["variable.constant", "constant"],
+      },
+      {
+        "token_type": "variable",
+        "token_modifiers": ["defaultLibrary"],
+        "style": ["variable.constant", "constant"],
+      },
+      {
+        "token_type": "variable",
+        "style": ["variable"],
+      },
+    ],
+  },
+  "use_autoclose": true,
+  "relative_line_numbers": "enabled",
+  "vim_mode": true,
+  "vim": {
+    "highlight_on_yank_duration": 150,
+    "use_smartcase_find": true,
+    "use_system_clipboard": "always",
+  },
+  "lsp": {
+    "biome": {
+      "settings": {
+        "require_config_file": true,
+      },
+    },
+    "lemminx": {
+      "settings": {
+        "xml": {
+          "fileAssociations": [
+            {
+              "pattern": "**.csproj",
+              "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+            },
+            {
+              "pattern": "**.props",
+              "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+            },
+            {
+              "pattern": "**.targets",
+              "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+            },
+          ],
+        },
+      },
+    },
+    "nginx": {
+      "binary": {
+        "path": "/Users/irwinarruda/.local/share/nvim/mason/bin/nginx-language-server",
+        "arguments": [],
+      },
+    },
+    "roslyn": {
+      "binary": {
+        "path": "/Users/irwinarruda/.dotnet/tools/.store/roslyn-language-server/5.5.0-2.26103.6/roslyn-language-server.osx-arm64/5.5.0-2.26103.6/tools/net10.0/osx-arm64/Microsoft.CodeAnalysis.LanguageServer",
+        "arguments": ["--stdio", "--autoLoadProjects"],
+      },
+      "settings": {
+        "csharp|background_analysis": {
+          "dotnet_analyzer_diagnostics_scope": "fullSolution",
+          "dotnet_compiler_diagnostics_scope": "fullSolution",
+        },
+        "csharp|code_lens": {
+          "dotnet_enable_references_code_lens": true,
+          "dotnet_enable_tests_code_lens": true,
+        },
+        "csharp|completion": {
+          "dotnet_provide_regex_completions": true,
+          "dotnet_show_completion_items_from_unimported_namespaces": true,
+          "dotnet_show_name_completion_suggestions": true,
+        },
+        "csharp|formatting": {
+          "dotnet_organize_imports_on_format": true,
+        },
+        "csharp|navigation": {
+          "dotnet_navigate_to_decompiled_sources": false,
+          "dotnet_navigate_to_source_link_and_embedded_sources": false,
+        },
+        "csharp|inlay_hints": {
+          "csharp_enable_inlay_hints_for_implicit_object_creation": true,
+          "csharp_enable_inlay_hints_for_implicit_variable_types": true,
+          "csharp_enable_inlay_hints_for_lambda_parameter_types": true,
+          "csharp_enable_inlay_hints_for_types": true,
+          "dotnet_enable_inlay_hints_for_indexer_parameters": true,
+          "dotnet_enable_inlay_hints_for_literal_parameters": true,
+          "dotnet_enable_inlay_hints_for_object_creation_parameters": true,
+          "dotnet_enable_inlay_hints_for_other_parameters": true,
+          "dotnet_enable_inlay_hints_for_parameters": true,
+          "dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix": true,
+          "dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name": true,
+          "dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent": true,
+        },
+        "csharp|symbol_search": {
+          "dotnet_search_reference_assemblies": true,
+        },
+      },
+    },
+  },
+  "languages": {
+    "Markdown": {
+      "show_edit_predictions": false,
+    },
+    "JavaScript": {
+      "language_servers": [
+        "tsgo",
+        "vtsls",
+        "!typescript-language-server",
+        "...",
+      ],
+      "formatter": {
+        "external": {
+          "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          "arguments": ["{buffer_path}"],
+        },
+      },
+    },
+    "TypeScript": {
+      "language_servers": [
+        "tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "...",
+      ],
+      "colorize_brackets": true,
+      "formatter": {
+        "external": {
+          "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          "arguments": ["{buffer_path}"],
+        },
+      },
+    },
+    "TSX": {
+      "language_servers": [
+        "tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "...",
+      ],
+      "colorize_brackets": true,
+      "formatter": {
+        "external": {
+          "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          "arguments": ["{buffer_path}"],
+        },
+      },
+    },
+    "CSharp": {
+      "language_servers": ["roslyn", "!omnisharp", "..."],
+    },
+    "XML": {
+      "language_servers": ["lemminx", "..."],
+      "enable_language_server": true,
+      "format_on_save": "off",
+    },
+    "Nginx": {
+      "language_servers": ["nginx", "..."],
+      "enable_language_server": true,
+    },
+  },
+}
