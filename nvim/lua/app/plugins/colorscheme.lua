@@ -39,7 +39,7 @@ return {
       ]]
       vim.cmd("syntax enable")
       vim.cmd("let g:dracula_colorterm = 0")
-      vim.cmd("colorscheme dracula_pro")
+      vim.cmd("colorscheme dracula_pro_van_helsing")
       vim.cmd([[
         " Default TS
         hi! link @type DraculaCyan

@@ -392,6 +392,24 @@ return {
       vim.lsp.config("*", {
         on_attach = on_attach,
       })
+      vim.lsp.config("rust_analyzer", {
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+
+          vim.api.nvim_buf_create_user_command(bufnr, "LspCargoReload", function()
+            local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
+            for _, rust_client in ipairs(clients) do
+              vim.notify("Reloading Cargo Workspace")
+              rust_client:request("rust-analyzer/reloadWorkspace", nil, function(err)
+                if err then
+                  error(tostring(err))
+                end
+                vim.notify("Cargo workspace reloaded")
+              end, bufnr)
+            end
+          end, { desc = "Reload current cargo workspace" })
+        end,
+      })
       require("mason-lspconfig").setup({
         automatic_enable = {
           exclude = { "ts_ls", "vtsls", "tsgo", "omnisharp" },
