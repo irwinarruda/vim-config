@@ -23,7 +23,7 @@
   },
   "icon_theme": {
     "mode": "dark",
-    "light": "Zed (Default)",
+    "light": "Material Icon Theme Custom",
     "dark": "Material Icon Theme Custom",
   },
   "project_panel": {
@@ -50,7 +50,10 @@
       "liga": true,
     },
     "env": {
+      // MacOS
       "DOTNET_ROOT": "/usr/local/share/dotnet",
+      // Windows
+      // "DOTNET_ROOT": "C:\\Program Files\\dotnet",
     },
   },
   "tab_bar": {
@@ -63,9 +66,9 @@
       "default": "allow",
     },
     "default_model": {
-      "provider": "openai",
+      "provider": "openai-subscribed",
       "model": "gpt-5.5",
-      "enable_thinking": false,
+      "enable_thinking": true,
     },
     "model_parameters": [],
     "inline_assistant_model": {
@@ -184,15 +187,24 @@
           "fileAssociations": [
             {
               "pattern": "**.csproj",
+              // MacOS
               "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+              // Windows
+              // "systemId": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Xml\\Schemas\\1033\\Microsoft.Build.xsd",
             },
             {
               "pattern": "**.props",
+              // MacOS
               "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+              // Windows
+              // "systemId": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Xml\\Schemas\\1033\\Microsoft.Build.xsd",
             },
             {
               "pattern": "**.targets",
+              // MacOS
               "systemId": "/Users/irwinarruda/.config/zed/schemas/msbuild/Microsoft.Build.xsd",
+              // Windows
+              // "systemId": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Xml\\Schemas\\1033\\Microsoft.Build.xsd",
             },
           ],
         },
@@ -200,15 +212,14 @@
     },
     "nginx": {
       "binary": {
+        // MacOS
         "path": "/Users/irwinarruda/.local/share/nvim/mason/bin/nginx-language-server",
+        // Windows
+        // "path": "C:\\Users\\arrud\\AppData\\Local\\nvim-data\\mason\\bin\\nginx-language-server.cmd",
         "arguments": [],
       },
     },
     "roslyn": {
-      "binary": {
-        "path": "/Users/irwinarruda/.dotnet/tools/.store/roslyn-language-server/5.5.0-2.26103.6/roslyn-language-server.osx-arm64/5.5.0-2.26103.6/tools/net10.0/osx-arm64/Microsoft.CodeAnalysis.LanguageServer",
-        "arguments": ["--stdio", "--autoLoadProjects"],
-      },
       "settings": {
         "csharp|background_analysis": {
           "dotnet_analyzer_diagnostics_scope": "fullSolution",
@@ -263,7 +274,10 @@
       ],
       "formatter": {
         "external": {
+          // MacOS
           "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          // Windows
+          // "command": "C:\\Users\\arrud\\AppData\\Roaming\\Zed\\scripts\\biome-prettier-fallback.cmd",
           "arguments": ["{buffer_path}"],
         },
       },
@@ -278,7 +292,10 @@
       "colorize_brackets": true,
       "formatter": {
         "external": {
+          // MacOS
           "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          // Windows
+          // "command": "C:\\Users\\arrud\\AppData\\Roaming\\Zed\\scripts\\biome-prettier-fallback.cmd",
           "arguments": ["{buffer_path}"],
         },
       },
@@ -293,13 +310,16 @@
       "colorize_brackets": true,
       "formatter": {
         "external": {
+          // MacOS
           "command": "/Users/irwinarruda/.config/zed/scripts/biome-prettier-fallback",
+          // Windows
+          // "command": "C:\\Users\\arrud\\AppData\\Roaming\\Zed\\scripts\\biome-prettier-fallback.cmd",
           "arguments": ["{buffer_path}"],
         },
       },
     },
     "CSharp": {
-      "language_servers": ["roslyn", "!omnisharp", "..."],
+      "language_servers": ["roslyn", "!csharp-ls", "!omnisharp", "..."],
     },
     "XML": {
       "language_servers": ["lemminx", "..."],

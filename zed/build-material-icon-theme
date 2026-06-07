@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Build a Material Icon Theme dev extension with custom folder associations."""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+ZED_CONFIG = Path.home() / ".config" / "zed"
+ASSOCIATIONS_PATH = ZED_CONFIG / "icon-theme" / "folder-associations.json"
+UPSTREAM_EXTENSION = (
+    ZED_CONFIG / "icon-theme" / "upstream" / "material-icon-theme"
+)
+DEV_EXTENSION = ZED_CONFIG / "dev-extensions" / "material-icon-theme-custom"
+BASE_THEME_PATH = UPSTREAM_EXTENSION / "icon_themes" / "material-icon-theme.json"
+OUTPUT_THEME_PATH = DEV_EXTENSION / "icon_themes" / "material-icon-theme.json"
+ICONS_DIR = UPSTREAM_EXTENSION / "icons"
+THEME_NAME = "Material Icon Theme Custom"
+
+
+def folder_variants(name: str) -> list[str]:
+    return [name, f".{name}", f"_{name}", f"__{name}__"]
+
+
+def resolve_folder_icons(icon_name: str) -> tuple[str, str]:
+    slug = icon_name.lower().replace("_", "-")
+    base = f"folder-{slug}"
+    candidates = [
+        (f"{base}.clone.svg", f"{base}-open.clone.svg"),
+        (f"{base}.svg", f"{base}-open.svg"),
+    ]
+
+    for collapsed, expanded in candidates:
+        if (ICONS_DIR / collapsed).exists() and (ICONS_DIR / expanded).exists():
+            return collapsed, expanded
+
+    missing = ", ".join(name for pair in candidates for name in pair)
+    raise FileNotFoundError(
+        f"No folder icons found for '{icon_name}' (looked for: {missing})"
+    )
+
+
+def build_named_directory_entry(icon_name: str) -> dict[str, dict[str, str]]:
+    collapsed, expanded = resolve_folder_icons(icon_name)
+    return {
+        "collapsed": f"./icons/{collapsed}",
+        "expanded": f"./icons/{expanded}",
+    }
+
+
+def main() -> int:
+    if not BASE_THEME_PATH.exists():
+        print(f"Base theme not found: {BASE_THEME_PATH}", file=sys.stderr)
+        print("Run: git clone --depth 1 https://github.com/zed-extensions/material-icon-theme.git "
+              f"{UPSTREAM_EXTENSION}", file=sys.stderr)
+        return 1
+
+    associations = json.loads(ASSOCIATIONS_PATH.read_text())["associations"]
+    theme = json.loads(BASE_THEME_PATH.read_text())
+    theme["name"] = THEME_NAME
+    theme["themes"][0]["name"] = THEME_NAME
+    named_directory_icons = theme["themes"][0]["named_directory_icons"]
+
+    for folder_name, icon_name in associations.items():
+        entry = build_named_directory_entry(icon_name)
+        for variant in folder_variants(folder_name):
+            named_directory_icons[variant] = entry
+
+    OUTPUT_THEME_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_THEME_PATH.write_text(json.dumps(theme, indent=2) + "\n")
+
+    icons_link = DEV_EXTENSION / "icons"
+    if icons_link.is_symlink() or icons_link.exists():
+        icons_link.unlink()
+    icons_link.symlink_to(ICONS_DIR, target_is_directory=True)
+
+    print(f"Updated {OUTPUT_THEME_PATH}")
+    print(f"Linked icons -> {ICONS_DIR}")
+    print(f"Applied {len(associations)} folder associations.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

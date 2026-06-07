@@ -17,14 +17,11 @@
       "space o": ["workspace::SendKeystrokes", "o escape k _"],
       "space shift-o": ["workspace::SendKeystrokes", "shift-o escape j _"],
       "space escape": "editor::Cancel",
-      "space space p": ["workspace::SendKeystrokes", "cmd-v"],
       "space space b": "pane::CloseOtherItems",
       "space space w": "workspace::SaveWithoutFormat",
       "space space t": "workspace::NewTerminal",
       "space p": ["workspace::SendKeystrokes", "\" _ d shift-p"],
       "space d": ["workspace::SendKeystrokes", "\" _ d"],
-      "space cmd-e": "workspace::ToggleLeftDock",
-      "space e": ["workspace::SendKeystrokes", "space cmd-e escape"],
       "space q": "workspace::ToggleRightDock",
       "space t": "workspace::ToggleBottomDock",
       "space tab": ["task::Spawn", { "task_name": "harpoon_open" }],
@@ -83,6 +80,15 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
+
+      // MacOS
+      "space space p": ["workspace::SendKeystrokes", "cmd-v"],
+      "space cmd-e": "workspace::ToggleLeftDock",
+      "space e": ["workspace::SendKeystrokes", "space cmd-e escape"],
+      // Windows
+      // "space space p": ["workspace::SendKeystrokes", "ctrl-v"],
+      // "space ctrl-e": "workspace::ToggleLeftDock",
+      // "space e": ["workspace::SendKeystrokes", "space ctrl-e escape"],
     },
   },
   {
@@ -143,10 +149,15 @@
       "ctrl-shift-.": "editor::Hover",
       "alt-h": ["workspace::DecreaseOpenDocksSize", { "px": 50 }],
       "alt-l": ["workspace::IncreaseOpenDocksSize", { "px": 50 }],
-      "cmd-[": "editor::Outdent",
-      "cmd-]": "editor::Indent",
       "ctrl-k": "editor::ContextMenuPrevious", // Menu up "editor::ContextMenuFirst"
       "ctrl-j": "editor::ContextMenuNext", // Menu down "editor::ContextMenuLast"
+
+      // MacOS
+      "cmd-[": "editor::Outdent",
+      "cmd-]": "editor::Indent",
+      // Windows
+      // "ctrl-[": "editor::Outdent",
+      // "ctrl-]": "editor::Indent",
     },
   },
   {
@@ -221,23 +232,36 @@
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-l": "workspace::ActivatePaneRight",
       "escape": "buffer_search::FocusEditor",
+      "shift-alt-p": "command_palette::Toggle",
+
+      // MacOS
       "cmd-o": "workspace::Open",
       "cmd-alt-o": "workspace::AddFolderToProject",
-      "shift-alt-p": "command_palette::Toggle",
+      // Windows
+      // "ctrl-o": "workspace::Open",
+      // "ctrl-alt-o": "workspace::AddFolderToProject",
     },
   },
   {
     "context": "Workspace && !Terminal && !AgentPanel",
     "bindings": {
+      // MacOS
       "cmd-t": "workspace::NewWindow",
       "cmd-w": "workspace::CloseWindow",
+      // Windows
+      // "ctrl-t": "workspace::NewWindow",
+      // "ctrl-w": "workspace::CloseWindow",
     },
   },
   {
     "context": "Pane && !Terminal && !AgentPanel",
     "bindings": {
       "ctrl-alt-shift-m": "pane::CloseMultibufferItems",
+
+      // MacOS
       "cmd-w": "workspace::CloseWindow",
+      // Windows
+      // "ctrl-w": "workspace::CloseWindow",
     },
   },
   {
@@ -285,30 +309,46 @@
       "alt-k": ["workspace::IncreaseActiveDockSize", { "px": 60 }],
       "alt-j": ["workspace::DecreaseActiveDockSize", { "px": 60 }],
       "alt-r": ["pane::CloseActiveItem", { "close_pinned": false }],
-      "cmd-w": ["pane::CloseActiveItem", { "close_pinned": false }],
-      "cmd-t": "workspace::NewTerminal",
       "ctrl-tab": "pane::ActivateNextItem",
       "ctrl-shift-tab": "pane::ActivatePreviousItem",
       "ctrl-shift-t": "workspace::ToggleZoom",
       "escape": ["terminal::SendKeystroke", "escape"],
       "ctrl-x escape": "workspace::ToggleBottomDock",
       "ctrl-k": "workspace::ActivatePaneUp",
+
+      // MacOS
+      "cmd-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+      "cmd-t": "workspace::NewTerminal",
+      // Windows
+      // "ctrl-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+      // "ctrl-p": null,
+      // "ctrl-n": null,
+      // "ctrl-t": "workspace::NewTerminal",
+      // "shift-enter": ["terminal::SendKeystroke", "shift-enter"],
     },
   },
   {
     "context": "AgentPanel",
     "bindings": {
-      "cmd-t": "agent::NewThread",
-      "cmd-w": "agent::RemoveSelectedThread",
-      "cmd-;": "agent::ToggleModelSelector",
-      "cmd-.": "agent::ToggleProfileSelector",
       "ctrl-tab": "agents_sidebar::ToggleThreadSwitcher",
       "ctrl-shift-tab": [
         "agents_sidebar::ToggleThreadSwitcher",
         { "select_last": true },
       ],
-      "shift-cmd-h": "workspace::ActivatePaneLeft",
       "ctrl-q": "workspace::ToggleRightDock",
+
+      // MacOS
+      "cmd-t": "agent::NewThread",
+      "cmd-w": "agent::RemoveSelectedThread",
+      "cmd-;": "agent::ToggleModelSelector",
+      "cmd-.": "agent::ToggleProfileSelector",
+      "shift-cmd-h": "workspace::ActivatePaneLeft",
+      // Windows
+      // "ctrl-t": "agent::NewThread",
+      // "ctrl-w": "agent::RemoveSelectedThread",
+      // "ctrl-;": "agent::ToggleModelSelector",
+      // "ctrl-.": "agent::ToggleProfileSelector",
+      // "shift-ctrl-h": "workspace::ActivatePaneLeft",
     },
   },
   {
@@ -343,19 +383,29 @@
   {
     "context": "AgentPanel",
     "bindings": {
-      "cmd-;": "agent::ToggleModelSelector",
-      "cmd-.": "agent::ToggleProfileSelector",
       "alt-h": ["workspace::DecreaseActiveDockSize", { "px": 50 }],
       "alt-l": ["workspace::IncreaseActiveDockSize", { "px": 50 }],
+
+      // MacOS
+      "cmd-;": "agent::ToggleModelSelector",
+      "cmd-.": "agent::ToggleProfileSelector",
+      // Windows
+      // "ctrl-;": "agent::ToggleModelSelector",
+      // "ctrl-.": "agent::ToggleProfileSelector",
     },
   },
   {
     "context": "AcpThread > Editor",
     "bindings": {
-      "cmd-;": "agent::ToggleModelSelector",
-      "cmd-.": "agent::ToggleProfileSelector",
       "alt-h": ["workspace::DecreaseActiveDockSize", { "px": 50 }],
       "alt-l": ["workspace::IncreaseActiveDockSize", { "px": 50 }],
+
+      // MacOS
+      "cmd-;": "agent::ToggleModelSelector",
+      "cmd-.": "agent::ToggleProfileSelector",
+      // Windows
+      // "ctrl-;": "agent::ToggleModelSelector",
+      // "ctrl-.": "agent::ToggleProfileSelector",
     },
   },
 ]
