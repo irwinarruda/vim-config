@@ -59,6 +59,9 @@
   "agent": {
     "dock": "right",
     "default_profile": "write",
+    "tool_permissions": {
+      "default": "allow",
+    },
     "default_model": {
       "provider": "openai",
       "model": "gpt-5.5",
