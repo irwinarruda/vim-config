@@ -220,6 +220,13 @@
       },
     },
     "roslyn": {
+      // MacOS
+      "binary": {
+        // Pinned to the C# extension 1.0.2-era Roslyn server to avoid the
+        // current Zed C# extension's Roslyn performance regression.
+        "path": "/Users/irwinarruda/Library/Caches/com.github.csharp-language-server/server/5.4.0-2.26060.1/osx-arm64/Microsoft.CodeAnalysis.LanguageServer",
+        "arguments": ["--stdio", "--autoLoadProjects"],
+      },
       "settings": {
         "csharp|background_analysis": {
           "dotnet_analyzer_diagnostics_scope": "fullSolution",
