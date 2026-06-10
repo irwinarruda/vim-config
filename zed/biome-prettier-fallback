@@ -48,7 +48,7 @@ project_root="$(dirname "$(find_up "$buffer_dir" "package.json" || printf '%s/pa
 if find_up "$buffer_dir" "biome.json" >/dev/null || find_up "$buffer_dir" "biome.jsonc" >/dev/null; then
   biome_command="$(find_command "$buffer_dir" "biome")"
   cd "$project_root"
-  exec "$biome_command" format --stdin-file-path "$buffer_path"
+  exec "$biome_command" check --write --stdin-file-path "$buffer_path"
 fi
 
 prettier_command="$(find_command "$buffer_dir" "prettier")"

@@ -28,6 +28,7 @@
   },
   "project_panel": {
     "dock": "left",
+    "auto_fold_dirs": false,
   },
   "command_aliases": {
     "W": "w",
@@ -211,8 +212,8 @@
       },
     },
     "nginx": {
+      // MacOS
       "binary": {
-        // MacOS
         "path": "/Users/irwinarruda/.local/share/nvim/mason/bin/nginx-language-server",
         // Windows
         // "path": "C:\\Users\\arrud\\AppData\\Local\\nvim-data\\mason\\bin\\nginx-language-server.cmd",
@@ -220,12 +221,11 @@
       },
     },
     "roslyn": {
-      // MacOS
       "binary": {
-        // Pinned to the C# extension 1.0.2-era Roslyn server to avoid the
-        // current Zed C# extension's Roslyn performance regression.
-        "path": "/Users/irwinarruda/Library/Caches/com.github.csharp-language-server/server/5.4.0-2.26060.1/osx-arm64/Microsoft.CodeAnalysis.LanguageServer",
-        "arguments": ["--stdio", "--autoLoadProjects"],
+        // Pinned to the C# extension 1.0.2-era wrapper to avoid the current
+        // Zed C# extension's Roslyn performance regression.
+        "path": "/Users/irwinarruda/.config/zed/lsp/csharp-language-server-5.4.0-2.26060.1/csharp-language-server",
+        "arguments": [],
       },
       "settings": {
         "csharp|background_analysis": {
@@ -279,6 +279,7 @@
         "!typescript-language-server",
         "...",
       ],
+      "format_on_save": "on",
       "formatter": {
         "external": {
           // MacOS
@@ -297,6 +298,7 @@
         "...",
       ],
       "colorize_brackets": true,
+      "format_on_save": "on",
       "formatter": {
         "external": {
           // MacOS
@@ -315,6 +317,7 @@
         "...",
       ],
       "colorize_brackets": true,
+      "format_on_save": "on",
       "formatter": {
         "external": {
           // MacOS
