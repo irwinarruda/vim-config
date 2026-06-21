@@ -1,0 +1,12 @@
+[package]
+name = "clean-copy"
+version = "0.1.0"
+edition = "2024"
+description = "Clean tmux copy buffers before sending them to the macOS clipboard."
+publish = false
+
+[[bin]]
+name = "clean-copy"
+path = "src/main.rs"
+
+[dependencies]

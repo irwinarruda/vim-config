@@ -1,1 +1,3 @@
 .DS_Store
+/tmux/bin/clean-copy
+/tmux/clean-copy/target/

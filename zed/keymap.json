@@ -313,6 +313,7 @@
       "ctrl-tab": "pane::ActivateNextItem",
       "ctrl-shift-tab": "pane::ActivatePreviousItem",
       "ctrl-shift-t": "workspace::ToggleZoom",
+      "ctrl-l": ["terminal::SendKeystroke", "ctrl-l"],
       "escape": ["terminal::SendKeystroke", "escape"],
       "ctrl-x escape": "workspace::ToggleBottomDock",
       "ctrl-k": "workspace::ActivatePaneUp",
