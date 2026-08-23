@@ -63,6 +63,16 @@ return {
       end, { silent = true, desc = "Toggle workspace terminal" })
     end
 
-    vim.keymap.set("t", "<C-q>", "<cmd>ToggleTerm<cr>", { silent = true })
+    -- <C-x> acts as a prefix/leader inside the terminal; follow with <Esc> to close.
+    -- Works from terminal mode (t, global) and normal mode (n, buffer-local so it
+    -- never shadows <C-x> decrement in regular files).
+    vim.keymap.set("t", "<C-x><Esc>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "Close terminal" })
+    vim.api.nvim_create_autocmd("TermOpen", {
+      callback = function(args)
+        vim.keymap.set("n", "<C-x><Esc>", "<cmd>ToggleTerm<cr>", {
+          silent = true, buffer = args.buf, desc = "Close terminal",
+        })
+      end,
+    })
   end,
 }

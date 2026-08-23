@@ -92,6 +92,12 @@
     },
   },
   {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "space t": "workspace::ToggleBottomDock",
+    },
+  },
+  {
     "context": "OutlinePanel && not_editing",
     "bindings": {
       "j": "menu::SelectNext",

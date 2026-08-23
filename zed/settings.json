@@ -13,7 +13,7 @@
   },
   "file_types": {
     "XML": ["csproj", "props", "targets"],
-    "Nginx": ["nginx_*.conf"],
+    "Nginx": ["nginx_*.conf", "nginx.*.conf"],
   },
   "diff_view_style": "unified",
   "agent_servers": {
@@ -32,6 +32,7 @@
   },
   "command_aliases": {
     "W": "w",
+    "Q": "∅",
   },
   "close_on_file_delete": true,
   "outline_panel": {
@@ -83,12 +84,13 @@
   "buffer_font_family": "FiraCode Nerd Font",
   "buffer_font_weight": 450,
   "buffer_font_size": 14,
+  "markdown_preview_font_size": 18,
   "text_rendering_mode": "subpixel",
   "ui_font_size": 15,
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "One Dark",
+    "dark": "Dracula Pro (Van Helsing)",
   },
   "telemetry": {
     "metrics": true,
@@ -269,6 +271,9 @@
     },
   },
   "languages": {
+    "Rust": {
+      "show_edit_predictions": false,
+    },
     "Markdown": {
       "show_edit_predictions": false,
     },
