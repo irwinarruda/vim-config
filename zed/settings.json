@@ -90,7 +90,7 @@
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "Dracula Pro (Van Helsing)",
+    "dark": "Dracula Pro",
   },
   "telemetry": {
     "metrics": true,
