@@ -173,7 +173,7 @@ function Globals:set_virt_text(enable)
         self:show_virtual_text()
       end,
     })
-    if vim.api.nvim_buf_is_loaded(ctx.bufnr) and vim.api.nvim_buf_get_option(ctx.bufnr, "buftype") == "" then
+    if vim.api.nvim_buf_is_loaded(ctx.bufnr) and vim.bo[ctx.bufnr].buftype == "" then
       self:create_virt_text(ctx)
     end
   else

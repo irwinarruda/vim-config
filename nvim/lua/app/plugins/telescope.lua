@@ -19,7 +19,7 @@ local function workspace_git_status()
   -- Collect modified files from all repos
   local results = {}
   for _, repo in ipairs(repos) do
-    local output = vim.fn.systemlist("git -C " .. vim.fn.shellescape(repo.path) .. " status --porcelain")
+    local output = vim.fn.systemlist({ "git", "-C", repo.path, "status", "--porcelain" })
     for _, line in ipairs(output) do
       if line ~= "" then
         local status = vim.trim(line:sub(1, 2))
@@ -96,7 +96,7 @@ local function workspace_git_status()
         end,
       }),
       sorter = conf.generic_sorter({}),
-      attach_mappings = function(prompt_bufnr, map)
+      attach_mappings = function(prompt_bufnr)
         actions.select_default:replace(function()
           local entry = action_state.get_selected_entry()
           actions.close(prompt_bufnr)
@@ -113,10 +113,15 @@ end
 return {
   "nvim-telescope/telescope.nvim",
   branch = "master",
-  dependencies = { "nvim-telescope/telescope-dap.nvim", "nvim-lua/plenary.nvim" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-dap.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+  },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local themes = require("telescope.themes")
 
     local ignore_file = vim.fn.stdpath("config") .. "/lua/app/plugins/.telescope_ignore"
     local dropdown_config = {
@@ -170,9 +175,14 @@ return {
         lsp_definitions = dropdown_config,
         diagnostics = dropdown_config,
       },
+      extensions = {
+        -- vim.ui.select (code actions, roslyn solution picker, ...) as a dropdown
+        ["ui-select"] = themes.get_dropdown(),
+      },
     })
 
     telescope.load_extension("dap")
+    telescope.load_extension("ui-select")
 
     local builtin = require("telescope.builtin")
     local keymap = vim.keymap

@@ -1,36 +1,33 @@
+local WIDTH = 28
+
+local git = {
+  icon = "󰊢",
+  color = "#df3429",
+  name = "GitLogo",
+}
+
+local webpack = {
+  icon = "",
+  color = "#86d3f7",
+  name = "Webpack",
+}
+
+local env = {
+  icon = "󰙪",
+  color = "#f9b540",
+  name = "Env",
+}
+
+local eslint = {
+  icon = "󰱺",
+  color = "#384aa7",
+  name = "Eslint",
+}
+
 return {
-  "nvim-tree/nvim-tree.lua",
-  lazy = false,
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    local nvim_tree = require("nvim-tree")
-    local nvim_devicons = require("nvim-web-devicons")
-
-    local git = {
-      icon = "󰊢",
-      color = "#df3429",
-      name = "GitLogo",
-    }
-
-    local webpack = {
-      icon = "",
-      color = "#86d3f7",
-      name = "Webpack",
-    }
-
-    local env = {
-      icon = "󰙪",
-      color = "#f9b540",
-      name = "Env",
-    }
-
-    local eslint = {
-      icon = "󰱺",
-      color = "#384aa7",
-      name = "Eslint",
-    }
-
-    nvim_devicons.setup({
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = {
       override = {
         ["git"] = git,
         ["env"] = env,
@@ -46,14 +43,16 @@ return {
         [".gitignore"] = git,
         [".gitattributes"] = git,
       },
-    })
-
-    vim.g.loaded = 1
-    vim.g.loaded_netrwPlugin = 1
-    nvim_tree.setup({
+    },
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
       reload_on_bufenter = true,
       view = {
-        width = 28,
+        width = WIDTH,
         preserve_window_proportions = true,
       },
       actions = {
@@ -64,31 +63,26 @@ return {
       git = {
         ignore = false,
       },
-    })
+      -- Reveal the current buffer in the tree when it is open
+      update_focused_file = {
+        enable = true,
+      },
+    },
+    config = function(_, opts)
+      require("nvim-tree").setup(opts)
 
-    local current_width = 28
-    vim.keymap.set("n", "<leader>e", function()
-      local nvim_tree_api = require("nvim-tree.api")
-      for _, winid in ipairs(vim.api.nvim_list_wins()) do
-        local bufnr = vim.api.nvim_win_get_buf(winid)
-        local bufwidth = vim.api.nvim_win_get_width(winid)
-        if nvim_tree_api.tree.is_tree_buf(bufnr) then
-          current_width = bufwidth
+      -- Toggle the tree but reopen it at whatever width it was resized to
+      local current_width = WIDTH
+      vim.keymap.set("n", "<leader>e", function()
+        local api = require("nvim-tree.api")
+        local tree_win = api.tree.winid()
+        if tree_win then
+          current_width = vim.api.nvim_win_get_width(tree_win)
         end
-      end
 
-      nvim_tree_api.tree.toggle({ find_file = true, focus = false })
-      vim.cmd(":NvimTreeResize " .. current_width)
-    end, { noremap = true })
-
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-      group = vim.api.nvim_create_augroup("NvimTreeOnOpen", { clear = false }),
-      desc = "Find file on open",
-      pattern = "*",
-      callback = function()
-        local nvimtree = require("nvim-tree.api")
-        nvimtree.tree.find_file({ open = false, focus = false })
-      end,
-    })
-  end,
+        api.tree.toggle({ find_file = true, focus = false })
+        vim.cmd("NvimTreeResize " .. current_width)
+      end)
+    end,
+  },
 }

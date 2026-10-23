@@ -5,19 +5,19 @@ local M = {}
 --- Returns a sorted list of { name = string, path = string }.
 function M.find_git_repos(dir)
   local repos = {}
-  local handle = vim.loop.fs_scandir(dir)
+  local handle = vim.uv.fs_scandir(dir)
   if not handle then
     return repos
   end
   while true do
-    local name, _ = vim.loop.fs_scandir_next(handle)
+    local name, _ = vim.uv.fs_scandir_next(handle)
     if not name then
       break
     end
     local path = dir .. "/" .. name
-    local real_path = vim.loop.fs_realpath(path)
+    local real_path = vim.uv.fs_realpath(path)
     if real_path then
-      local stat = vim.loop.fs_stat(real_path .. "/.git")
+      local stat = vim.uv.fs_stat(real_path .. "/.git")
       if stat then
         table.insert(repos, { name = name, path = real_path })
       end
@@ -32,9 +32,7 @@ end
 --- Returns true when dir (or any parent) is inside a git work tree.
 --- Walks up the directory tree looking for .git, just like git itself.
 function M.is_inside_git_repo(dir)
-  dir = dir or vim.fn.getcwd()
-  local found = vim.fn.finddir(".git", dir .. ";")
-  return found ~= ""
+  return vim.fs.root(dir or vim.fn.getcwd(), ".git") ~= nil
 end
 
 --- Returns true when cwd looks like a workspace directory:

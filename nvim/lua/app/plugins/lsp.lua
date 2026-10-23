@@ -36,82 +36,33 @@ local function get_project_root(bufnr)
   return vim.fs.root(bufnr, PROJECT_ROOT_MARKERS) or vim.fn.getcwd()
 end
 
-local function package_json_has_field(filename, field, stop_dir)
-  local package_json_files = vim.fs.find(PACKAGE_JSON_FILES, {
-    path = filename,
-    upward = true,
-    type = "file",
-    stop = stop_dir,
-  })
-
-  for _, package_json_file in ipairs(package_json_files) do
-    local file = io.open(package_json_file, "r")
-    if file then
-      local content = file:read("*a")
-      file:close()
-      if content and content:find(field, 1, true) then
-        return true
-      end
-    end
-  end
-
-  return false
-end
-
-local function package_json_root_with_field(filename, field, stop_dir)
-  local package_json_files = vim.fs.find(PACKAGE_JSON_FILES, {
-    path = filename,
-    upward = true,
-    type = "file",
-    stop = stop_dir,
-  })
-
-  for _, package_json_file in ipairs(package_json_files) do
-    local file = io.open(package_json_file, "r")
-    if file then
-      local content = file:read("*a")
-      file:close()
-      if content and content:find(field, 1, true) then
-        return vim.fs.dirname(package_json_file)
-      end
-    end
-  end
-
-  return nil
-end
-
-local function has_project_file(filename, files, stop_dir)
-  return vim.fs.find(files, {
-    path = filename,
-    upward = true,
-    type = "file",
-    limit = 1,
-    stop = stop_dir,
-  })[1] ~= nil
-end
-
+--- Directory of the nearest of `files` above `filename`, searching no higher than `stop_dir`.
 local function project_file_root(filename, files, stop_dir)
-  local matched_file = vim.fs.find(files, {
-    path = filename,
-    upward = true,
-    type = "file",
-    limit = 1,
-    stop = stop_dir,
-  })[1]
-
-  return matched_file and vim.fs.dirname(matched_file) or nil
+  local match = vim.fs.find(files, { path = filename, upward = true, type = "file", stop = stop_dir })[1]
+  return match and vim.fs.dirname(match)
 end
 
-local function mason_bin(name)
-  local bin = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin", name)
-  return vim.fn.executable(bin) == 1 and bin or name
+--- Directory of the nearest package.json above `filename`, if it mentions `field`.
+local function package_json_root_with_field(filename, field, stop_dir)
+  local package_json =
+    vim.fs.find(PACKAGE_JSON_FILES, { path = filename, upward = true, type = "file", stop = stop_dir })[1]
+  local file = package_json and io.open(package_json, "r")
+  if not file then
+    return nil
+  end
+  local content = file:read("*a")
+  file:close()
+  return content:find(field, 1, true) and vim.fs.dirname(package_json) or nil
+end
+
+local function biome_root(filename, stop_dir)
+  return project_file_root(filename, BIOME_CONFIG_FILES, stop_dir)
+    or package_json_root_with_field(filename, "@biomejs/biome", stop_dir)
 end
 
 local function uses_biome(bufnr)
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-    if client.name == "biome" then
-      return true
-    end
+  if #vim.lsp.get_clients({ bufnr = bufnr, name = "biome" }) > 0 then
+    return true
   end
 
   local filename = vim.api.nvim_buf_get_name(bufnr)
@@ -119,55 +70,44 @@ local function uses_biome(bufnr)
     return false
   end
 
-  local project_root = get_project_root(bufnr)
-  local stop_dir = vim.fs.dirname(project_root)
-
-  return has_project_file(filename, BIOME_CONFIG_FILES, stop_dir)
-    or package_json_has_field(filename, "@biomejs/biome", stop_dir)
+  return biome_root(filename, vim.fs.dirname(get_project_root(bufnr))) ~= nil
 end
 
+--- ESLint runs unless the project is Deno, or a Biome config sits closer to the file.
 local function uses_eslint(bufnr)
   local filename = vim.api.nvim_buf_get_name(bufnr)
-  if filename == "" then
+  if filename == "" or vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "deno.lock" }) then
     return false
   end
 
-  if vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "deno.lock" }) then
-    return false
-  end
-
-  local project_root = get_project_root(bufnr)
-  local stop_dir = vim.fs.dirname(project_root)
+  local stop_dir = vim.fs.dirname(get_project_root(bufnr))
   local eslint_root = project_file_root(filename, ESLINT_CONFIG_FILES, stop_dir)
     or package_json_root_with_field(filename, "eslintConfig", stop_dir)
-
   if not eslint_root then
     return false
   end
 
-  local biome_root = project_file_root(filename, BIOME_CONFIG_FILES, stop_dir)
-    or package_json_root_with_field(filename, "@biomejs/biome", stop_dir)
-
-  return not biome_root or #eslint_root >= #biome_root
+  local biome = biome_root(filename, stop_dir)
+  return not biome or #eslint_root >= #biome
 end
 
 return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
-    opts = {},
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "folke/lazydev.nvim",
-      "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
       "nvim-os-persist",
-      "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
-      "L3MON4D3/LuaSnip",
       "pmizio/typescript-tools.nvim",
       "yioneko/nvim-vtsls",
       {
@@ -181,95 +121,58 @@ return {
       },
     },
     config = function()
-      local TYPESCRIPT_LSP = require("app.core.typescript-lsp").get()
-      local ts_actions = require("app.core.typescript-actions")
-      local roslyn_codelens_group = vim.api.nvim_create_augroup("app_roslyn_codelens", { clear = true })
-      local function refresh_roslyn_codelens(bufnr)
-        pcall(vim.lsp.codelens.refresh, { bufnr = bufnr })
+      local levels = vim.diagnostic.severity
+      vim.diagnostic.config({
+        virtual_text = true,
+        float = {
+          border = "rounded",
+        },
+        signs = {
+          text = {
+            [levels.ERROR] = "✘",
+            [levels.WARN] = "▲",
+            [levels.HINT] = "⚑",
+            [levels.INFO] = "»",
+          },
+        },
+      })
+
+      local typescript_lsp = require("app.core.typescript-lsp").get()
+      require("app.core.lsp-keymaps").setup(typescript_lsp)
+
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+
+      if typescript_lsp == "tsc" then
+        -- Code actions come from vtsls instead, which has the quick-fixes tsc lacks
+        vim.lsp.config("tsc", {
+          on_init = function(client)
+            client.server_capabilities.codeActionProvider = nil
+          end,
+        })
+        -- vtsls starts on demand (see app.core.lsp-keymaps) and only serves code actions,
+        -- commands and file renames, so it never duplicates tsc's diagnostics or completions
+        vim.lsp.config("vtsls", {
+          handlers = {
+            ["textDocument/publishDiagnostics"] = function() end,
+          },
+          on_init = function(client)
+            local capabilities = client.server_capabilities
+            client.server_capabilities = {
+              textDocumentSync = capabilities.textDocumentSync,
+              codeActionProvider = capabilities.codeActionProvider,
+              executeCommandProvider = capabilities.executeCommandProvider,
+              workspace = capabilities.workspace,
+            }
+          end,
+        })
       end
 
-      local on_attach = function(_, bufnr)
-        local opts = { buffer = bufnr, remap = false }
-        local os = require("nvim-os-persist")
-        require("app.core.lsp-keymaps").setup(opts)
-
-        local keymap = vim.keymap
-        keymap.set("n", os.motion("lsp_hover_diagnostic"), function()
-          vim.diagnostic.open_float()
-          vim.diagnostic.open_float()
-        end, opts)
-        keymap.set("n", os.motion("lsp_hover"), function()
-          vim.lsp.buf.hover()
-          vim.defer_fn(function()
-            vim.lsp.buf.hover()
-          end, 80)
-        end, opts)
-        keymap.set("n", os.motion("lsp_code_action"), function()
-          require("lspsaga.command").load_command("code_action")
-        end, opts)
-        keymap.set("n", os.motion("lsp_rename"), vim.lsp.buf.rename, opts)
-        keymap.set("n", os.motion("lsp_goto_next"), function()
-          vim.diagnostic.jump({ count = 1 })
-          vim.cmd.normal("zz")
-        end, opts)
-        keymap.set("n", os.motion("lsp_goto_prev"), function()
-          vim.diagnostic.jump({ count = -1 })
-          vim.cmd.normal("zz")
-        end, opts)
-        if TYPESCRIPT_LSP == "typescript-tools" then
-          keymap.set("n", os.motion("lsp_ts_rename_file"), ":TSToolsRenameFile<CR>", opts)
-          keymap.set("n", os.motion("lsp_ts_remove_imports"), ":TSToolsRemoveUnusedImports<CR>", opts)
-          keymap.set("n", os.motion("lsp_ts_sort_imports"), ":TSToolsSortImports<CR>", opts)
-        elseif TYPESCRIPT_LSP == "vtsls" then
-          keymap.set("n", os.motion("lsp_ts_rename_file"), function()
-            require("vtsls").commands.rename_file(opts.buffer)
-          end, opts)
-          keymap.set("n", os.motion("lsp_ts_remove_imports"), function()
-            require("vtsls").commands.remove_unused_imports(opts.buffer)
-          end, opts)
-          keymap.set("n", os.motion("lsp_ts_sort_imports"), function()
-            require("vtsls").commands.sort_imports(opts.buffer)
-          end, opts)
-          keymap.set("n", os.motion("lsp_ts_select_version"), function()
-            require("vtsls").commands.select_ts_version(opts.buffer)
-          end, opts)
-        elseif TYPESCRIPT_LSP == "tsgo" then
-          keymap.set("n", os.motion("lsp_ts_rename_file"), function()
-            ts_actions.rename_file({ bufnr = opts.buffer, client_name = "tsgo" })
-          end, opts)
-          keymap.set("n", os.motion("lsp_ts_remove_imports"), function()
-            ts_actions.apply_source_action("source.removeUnusedImports", { bufnr = opts.buffer, client_name = "tsgo" })
-          end, opts)
-          keymap.set("n", os.motion("lsp_ts_sort_imports"), function()
-            ts_actions.apply_source_action("source.sortImports", { bufnr = opts.buffer, client_name = "tsgo" })
-          end, opts)
-        end
-        vim.keymap.set("n", "<leader>h", function()
-          ---@diagnostic disable-next-line: missing-parameter
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-        end, { noremap = true })
-      end
-
-      if TYPESCRIPT_LSP == "typescript-tools" then
+      if typescript_lsp == "typescript-tools" then
         require("typescript-tools").setup({
-          on_attach = on_attach,
           settings = {
-            separate_diagnostic_server = true,
-            publish_diagnostic_on = "insert_leave",
             expose_as_code_action = "all",
-            tsserver_path = nil,
-            tsserver_plugins = {},
-            tsserver_max_memory = "auto",
-            tsserver_format_options = {},
-            tsserver_locale = "en",
-            complete_function_calls = false,
-            include_completions_with_insert_text = true,
-            code_lens = "off",
-            disable_member_code_lens = false,
-            jsx_close_tag = {
-              enable = false,
-              filetypes = { "javascriptreact", "typescriptreact" },
-            },
             tsserver_file_preferences = {
               includeInlayEnumMemberValueHints = false,
               includeInlayFunctionLikeReturnTypeHints = true,
@@ -281,19 +184,8 @@ return {
             },
           },
         })
-      elseif TYPESCRIPT_LSP == "vtsls" then
-        vim.lsp.config("vtsls", {
-          on_attach = on_attach,
-        })
-        vim.lsp.enable("vtsls")
-      elseif TYPESCRIPT_LSP == "tsgo" then
-        vim.lsp.config("tsgo", {
-          on_attach = on_attach,
-          cmd = function(dispatchers)
-            return vim.lsp.rpc.start({ mason_bin("tsgo"), "--lsp", "--stdio" }, dispatchers)
-          end,
-        })
-        vim.lsp.enable("tsgo")
+      else
+        vim.lsp.enable(typescript_lsp)
       end
       vim.lsp.config("jsonls", {
         settings = {
@@ -325,18 +217,8 @@ return {
       })
       vim.lsp.config("roslyn", {
         on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-
-          if client.server_capabilities.codeLensProvider then
-            vim.api.nvim_clear_autocmds({ group = roslyn_codelens_group, buffer = bufnr })
-            vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "BufWritePost" }, {
-              group = roslyn_codelens_group,
-              buffer = bufnr,
-              callback = function(event)
-                refresh_roslyn_codelens(event.buf)
-              end,
-            })
-            refresh_roslyn_codelens(bufnr)
+          if client:supports_method("textDocument/codeLens") then
+            vim.lsp.codelens.enable(true, { bufnr = bufnr })
           end
         end,
         settings = {
@@ -376,31 +258,23 @@ return {
         },
       })
       vim.lsp.config("mdx_analyzer", {
-        on_attach = function(client, _)
+        on_attach = function(client)
           client.server_capabilities.documentHighlightProvider = false
         end,
       })
       vim.lsp.config("eslint", {
         root_dir = function(bufnr, on_dir)
-          if not uses_eslint(bufnr) then
-            return
+          if uses_eslint(bufnr) then
+            on_dir(get_project_root(bufnr))
           end
-
-          on_dir(get_project_root(bufnr))
         end,
       })
-      vim.lsp.config("*", {
-        on_attach = on_attach,
-      })
       vim.lsp.config("rust_analyzer", {
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-
+        on_attach = function(_, bufnr)
           vim.api.nvim_buf_create_user_command(bufnr, "LspCargoReload", function()
-            local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
-            for _, rust_client in ipairs(clients) do
+            for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })) do
               vim.notify("Reloading Cargo Workspace")
-              rust_client:request("rust-analyzer/reloadWorkspace", nil, function(err)
+              client:request("rust-analyzer/reloadWorkspace", nil, function(err)
                 if err then
                   error(tostring(err))
                 end
@@ -410,27 +284,13 @@ return {
           end, { desc = "Reload current cargo workspace" })
         end,
       })
+
       require("mason-lspconfig").setup({
         automatic_enable = {
-          exclude = { "ts_ls", "vtsls", "tsgo", "omnisharp" },
+          -- TypeScript servers are enabled above; stylua stays a conform formatter
+          exclude = { "ts_ls", "vtsls", "tsc", "omnisharp", "stylua" },
         },
       })
-      local levels = vim.diagnostic.severity
-      local opts = {
-        virtual_text = true,
-        float = {
-          border = "rounded",
-        },
-        signs = {
-          text = {
-            [levels.ERROR] = "✘",
-            [levels.WARN] = "▲",
-            [levels.HINT] = "⚑",
-            [levels.INFO] = "»",
-          },
-        },
-      }
-      vim.diagnostic.config(opts)
     end,
   },
   {
@@ -438,82 +298,45 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local conform = require("conform")
+      local prettier = { "prettierd", "prettier", stop_after_first = true }
 
-      local current_bufnr = -1
-      local is_eslint_available = false
-      local function biome_format(bufnr, fallback)
-        if uses_biome(bufnr) then
-          return { "biome-check" }
+      local function biome_or(fallback)
+        return function(bufnr)
+          return uses_biome(bufnr) and { "biome-check" } or fallback
         end
-
-        return fallback
       end
 
       local function javascript_format(bufnr)
         if uses_biome(bufnr) then
           return { "biome-check" }
         end
-
-        if current_bufnr == bufnr then
-          if is_eslint_available then
-            return { "prettierd", "eslint_d" }
-          end
-          return { "prettierd" }
-        end
-        current_bufnr = bufnr
-        is_eslint_available = false
-        local clients = vim.lsp.get_clients({ bufnr = bufnr })
-        for _, client in ipairs(clients) do
-          if client.name == "eslint" then
-            is_eslint_available = true
-            return { "prettierd", "eslint_d" }
-          end
+        if #vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" }) > 0 then
+          return { "prettierd", "eslint_d" }
         end
         return { "prettierd" }
+      end
+
+      local formatters_by_ft = {
+        lua = { "stylua" },
+        yaml = prettier,
+        markdown = prettier,
+        go = { "gofmt", "goimports" },
+        nginx = { "nginxfmt" },
+      }
+      for _, ft in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
+        formatters_by_ft[ft] = javascript_format
+      end
+      for _, ft in ipairs({ "astro", "svelte", "vue", "css", "html", "json", "jsonc", "graphql" }) do
+        formatters_by_ft[ft] = biome_or(prettier)
       end
 
       conform.setup({
         format_on_save = {
           timeout_ms = 1000,
-          lsp_fallback = true,
+          lsp_format = "fallback",
         },
         log_level = vim.log.levels.ERROR,
-        formatters_by_ft = {
-          lua = { "stylua" },
-          javascript = javascript_format,
-          typescript = javascript_format,
-          javascriptreact = javascript_format,
-          typescriptreact = javascript_format,
-          astro = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          svelte = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          vue = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          css = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          html = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          json = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          jsonc = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          yaml = { "prettierd", "prettier", stop_after_first = true },
-          markdown = { "prettierd", "prettier", stop_after_first = true },
-          graphql = function(bufnr)
-            return biome_format(bufnr, { "prettierd", "prettier", stop_after_first = true })
-          end,
-          rust = { "rust_analyzer" },
-          go = { "gofmt", "goimports" },
-          nginx = { "nginxfmt" },
-        },
+        formatters_by_ft = formatters_by_ft,
         formatters = {
           -- Need to install manually
           nginxfmt = {
@@ -522,12 +345,11 @@ return {
         },
       })
 
-      local keymap = vim.keymap
-      keymap.set({ "n", "v" }, "<C-s>", function()
+      vim.keymap.set({ "n", "v" }, "<C-s>", function()
         conform.format({
           timeout_ms = 1000,
           async = false,
-          lsp_fallback = true,
+          lsp_format = "fallback",
         })
       end)
     end,
@@ -552,16 +374,14 @@ return {
         end)
       end
 
-      local lint_group = vim.api.nvim_create_augroup("app_nvim_lint", { clear = true })
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-        group = lint_group,
+        group = vim.api.nvim_create_augroup("app_nvim_lint", { clear = true }),
         callback = function(event)
           run_lint(event.buf)
         end,
       })
 
-      local keymap = vim.keymap
-      keymap.set({ "n", "v" }, "<leader><C-s>", function()
+      vim.keymap.set({ "n", "v" }, "<leader><C-s>", function()
         run_lint(vim.api.nvim_get_current_buf())
       end)
     end,

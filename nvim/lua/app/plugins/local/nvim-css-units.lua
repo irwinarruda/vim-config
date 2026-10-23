@@ -1,7 +1,6 @@
 return {
   name = "nvim-css-units",
   dir = vim.fn.stdpath("config") .. "/lua/plugins/local/nvim-css-units",
-  dev = true,
   priority = 1000,
   config = function()
     local css_units = require("nvim-css-units")

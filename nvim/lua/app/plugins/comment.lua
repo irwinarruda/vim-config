@@ -6,11 +6,12 @@ return {
     "nvim-os-persist",
   },
   config = function()
-    local comment = require("Comment")
     local os = require("nvim-os-persist")
-    comment.setup({
+    local ts_pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+
+    require("Comment").setup({
       pre_hook = function(ctx)
-        local commentstring = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()(ctx)
+        local commentstring = ts_pre_hook(ctx)
         if commentstring ~= nil then
           return commentstring
         end

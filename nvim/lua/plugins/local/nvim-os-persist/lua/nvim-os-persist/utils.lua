@@ -5,7 +5,7 @@ local Os = {}
 
 --- @return boolean
 function Os:is_windows()
-  return vim.loop.os_uname().sysname == "Windows_NT"
+  return vim.uv.os_uname().sysname == "Windows_NT"
 end
 
 return {

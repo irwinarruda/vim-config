@@ -1,7 +1,6 @@
 return {
   name = "nvim-os-persist",
   dir = vim.fn.stdpath("config") .. "/lua/plugins/local/nvim-os-persist",
-  dev = true,
   priority = 1000,
   config = function()
     local os_persist = require("nvim-os-persist")

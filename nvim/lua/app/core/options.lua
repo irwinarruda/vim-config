@@ -1,5 +1,9 @@
 local opt = vim.opt
 
+-- nvim-tree replaces netrw; this has to run before any plugin loads
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- line
 opt.relativenumber = true
 opt.number = true
@@ -9,25 +13,18 @@ opt.number = true
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
-opt.autoindent = true
 opt.smartindent = true
 
 -- line wrapping
 opt.wrap = false
 
 -- search settings
-opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
+opt.inccommand = "split"
 
 -- apperance
-opt.inccommand = "split"
 opt.termguicolors = true
-opt.smartcase = true
-
--- backspace
-opt.backspace = "indent,eol,start"
-opt.eol = true
 
 -- clipboard
 opt.clipboard:append("unnamedplus")
@@ -43,18 +40,9 @@ opt.updatetime = 50
 opt.colorcolumn = { "80", "120" }
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = false }),
+  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = true }),
   desc = "Hightlight selection on yank",
-  pattern = "*",
   callback = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
+    vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 })
   end,
-})
-
--- adding templ filetype for golang templates
-vim.filetype.add({
-  extension = {
-    templ = "templ",
-    mdx = "mdx",
-  },
 })

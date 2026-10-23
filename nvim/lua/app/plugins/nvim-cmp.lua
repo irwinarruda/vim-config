@@ -10,11 +10,10 @@ return {
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
+    local os = require("nvim-os-persist")
 
     require("luasnip.loaders.from_vscode").lazy_load()
     vim.opt.completeopt = "menu,menuone"
-
-    local os = require("nvim-os-persist")
 
     local cmp_select = { behavior = cmp.SelectBehavior.Select }
     cmp.setup({
@@ -40,11 +39,9 @@ return {
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
+        { name = "lazydev", group_index = 0 }, -- neovim lua api (replaces nvim_lua)
         { name = "nvim_lsp" }, -- lsp
-        { name = "nvim_lua" }, -- lsp lua
         { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
       }),
     })
   end,

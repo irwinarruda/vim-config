@@ -2,7 +2,6 @@ if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono:h12"
   vim.g.neovide_cursor_animation_length = 0.10
   vim.g.neovide_cursor_trail_size = 0.5
-  vim.g.neovide_cursor_vfx_mode = "pixiedust"
   vim.g.neovide_cursor_vfx_mode = "ripple"
   vim.g.neovide_input_macos_alt_is_meta = false
 end
@@ -37,9 +36,8 @@ return {
           dracula_pro_morbius
           dracula_pro_van_helsing
       ]]
-      vim.cmd("syntax enable")
-      vim.cmd("let g:dracula_colorterm = 0")
-      vim.cmd("colorscheme dracula_pro_van_helsing")
+      vim.g.dracula_colorterm = 0
+      vim.cmd("colorscheme dracula_pro")
       vim.cmd([[
         " Default TS
         hi! link @type DraculaCyan

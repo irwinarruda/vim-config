@@ -2,15 +2,11 @@ return {
   "hiphish/rainbow-delimiters.nvim",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    local rainbow = require("rainbow-delimiters.setup")
+    vim.api.nvim_set_hl(0, "CustomRainbowYellow", { fg = "#FFD700" })
+    vim.api.nvim_set_hl(0, "CustomRainbowPink", { fg = "#DA70D6" })
+    vim.api.nvim_set_hl(0, "CustomRainbowBlue", { fg = "#179FFF" })
 
-    vim.cmd([[
-      hi! CustomRainbowYellow guifg=#FFD700
-      hi! CustomRainbowPink guifg=#DA70D6
-      hi! CustomRainbowBlue guifg=#179FFF
-    ]])
-
-    rainbow.setup({
+    require("rainbow-delimiters.setup").setup({
       query = {
         svelte = "rainbow-parens",
         vue = "rainbow-parens",
@@ -18,7 +14,7 @@ return {
         javascript = "rainbow-parens",
         tsx = "rainbow-parens",
         typescript = "rainbow-parens",
-        templ = "rainbow-parens"
+        templ = "rainbow-parens",
       },
       highlight = {
         "CustomRainbowYellow",

@@ -1,13 +1,7 @@
 local M = {}
 
 local function get_tailwind_client(bufnr)
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-    if client.name == "tailwindcss" then
-      return client
-    end
-  end
-
-  return nil
+  return vim.lsp.get_clients({ bufnr = bufnr, name = "tailwindcss" })[1]
 end
 
 local function is_tailwind_diagnostic(diagnostic)
@@ -120,36 +114,16 @@ local function make_code_action_params(bufnr, group)
   }
 end
 
-local function normalize_action(action)
-  if action.edit or action.command then
-    return action
-  end
-
-  return {
-    title = action.title,
-    kind = action.kind,
-    edit = action.edit,
-    command = action.command,
-    isPreferred = action.isPreferred,
-    disabled = action.disabled,
-    data = action.data,
-  }
-end
-
 local function select_action(actions)
   local fallback = nil
 
-  for _, action in ipairs(actions or {}) do
+  for _, action in ipairs(actions) do
     if not action.disabled then
-      local normalized = normalize_action(action)
-
-      if normalized.isPreferred then
-        return normalized
+      if action.isPreferred then
+        return action
       end
 
-      if not fallback then
-        fallback = normalized
-      end
+      fallback = fallback or action
     end
   end
 
@@ -180,12 +154,8 @@ local function apply_action(client, action, bufnr)
 end
 
 local function get_action_for_group(client, bufnr, group)
-  local responses = vim.lsp.buf_request_sync(
-    bufnr,
-    "textDocument/codeAction",
-    make_code_action_params(bufnr, group),
-    1000
-  )
+  local responses =
+    vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", make_code_action_params(bufnr, group), 1000)
 
   if not responses then
     return nil
@@ -193,7 +163,8 @@ local function get_action_for_group(client, bufnr, group)
 
   local response = responses[client.id]
 
-  if not response or not response.result or #response.result == 0 then
+  -- JSON null arrives as vim.NIL
+  if not response or not response.result or response.result == vim.NIL or #response.result == 0 then
     return nil
   end
 
@@ -205,10 +176,7 @@ function M.apply_buffer_suggestions()
   local client = get_tailwind_client(bufnr)
 
   if not client then
-    vim.notify(
-      "No tailwindcss LSP client attached to the current buffer.",
-      vim.log.levels.WARN
-    )
+    vim.notify("No tailwindcss LSP client attached to the current buffer.", vim.log.levels.WARN)
     return
   end
 
@@ -240,17 +208,11 @@ function M.apply_buffer_suggestions()
   end
 
   if applied == 0 then
-    vim.notify(
-      "No Tailwind LSP fixes were available for the current buffer.",
-      vim.log.levels.INFO
-    )
+    vim.notify("No Tailwind LSP fixes were available for the current buffer.", vim.log.levels.INFO)
     return
   end
 
-  vim.notify(
-    string.format("Applied %d Tailwind LSP fix(es) in the current buffer.", applied),
-    vim.log.levels.INFO
-  )
+  vim.notify(string.format("Applied %d Tailwind LSP fix(es) in the current buffer.", applied), vim.log.levels.INFO)
 end
 
 function M.setup()

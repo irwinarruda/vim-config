@@ -1,11 +1,7 @@
-local harpoon_select = function(index)
-  return function()
-    if require("app.core.toggleterm-state").is_terminals_open() then
-      return
-    end
-    local harpoon = require("harpoon")
-    harpoon:list():select(index)
-  end
+-- A floating toggleterm sits on top of the editor; don't swap the buffer underneath it
+local function terminal_is_open()
+  local ok, ui = pcall(require, "toggleterm.ui")
+  return ok and ui.find_open_windows()
 end
 
 return {
@@ -25,14 +21,12 @@ return {
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
 
-    keymap.set("n", "<leader>1", harpoon_select(1))
-    keymap.set("n", "<leader>2", harpoon_select(2))
-    keymap.set("n", "<leader>3", harpoon_select(3))
-    keymap.set("n", "<leader>4", harpoon_select(4))
-    keymap.set("n", "<leader>5", harpoon_select(5))
-    keymap.set("n", "<leader>6", harpoon_select(6))
-    keymap.set("n", "<leader>7", harpoon_select(7))
-    keymap.set("n", "<leader>8", harpoon_select(8))
-    keymap.set("n", "<leader>9", harpoon_select(9))
+    for index = 1, 9 do
+      keymap.set("n", "<leader>" .. index, function()
+        if not terminal_is_open() then
+          harpoon:list():select(index)
+        end
+      end)
+    end
   end,
 }

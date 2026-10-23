@@ -2,30 +2,22 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "folke/noice.nvim" },
   event = "VeryLazy",
-  config = function()
-    local lualine = require("lualine")
-    local lualine_dracula = require("lualine.themes.dracula")
+  opts = function()
+    local noice_mode = require("noice").api.statusline.mode
 
-    local theme
-    if string.find(vim.g.colors_name, "tokyonight") then
-      theme = "tokyonight"
-    else
-      theme = lualine_dracula
-    end
-
-    lualine.setup({
+    return {
       options = {
-        theme = theme,
+        theme = (vim.g.colors_name or ""):find("tokyonight") and "tokyonight" or "dracula",
       },
       sections = {
         lualine_x = {
           {
-            require("noice").api.statusline.mode.get,
-            cond = require("noice").api.statusline.mode.has,
+            noice_mode.get,
+            cond = noice_mode.has,
             color = { fg = "#ff9e64" },
           },
         },
       },
-    })
+    }
   end,
 }

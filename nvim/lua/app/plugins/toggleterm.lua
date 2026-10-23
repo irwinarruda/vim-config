@@ -2,7 +2,7 @@ return {
   "akinsho/toggleterm.nvim",
   event = "VeryLazy",
   init = function()
-    if vim.loop.os_uname().sysname == "Windows_NT" then
+    if vim.uv.os_uname().sysname == "Windows_NT" then
       vim.opt.shell = "pwsh"
       vim.opt.shellcmdflag =
         "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
@@ -13,13 +13,12 @@ return {
     end
   end,
   config = function()
-    local toggleterm = require("toggleterm")
     local workspace = require("app.core.workspace")
     local cwd = vim.fn.getcwd()
     local repos = not workspace.is_inside_git_repo(cwd) and workspace.find_git_repos(cwd) or {}
     local is_workspace_mode = #repos > 0
 
-    toggleterm.setup({
+    require("toggleterm").setup({
       open_mapping = not is_workspace_mode and "<leader>t" or false,
       direction = "float",
       start_in_insert = false,
@@ -28,6 +27,7 @@ return {
       terminal_mappings = false,
     })
 
+    -- In a workspace (folder of repos) each count opens a terminal in that repo: 2<leader>t
     if is_workspace_mode then
       local Terminal = require("toggleterm.terminal").Terminal
       local workspace_terms = {}
@@ -45,20 +45,13 @@ return {
       local last_count = 1
 
       vim.keymap.set("n", "<leader>t", function()
-        local count = vim.v.count
-        if count > 0 then
-          last_count = count
-          if workspace_terms[count] then
-            workspace_terms[count]:toggle()
-          else
-            vim.cmd(count .. "ToggleTerm direction=float")
-          end
+        if vim.v.count > 0 then
+          last_count = vim.v.count
+        end
+        if workspace_terms[last_count] then
+          workspace_terms[last_count]:toggle()
         else
-          if workspace_terms[last_count] then
-            workspace_terms[last_count]:toggle()
-          else
-            vim.cmd(last_count .. "ToggleTerm direction=float")
-          end
+          vim.cmd(last_count .. "ToggleTerm direction=float")
         end
       end, { silent = true, desc = "Toggle workspace terminal" })
     end
@@ -68,9 +61,12 @@ return {
     -- never shadows <C-x> decrement in regular files).
     vim.keymap.set("t", "<C-x><Esc>", "<cmd>ToggleTerm<cr>", { silent = true, desc = "Close terminal" })
     vim.api.nvim_create_autocmd("TermOpen", {
+      group = vim.api.nvim_create_augroup("ToggleTermClose", { clear = true }),
       callback = function(args)
         vim.keymap.set("n", "<C-x><Esc>", "<cmd>ToggleTerm<cr>", {
-          silent = true, buffer = args.buf, desc = "Close terminal",
+          silent = true,
+          buf = args.buf,
+          desc = "Close terminal",
         })
       end,
     })
