@@ -91,6 +91,38 @@ local function uses_eslint(bufnr)
   return not biome or #eslint_root >= #biome
 end
 
+--- Roslyn anchors code lenses at the symbol name, and Neovim 0.12 indents each lens line
+--- to that column. Re-anchor them at the line's indentation, where VS Code shows them.
+local reanchored_clients = setmetatable({}, { __mode = "k" })
+local function indent_code_lenses(client)
+  if reanchored_clients[client] then
+    return
+  end
+  reanchored_clients[client] = true
+
+  -- Neovim's codelens requests with a callback instead of client.handlers, so wrap the request
+  local request = client.request
+  client.request = function(self, method, params, handler, bufnr)
+    if handler and (method == "textDocument/codeLens" or method == "codeLens/resolve") then
+      local on_result = handler
+      handler = function(err, result, ctx, ...)
+        local buf = ctx.bufnr or bufnr
+        local lenses = method == "codeLens/resolve" and { result } or result
+        for _, lens in ipairs(type(lenses) == "table" and lenses or {}) do
+          if type(lens) == "table" and lens.range and vim.api.nvim_buf_is_loaded(buf) then
+            local start = lens.range.start
+            start.character = vim.api.nvim_buf_call(buf, function()
+              return vim.fn.indent(start.line + 1)
+            end)
+          end
+        end
+        return on_result(err, result, ctx, ...)
+      end
+    end
+    return request(self, method, params, handler, bufnr)
+  end
+end
+
 return {
   {
     "folke/lazydev.nvim",
@@ -107,7 +139,7 @@ return {
     dependencies = {
       "mason-org/mason-lspconfig.nvim",
       "nvim-os-persist",
-      "hrsh7th/cmp-nvim-lsp",
+      "saghen/blink.cmp",
       "pmizio/typescript-tools.nvim",
       "yioneko/nvim-vtsls",
       {
@@ -141,7 +173,7 @@ return {
       require("app.core.lsp-keymaps").setup(typescript_lsp)
 
       vim.lsp.config("*", {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
 
       if typescript_lsp == "tsc" then
@@ -216,8 +248,10 @@ return {
         },
       })
       vim.lsp.config("roslyn", {
+        -- on_init is left to roslyn.nvim, which uses it to open the solution
         on_attach = function(client, bufnr)
           if client:supports_method("textDocument/codeLens") then
+            indent_code_lenses(client)
             vim.lsp.codelens.enable(true, { bufnr = bufnr })
           end
         end,

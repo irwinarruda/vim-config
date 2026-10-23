@@ -60,6 +60,10 @@ keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
 keymap.set("n", "<leader><leader>p", "p=`[v`]=")
 
 keymap.set("n", "<leader><leader>w", "<cmd>noa w<CR>", { desc = "Write without autocommands" })
+keymap.set("n", "<leader>u", function()
+  vim.cmd.packadd("nvim.undotree") -- built-in since Neovim 0.12
+  require("undotree").open()
+end, { desc = "Toggle undo tree" })
 keymap.set("n", "<leader>at", function()
   require("app.core.tailwind-lsp").apply_buffer_suggestions()
 end, { desc = "Apply Tailwind LSP fixes in current buffer" })

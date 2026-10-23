@@ -49,10 +49,6 @@ return {
           default = "<C-;>",
           windows = "^com",
         },
-        block_comment = {
-          default = "<C-c><C-;>",
-          windows = "^bco",
-        },
       },
     })
   end,

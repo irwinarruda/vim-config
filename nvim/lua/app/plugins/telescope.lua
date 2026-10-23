@@ -115,7 +115,6 @@ return {
   branch = "master",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope-dap.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
   },
   config = function()
@@ -181,7 +180,6 @@ return {
       },
     })
 
-    telescope.load_extension("dap")
     telescope.load_extension("ui-select")
 
     local builtin = require("telescope.builtin")

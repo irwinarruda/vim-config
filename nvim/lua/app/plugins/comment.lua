@@ -1,36 +1,24 @@
 return {
-  "numToStr/Comment.nvim",
+  -- Neovim's built-in commenting (gc) plus treesitter-aware commentstrings (e.g. JSX)
+  "JoosepAlviste/nvim-ts-context-commentstring",
   event = { "BufReadPre", "BufNewFile" },
-  dependencies = {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    "nvim-os-persist",
+  dependencies = { "nvim-os-persist" },
+  opts = {
+    enable_autocmd = false,
   },
-  config = function()
-    local os = require("nvim-os-persist")
-    local ts_pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+  config = function(_, opts)
+    require("ts_context_commentstring").setup(opts)
 
-    require("Comment").setup({
-      pre_hook = function(ctx)
-        local commentstring = ts_pre_hook(ctx)
-        if commentstring ~= nil then
-          return commentstring
-        end
-        return vim.bo.commentstring ~= "" and vim.bo.commentstring or "# %s"
-      end,
-      post_hook = function(ctx)
-        local U = require("Comment.utils")
-        if ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-          vim.cmd("norm! gv")
-        end
-      end,
-      toggler = {
-        line = os.motion("comment"),
-        block = os.motion("block_comment"),
-      },
-      opleader = {
-        line = os.motion("comment"),
-        block = os.motion("block_comment"),
-      },
-    })
+    -- gc asks for each language's commentstring through this; answer from the cursor's context
+    local get_option = vim.filetype.get_option
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.filetype.get_option = function(filetype, option)
+      return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
+        or get_option(filetype, option)
+    end
+
+    local os = require("nvim-os-persist")
+    vim.keymap.set("n", os.motion("comment"), "gcc", { remap = true, desc = "Toggle comment" })
+    vim.keymap.set("x", os.motion("comment"), "gcgv", { remap = true, desc = "Toggle comment, keep selection" })
   end,
 }

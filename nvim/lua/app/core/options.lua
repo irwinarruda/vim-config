@@ -26,6 +26,9 @@ opt.inccommand = "split"
 -- apperance
 opt.termguicolors = true
 
+-- native completion popup (blink.cmp draws its own menu)
+opt.completeopt = "menu,menuone"
+
 -- clipboard
 opt.clipboard:append("unnamedplus")
 
