@@ -7,12 +7,13 @@ if vim.g.neovide then
 end
 
 local dracula_pro_path = vim.fn.stdpath("data") .. "/themes/dracula_pro"
+local has_dracula_pro = vim.fn.filereadable(dracula_pro_path .. "/colors/dracula_pro.vim") == 1
 
 return {
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    enabled = false,
+    enabled = not has_dracula_pro,
     config = function()
       vim.cmd([[colorscheme tokyonight-moon]])
       vim.cmd([[
@@ -25,7 +26,7 @@ return {
   {
     dir = dracula_pro_path,
     priority = 1000,
-    enabled = true,
+    enabled = has_dracula_pro,
     config = function()
       --[[
         ** Available themes: **
