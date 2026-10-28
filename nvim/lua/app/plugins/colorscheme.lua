@@ -80,6 +80,12 @@ return {
       ]])
       vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+      -- Diff lines get Dracula green/red tinted at 20% over #22212c instead of colored
+      -- text, so diff views keep syntax colors. Groups that wanted green text keep it
+      vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#374d3d" })
+      vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#4e383d" })
+      vim.api.nvim_set_hl(0, "GitSignsAdd", { link = "DraculaGreen" })
+      vim.api.nvim_set_hl(0, "CodeActionNumber", { link = "DraculaGreen" })
     end,
   },
 }

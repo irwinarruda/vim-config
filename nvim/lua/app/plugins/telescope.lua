@@ -3,9 +3,9 @@ local workspace = require("app.core.workspace")
 local function workspace_git_status()
   local cwd = vim.fn.getcwd()
 
-  -- If cwd is inside a git repo, fall back to builtin
+  -- If cwd is inside a git repo, open the CodeDiff explorer
   if workspace.is_inside_git_repo(cwd) then
-    require("telescope.builtin").git_status()
+    vim.cmd("CodeDiff")
     return
   end
 
@@ -186,7 +186,7 @@ return {
     local keymap = vim.keymap
     keymap.set("n", "<leader>fo", builtin.find_files) -- find files using custom ignore patterns
     keymap.set("n", "<leader>fp", builtin.git_files) -- find files in git
-    keymap.set("n", "<leader>fg", workspace_git_status) -- find in changed files (workspace-aware)
+    keymap.set("n", "<leader>fg", workspace_git_status) -- review changed files: CodeDiff in a repo, picker across workspace repos
     keymap.set("n", "<leader>ff", builtin.live_grep) -- find string in current working directory as you type
     keymap.set("n", "<leader>fb", builtin.buffers) -- find string in current working directory as you type
   end,
