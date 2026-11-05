@@ -6,27 +6,31 @@ if vim.g.neovide then
   vim.g.neovide_input_macos_alt_is_meta = false
 end
 
+-- "favo-honey" or "favo-wax" for favo's theme, "" for Dracula Pro when it is installed
+local favo = "favo-honey"
+
 local dracula_pro_path = vim.fn.stdpath("data") .. "/themes/dracula_pro"
 local has_dracula_pro = vim.fn.filereadable(dracula_pro_path .. "/colors/dracula_pro.vim") == 1
+local use_dracula_pro = favo == "" and has_dracula_pro
 
 return {
   {
-    "folke/tokyonight.nvim",
+    "irwinarruda/favo-theme",
+    name = "favo",
     priority = 1000,
-    enabled = not has_dracula_pro,
+    lazy = false,
+    enabled = not use_dracula_pro,
     config = function()
-      vim.cmd([[colorscheme tokyonight-moon]])
-      vim.cmd([[
-        hi! link @lsp.typemod.variable.readonly Constant
-        hi! link @lsp.type.extensionMethodName.cs Function
-        hi! link @lsp.type.constantName.cs Constant
-      ]])
+      vim.cmd.colorscheme(favo ~= "" and favo or "favo-honey")
+      for _, group in ipairs({ "Normal", "NormalFloat", "FloatBorder", "FloatTitle" }) do
+        vim.api.nvim_set_hl(0, group, vim.tbl_extend("force", vim.api.nvim_get_hl(0, { name = group }), { bg = "none" }))
+      end
     end,
   },
   {
     dir = dracula_pro_path,
     priority = 1000,
-    enabled = has_dracula_pro,
+    enabled = use_dracula_pro,
     config = function()
       --[[
         ** Available themes: **
@@ -35,10 +39,11 @@ return {
           dracula_pro_buffy
           dracula_pro_lincoln
           dracula_pro_morbius
+          dracula_pro_nosferatu
           dracula_pro_van_helsing
       ]]
       vim.g.dracula_colorterm = 0
-      vim.cmd("colorscheme dracula_pro")
+      vim.cmd("colorscheme dracula_pro_van_helsing")
       vim.cmd([[
         " Default TS
         hi! link @type DraculaCyan

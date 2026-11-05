@@ -7,7 +7,7 @@ return {
 
     return {
       options = {
-        theme = (vim.g.colors_name or ""):find("tokyonight") and "tokyonight" or "dracula",
+        theme = (vim.g.colors_name or ""):find("^favo") and "favo" or "dracula",
       },
       sections = {
         lualine_x = {
