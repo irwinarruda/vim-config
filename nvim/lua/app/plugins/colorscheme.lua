@@ -6,8 +6,8 @@ if vim.g.neovide then
   vim.g.neovide_input_macos_alt_is_meta = false
 end
 
--- "favo-honey" or "favo-wax" for favo's theme, "" for Dracula Pro when it is installed
-local favo = "favo-honey"
+-- "favo-honey", "favo-wax", "favo-smoke" or "favo-veil" for favo's theme, "" for Dracula Pro when it is installed
+local favo = "favo-smoke"
 
 local dracula_pro_path = vim.fn.stdpath("data") .. "/themes/dracula_pro"
 local has_dracula_pro = vim.fn.filereadable(dracula_pro_path .. "/colors/dracula_pro.vim") == 1

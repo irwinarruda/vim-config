@@ -89,8 +89,8 @@
   "ui_font_size": 15,
   "theme": {
     "mode": "dark",
-    "light": "One Light",
-    "dark": "Dracula Pro",
+    "light": "Favo Wax",
+    "dark": "Favo Smoke",
   },
   "telemetry": {
     "metrics": true,
