@@ -7,7 +7,7 @@ return {
 
     return {
       options = {
-        theme = (vim.g.colors_name or ""):find("^favo") and "favo" or "dracula",
+        theme = ({ favo = "favo", barro = "barro" })[(vim.g.colors_name or ""):match("^(%a+)%-")] or "dracula",
       },
       sections = {
         lualine_x = {
