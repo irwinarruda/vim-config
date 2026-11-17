@@ -7,14 +7,17 @@ if vim.g.neovide then
 end
 
 -- "favo-honey", "favo-wax", "favo-smoke" or "favo-veil" for favo's theme,
--- "barro-slate" or "barro-kaolin" for barro's, "" for Dracula Pro when it is installed
-local theme = "barro-slate"
+-- "barro-slate" or "barro-kaolin" for barro's, "lila-dusk" or "lila-petal" for lila's,
+-- "" for Dracula Pro when it is installed
+local theme = "lila-dusk"
 
 local dracula_pro_path = vim.fn.stdpath("data") .. "/themes/dracula_pro"
 local has_dracula_pro = vim.fn.filereadable(dracula_pro_path .. "/colors/dracula_pro.vim") == 1
 local use_dracula_pro = theme == "" and has_dracula_pro
 
-local use_barro = vim.startswith(theme, "barro-")
+-- Favo Honey stands in when Dracula Pro is asked for but not installed
+local active = theme ~= "" and theme or "favo-honey"
+local family = active:match("^(%a+)%-")
 
 local function apply(name)
   vim.cmd.colorscheme(name)
@@ -23,31 +26,25 @@ local function apply(name)
   end
 end
 
+local function theme_plugin(name)
+  return {
+    "irwinarruda/" .. name .. "-theme",
+    name = name,
+    priority = 1000,
+    lazy = false,
+    enabled = not use_dracula_pro,
+    config = function()
+      if family == name then
+        apply(active)
+      end
+    end,
+  }
+end
+
 return {
-  {
-    "irwinarruda/favo-theme",
-    name = "favo",
-    priority = 1000,
-    lazy = false,
-    enabled = not use_dracula_pro,
-    config = function()
-      if not use_barro then
-        apply(vim.startswith(theme, "favo-") and theme or "favo-honey")
-      end
-    end,
-  },
-  {
-    "irwinarruda/barro-theme",
-    name = "barro",
-    priority = 1000,
-    lazy = false,
-    enabled = not use_dracula_pro,
-    config = function()
-      if use_barro then
-        apply(theme)
-      end
-    end,
-  },
+  theme_plugin("favo"),
+  theme_plugin("barro"),
+  theme_plugin("lila"),
   {
     dir = dracula_pro_path,
     priority = 1000,
